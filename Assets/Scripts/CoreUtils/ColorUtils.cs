@@ -22,10 +22,6 @@ public class ColorUtils : MonoBehaviour
             return colorList[Random.Range(0, colorList.Count)];
         }
     }
-    
-    {
-        return new Color(Random.value, Random.value, Random.value);
-    }
 
     // Mix Two Colors (Additive Mixing)
     public static Color MixLights(Color color1, Color color2)
