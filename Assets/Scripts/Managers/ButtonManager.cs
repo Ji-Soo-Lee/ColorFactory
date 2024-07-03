@@ -95,5 +95,14 @@ public class ButtonManager : MonoBehaviour
 
         isAnimating = false;
     }
+
+    public void Click(int n)
+    {
+        clickNum += n;
+        targetColor = buttonColors[clickNum % buttonColors.Count];
+            
+        StopCoroutine("ChangeColor"); // Stop the current color transition coroutine if running
+        StartCoroutine("ChangeColor"); // Start the color transition coroutine
+    }
 }
 
