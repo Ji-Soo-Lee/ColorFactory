@@ -27,6 +27,7 @@ public class TimerManager : MonoBehaviour
             timer -= Time.deltaTime;
             if (timer <= 0f)
             {
+                timer = 0f;
                 TimerExpired();
             }
         }
@@ -55,5 +56,10 @@ public class TimerManager : MonoBehaviour
     {
         isTimerRunning = false;
         timerHandler?.Invoke();
+    }
+
+    public float GetTimerValue()
+    {
+        return timer;
     }
 }
