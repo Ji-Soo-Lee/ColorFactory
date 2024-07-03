@@ -9,7 +9,7 @@ public class StageManager : MonoBehaviour
     public int[] stageScores;               // Current score for each stage
 
     private int currentStage = 0;           // Index of current stage
-    private float stageStartTime;           // Start time for stage
+    private TimerManager timerManager;      // Timer Manager
     private bool isStageActive = false;     // Status of stage (active or not)
 
     protected virtual void Start()
@@ -20,20 +20,22 @@ public class StageManager : MonoBehaviour
             return;
         }
 
+        timerManager = gameObject.AddComponent<TimerManager>();
+
         StartStage(0);  // Start first stage
     }
 
+
     protected virtual void Update()
     {
+        // Check if a stage is currently active
+        
         if (isStageActive)
         {
-            // Update Stage Timer
-            float elapsedTime = Time.time - stageStartTime;
-            if (elapsedTime >= stageTimeLimits[currentStage])
-            {
-                EndStage();
-            }
+            // Stage-specific update logic if needed
         }
+
+        // General update logic if needed
     }
 
     protected virtual void StartStage(int stageIndex)
@@ -45,11 +47,17 @@ public class StageManager : MonoBehaviour
         }
 
         currentStage = stageIndex;
-        stageStartTime = Time.time;
+
+        // Timer Setup
+        float stageTimeLimit = stageTimeLimits[currentStage];
+        timerManager.SetupTimer(stageTimeLimit, EndStage);
+
         isStageActive = true;
 
-        // initialize
+        // Initialize
         InitializeGameElements();
+
+        timerManager.StartTimer();
 
         Debug.Log("Stage " + (currentStage + 1) + "started.");
     }
