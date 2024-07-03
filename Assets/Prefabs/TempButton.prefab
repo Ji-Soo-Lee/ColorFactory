@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3578599691266800345}
   - component: {fileID: 4869079929038955885}
   m_Layer: 0
-  m_Name: TestButton
+  m_Name: TempButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
