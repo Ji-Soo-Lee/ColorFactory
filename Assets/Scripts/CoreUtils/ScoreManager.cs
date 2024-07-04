@@ -13,7 +13,7 @@ public class ScoreManager : MonoBehaviour
     }
 
     // Initialize Score
-    protected virtual void Initialize()
+    public virtual void Initialize()
     {
         currentScore = 0;
     }
@@ -51,7 +51,7 @@ public class ScoreManager : MonoBehaviour
     }
 
     // Get Score in String
-    public virtual string GetScoreAsString()
+    public string GetScoreAsString()
     {
         return currentScore.ToString();
     }

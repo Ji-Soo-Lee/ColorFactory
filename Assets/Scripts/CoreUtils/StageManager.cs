@@ -9,7 +9,8 @@ public class StageManager : MonoBehaviour
     public int[] stageScores;               // Current score for each stage
 
     private int currentStage = 0;           // Index of current stage
-    private TimerManager timerManager;      // Timer Manager
+    protected TimerManager timerManager;      // Timer Manager
+    protected ScoreManager scoreManager;      // Score Manager
     private bool isStageActive = false;     // Status of stage (active or not)
 
     protected virtual void Start()
@@ -20,11 +21,21 @@ public class StageManager : MonoBehaviour
             return;
         }
 
-        timerManager = gameObject.AddComponent<TimerManager>();
+        InitializeTimerManager();
+        InitializeScoreManager();
 
         StartStage(0);  // Start first stage
     }
 
+    protected virtual void InitializeScoreManager()
+    {
+        scoreManager = gameObject.AddComponent<ScoreManager>();
+    }
+
+    protected virtual void InitializeTimerManager()
+    {
+        timerManager = gameObject.AddComponent<TimerManager>();
+    }
 
     protected virtual void Update()
     {
@@ -56,7 +67,8 @@ public class StageManager : MonoBehaviour
 
         // Initialize
         InitializeGameElements();
-
+        
+        scoreManager.Initialize();
         timerManager.StartTimer();
 
         Debug.Log("Stage " + (currentStage + 1) + "started.");
@@ -65,10 +77,12 @@ public class StageManager : MonoBehaviour
     protected virtual void EndStage()
     {
         isStageActive = false;
+        timerManager.PauseTimer();
 
         // Score Calculation
-        int score = CalculateScore();
-        Debug.Log("Stage " + (currentStage + 1) + "ended. Score: " + score);
+        CalculateFinalScore();
+        Debug.Log("Stage " + (currentStage + 1) + "ended.");
+        Debug.Log("Total Score: " + scoreManager.GetScoreAsString());
 
         if (currentStage < totalStages - 1)
         {
@@ -87,10 +101,11 @@ public class StageManager : MonoBehaviour
         // Initialize logic (ex: Player location initialize, Color initialize etc.)
     }
 
-    protected virtual int CalculateScore()
+    protected virtual void CalculateFinalScore()
     {
         // Score Calculation logic (ex: Remaining time, Color sync rate etc.)
-        return stageScores[currentStage];
+        float remainingTime = timerManager.GetTimerValue();
+        scoreManager.OnStageClear(remainingTime);
     }
 
     protected virtual void EndGame()
