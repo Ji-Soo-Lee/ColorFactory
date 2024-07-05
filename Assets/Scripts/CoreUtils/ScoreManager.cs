@@ -6,7 +6,7 @@ public class ScoreManager : MonoBehaviour
 {
     protected int currentScore;      // Current Score
 
-    protected virtual void Start()
+    protected void Start()
     {
         // Initialize Current Score
         Initialize();
