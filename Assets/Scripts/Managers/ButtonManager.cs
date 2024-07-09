@@ -34,7 +34,6 @@ public class ButtonManager : MonoBehaviour
 
         buttonColorLength = buttonColors.Count;
         colorThreshold = maxClicks / buttonColorLength;
-        Debug.Log(colorThreshold);
 
         buttonSprite.color = Color.HSVToRGB(currentHSV.x, currentHSV.y, currentHSV.z);
         clickButton.onClick.AddListener(OnClickButton);
@@ -89,7 +88,6 @@ public class ButtonManager : MonoBehaviour
             currentClickNum -= maxClicks;
         }
         
-        Debug.Log(colorThreshold);
         itv = (int) Math.Floor(clickNum / colorThreshold);
         targetHSV = Vector3.Slerp(buttonColors[itv % buttonColorLength], buttonColors[(itv + 1) % buttonColorLength], ((float) (clickNum % colorThreshold)) / colorThreshold);
 

@@ -710,11 +710,7 @@ MonoBehaviour:
   clickNum: 0
   clickButton: {fileID: 1428207346}
   buttonSprite: {fileID: 0}
-  buttonColors:
-  - {r: 1, g: 0.7216981, b: 0.83389795, a: 1}
-  - {r: 0.95251435, g: 0.72156864, b: 1, a: 1}
-  - {r: 0.72156864, g: 0.7519043, b: 1, a: 1}
-  - {r: 0.72156864, g: 0.96931005, b: 1, a: 1}
+  maxClicks: 24
 --- !u!114 &1428207346
 MonoBehaviour:
   m_ObjectHideFlags: 0
