@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +10,8 @@ public class ButtonManager : MonoBehaviour
     public Button clickButton;
     public Image buttonSprite;
     [SerializeField] private int maxClicks = 24;
+    [SerializeField] private int maxCycle = 4;
+    private List<Vector3> worldColors = new List<Vector3>();
     private List<Vector3> buttonColors = new List<Vector3>();
     private Vector3 targetHSV;
     private Vector3 currentHSV;
@@ -18,15 +20,20 @@ public class ButtonManager : MonoBehaviour
     private float colorThreshold;
     private int itv;
     private int currentClickNum;
+    private int rewardIdx;
 
     void Awake()
     {   
         clickNum = 0;
 
-        buttonColors.Add(new Vector3((float) 0/360, 0.53f, 0.93f));
-        buttonColors.Add(new Vector3((float) 90/360, 0.21f, 0.91f));
-        buttonColors.Add(new Vector3((float) 180/360, 0.11f, 0.95f));
-        buttonColors.Add(new Vector3((float) 270/360, 0.31f, 0.95f));
+        worldColors.Add(new Vector3((float) 0/360, 0.6f, 0.93f));
+        worldColors.Add(new Vector3((float) 90/360, 0.6f, 0.91f));
+        worldColors.Add(new Vector3((float) 180/360, 0.6f, 0.95f));
+        worldColors.Add(new Vector3((float) 270/360, 0.6f, 0.95f));
+
+        for (int i = 0; i < worldColors.Count; i++) {
+            buttonColors.Add(new Vector3(worldColors[i].x, worldColors[i].y / maxCycle, worldColors[i].z));
+        }
 
         currentHSV = buttonColors[0];
         targetHSV = currentHSV;
@@ -45,12 +52,25 @@ public class ButtonManager : MonoBehaviour
         currentClickNum++;
 
         if (currentClickNum >= maxClicks) {
-            Debug.Log(clickNum);
-            Debug.Log("REWARD!!!");
+            // Debug.Log(clickNum);
             currentClickNum -= maxClicks;
+
+            // TODO : need to fix
+            do {
+                rewardIdx = Random.Range(0, buttonColorLength);
+            } while(buttonColors[rewardIdx].y == worldColors[rewardIdx].y);
+
+            Debug.Log(rewardIdx);
+            
+            buttonColors[rewardIdx] = new Vector3(buttonColors[rewardIdx].x, buttonColors[rewardIdx].y + worldColors[rewardIdx].y / maxCycle, buttonColors[rewardIdx].z);
+
+            if (Enumerable.SequenceEqual(buttonColors, worldColors)) {
+                Debug.Log("You win!");
+                clickButton.interactable = false;
+            }
         }
         
-        itv = (int) Math.Floor(clickNum / colorThreshold);
+        itv = (int) Mathf.Floor(clickNum / colorThreshold);
         targetHSV = Vector3.Slerp(buttonColors[itv % buttonColorLength], buttonColors[(itv + 1) % buttonColorLength], ((float) (clickNum % colorThreshold)) / colorThreshold);
         
         StopCoroutine("ChangeColor"); // Stop the current color transition coroutine if running
@@ -84,11 +104,10 @@ public class ButtonManager : MonoBehaviour
 
         if (currentClickNum >= maxClicks) {
             Debug.Log(clickNum);
-            Debug.Log("REWARD!!!");
             currentClickNum -= maxClicks;
         }
         
-        itv = (int) Math.Floor(clickNum / colorThreshold);
+        itv = (int) Mathf.Floor(clickNum / colorThreshold);
         targetHSV = Vector3.Slerp(buttonColors[itv % buttonColorLength], buttonColors[(itv + 1) % buttonColorLength], ((float) (clickNum % colorThreshold)) / colorThreshold);
 
         StopCoroutine("ChangeColor"); // Stop the current color transition coroutine if running
