@@ -31,7 +31,7 @@ public class ProblemGenerator : MonoBehaviour
         {//우선 블록들을 설치하고, 무작위 색을 배정한다.
             for(int j=0; j<this.column; j++)
             {
-                Vector3 position = new Vector3(-1 + 2 * j, 1 - 2 * i, 0);
+                Vector3 position = new Vector3((-0.5f * (this.column - 1)) + j, (0.5f * (this.row - 1)) - i, 0);
                 GameObject block= Instantiate(this.blockPrefab, position, Quaternion.identity);
                 int x = Random.Range(1, kind + 1);
                 block.GetComponent<Block>().assign_color(x, game.color[x]);
