@@ -10,11 +10,14 @@ public class Block : MonoBehaviour
     {
         this.game = GameManager.game;
     }
-    public void assign_color(int x, Material m)
+    public void assign_color(int x, Material m, bool apply)
     {
-        this.answer = x;
         Renderer renderer = gameObject.GetComponent<Renderer>();
         renderer.material = m;
+        if(apply==true)
+        {
+            this.answer = x;
+        }
     }
     void OnMouseDown()
     {
