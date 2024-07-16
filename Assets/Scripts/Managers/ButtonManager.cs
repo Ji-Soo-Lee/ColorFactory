@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class ButtonManager : MonoBehaviour
+public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public int clickNum;
     public Button clickButton;
     public Image buttonSprite;
+    public Image backgroundSprite;
     [SerializeField] private int maxClicks = 24;
     [SerializeField] private int maxCycle = 4;
-    private List<Vector3> worldColors = new List<Vector3>();
-    private List<Vector3> buttonColors = new List<Vector3>();
-    private Vector3 targetHSV;
-    private Vector3 currentHSV;
-    private float colorTransitionDuration = 1.0f; // Duration in seconds over which color change occurs
+    [SerializeField] private List<Color> worldColors = new List<Color>();
+    [SerializeField] private List<Sprite> backgrounds = new List<Sprite>();
+    private List<Color> buttonColors = new List<Color>();
+    private Color targetColor;
+    private Color currentColor;
+    [SerializeField] private float colorTransitionDuration = 1.0f; // Duration in seconds over which color change occurs
     private int buttonColorLength;
     private float colorThreshold;
     private int itv;
@@ -26,24 +29,21 @@ public class ButtonManager : MonoBehaviour
     {   
         clickNum = 0;
 
-        worldColors.Add(new Vector3((float) 0/360, 0.6f, 0.93f));
-        worldColors.Add(new Vector3((float) 90/360, 0.6f, 0.91f));
-        worldColors.Add(new Vector3((float) 180/360, 0.6f, 0.95f));
-        worldColors.Add(new Vector3((float) 270/360, 0.6f, 0.95f));
-
         for (int i = 0; i < worldColors.Count; i++) {
-            buttonColors.Add(new Vector3(worldColors[i].x, worldColors[i].y / maxCycle, worldColors[i].z));
+            buttonColors.Add(new Color(worldColors[i].r, worldColors[i].g, worldColors[i].b, worldColors[i].a / maxCycle));
         }
 
-        currentHSV = buttonColors[0];
-        targetHSV = currentHSV;
+        currentColor = buttonColors[0];
+        targetColor = currentColor;
         buttonSprite = clickButton.GetComponent<Image>();
 
         buttonColorLength = buttonColors.Count;
         colorThreshold = maxClicks / buttonColorLength;
 
-        buttonSprite.color = Color.HSVToRGB(currentHSV.x, currentHSV.y, currentHSV.z);
+        buttonSprite.color = currentColor;
         clickButton.onClick.AddListener(OnClickButton);
+
+        backgroundSprite.sprite = backgrounds[0];
     }
 
     void OnClickButton()
@@ -58,11 +58,11 @@ public class ButtonManager : MonoBehaviour
             // TODO : need to fix
             do {
                 rewardIdx = Random.Range(0, buttonColorLength);
-            } while(buttonColors[rewardIdx].y == worldColors[rewardIdx].y);
+            } while(buttonColors[rewardIdx].a == worldColors[rewardIdx].a);
 
             Debug.Log(rewardIdx);
             
-            buttonColors[rewardIdx] = new Vector3(buttonColors[rewardIdx].x, buttonColors[rewardIdx].y + worldColors[rewardIdx].y / maxCycle, buttonColors[rewardIdx].z);
+            buttonColors[rewardIdx] = new Color(buttonColors[rewardIdx].r, buttonColors[rewardIdx].g, buttonColors[rewardIdx].b, buttonColors[rewardIdx].a + worldColors[rewardIdx].a / maxCycle);
 
             if (Enumerable.SequenceEqual(buttonColors, worldColors)) {
                 Debug.Log("You win!");
@@ -71,14 +71,14 @@ public class ButtonManager : MonoBehaviour
         }
         
         itv = (int) Mathf.Floor(clickNum / colorThreshold);
-        targetHSV = Vector3.Slerp(buttonColors[itv % buttonColorLength], buttonColors[(itv + 1) % buttonColorLength], ((float) (clickNum % colorThreshold)) / colorThreshold);
+        targetColor = Color.Lerp(buttonColors[itv % buttonColorLength], buttonColors[(itv + 1) % buttonColorLength], ((float) (clickNum % colorThreshold)) / colorThreshold);
         
         StopCoroutine("ChangeColor"); // Stop the current color transition coroutine if running
         StartCoroutine("ChangeColor"); // Start the color transition coroutine
 
         // Continuously update the color to smoothly transition to the target color
-        currentHSV = Vector3.Slerp(currentHSV, targetHSV, Time.deltaTime / colorTransitionDuration);
-        buttonSprite.color = Color.HSVToRGB(currentHSV.x, currentHSV.y, currentHSV.z);
+        currentColor = Color.Lerp(currentColor, targetColor, Time.deltaTime / colorTransitionDuration);
+        buttonSprite.color = currentColor;
     }
 
     IEnumerator ChangeColor()
@@ -87,13 +87,23 @@ public class ButtonManager : MonoBehaviour
 
         while (elapsedTime < colorTransitionDuration)
         {
-            currentHSV = Vector3.Slerp(currentHSV, targetHSV, elapsedTime / colorTransitionDuration);
-            buttonSprite.color = Color.HSVToRGB(currentHSV.x, currentHSV.y, currentHSV.z);
+            currentColor = Color.Lerp(currentColor, targetColor, elapsedTime / colorTransitionDuration);
+            buttonSprite.color = currentColor;
             elapsedTime += Time.deltaTime;
             yield return null;
         }
             
-        currentHSV = targetHSV; // Ensure the final color is set
+        currentColor = targetColor; // Ensure the final color is set
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        backgroundSprite.sprite = backgrounds[1];
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        backgroundSprite.sprite = backgrounds[0];
     }
 
     // TODO : need to fix
@@ -108,7 +118,7 @@ public class ButtonManager : MonoBehaviour
         }
         
         itv = (int) Mathf.Floor(clickNum / colorThreshold);
-        targetHSV = Vector3.Slerp(buttonColors[itv % buttonColorLength], buttonColors[(itv + 1) % buttonColorLength], ((float) (clickNum % colorThreshold)) / colorThreshold);
+        targetColor = Color.Lerp(buttonColors[itv % buttonColorLength], buttonColors[(itv + 1) % buttonColorLength], ((float) (clickNum % colorThreshold)) / colorThreshold);
 
         StopCoroutine("ChangeColor"); // Stop the current color transition coroutine if running
         StartCoroutine("ChangeColor"); // Start the color transition coroutine
