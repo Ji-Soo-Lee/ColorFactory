@@ -1,31 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TanmakPlayer : MonoBehaviour
 {
     public float speed = 5f;
+    [HideInInspector]
+    public bool isMoving;
     Vector3 pos;
+    Vector3 direction;
+
+    // set direction of character to move
+    public void SetDirection(Vector3 dir)
+    {
+        if (direction == null) return;
+        if (dir.z != 0.0f) dir.z = 0.0f;
+        direction = dir;
+        isMoving = true;
+    }
+
+    // stops moving
+    public void Stop()
+    {
+        direction = new Vector3(0.0f, 0.0f, 0.0f);
+        isMoving = false;
+    }
+
+    void Start()
+    {
+        Stop();
+    }
 
     void Update()
     {
         pos = transform.position;
 
-        if (pos.x > -10 && Input.GetKey(KeyCode.LeftArrow) || Input.GetKey("a"))
+        // stop for boundary
+        if ((pos.x <= -10 && direction.x < 0.0f) || (pos.x >= 10 && direction.x > 0.0f))
         {
-            transform.Translate(-speed * Time.deltaTime, 0, 0);
+            direction.x = 0.0f;
         }
-        else if (pos.x < 10 && Input.GetKey(KeyCode.RightArrow) || Input.GetKey("d"))
+        if ((pos.y <= -10 && direction.y < 0.0f) || (pos.y >= 10 && direction.y > 0.0f))
         {
-            transform.Translate(speed * Time.deltaTime, 0, 0);
+            direction.y = 0.0f;
         }
-        else if (pos.y < 10 && Input.GetKey(KeyCode.UpArrow) || Input.GetKey("w"))
+
+        if (direction.magnitude > 1.0f)
         {
-            transform.Translate(0, speed * Time.deltaTime, 0);
+            direction = direction.normalized;
         }
-        else if (pos.y > -10 && Input.GetKey(KeyCode.DownArrow) || Input.GetKey("s"))
-        {
-            transform.Translate(0, -speed * Time.deltaTime, 0);
-        }
+        // move
+        transform.Translate(direction * speed * Time.deltaTime);
     }
 }
