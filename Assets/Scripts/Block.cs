@@ -5,19 +5,24 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
     GameManager game;
+    public Material blank;//Èò»ö(ºóÄ­)
     int answer = 0, selected = 0;
     void Start()
     {
         this.game = GameManager.game;
     }
-    public void assign_color(int x, Material m, bool apply)
-    {
+    public IEnumerator assign_color(int x, Material m)
+    {//ºí·ÏÀÇ »ö º¸¿©ÁÖ±â. 3ÃÊ ÈÄ »öÀ» ¼û±ä´Ù.
         Renderer renderer = gameObject.GetComponent<Renderer>();
         renderer.material = m;
-        if(apply==true)
-        {
-            this.answer = x;
-        }
+        this.answer = x;
+        yield return new WaitForSeconds(3.0f);
+        hide_color();
+    }
+    void hide_color()
+    {//»ö ¼û±â±â
+        Renderer renderer = gameObject.GetComponent<Renderer>();
+        renderer.material = this.blank;
     }
     void OnMouseDown()
     {

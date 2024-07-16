@@ -30,40 +30,19 @@ public class GameManager : MonoBehaviour
     {
         this.generator = GameObject.Find("ProblemGenerator").GetComponent<ProblemGenerator>();
     }
-    public void judge_answer()
-    {//사용자가 입력한 답 평가하기
-        if(this.playable==true)
+    public void apply_result(int correct)
+    {//점수 반영하기
+        this.current += 1;
+        this.score += correct;//맞은 것 하나당 1점
+        this.bonus = (this.bonus < correct ? correct : this.bonus);//최대 기억 수는 수에 따라 보너스 점수를 준다.
+        this.scoreboard.GetComponent<TextMeshProUGUI>().text = this.score.ToString();
+        if (this.current < TOTAL)
+        {//다음 문제 내기
+            this.generator.InitiateProblem();
+        }
+        else
         {
-            this.current += 1; this.playable = false;
-            int cnt = 0;
-            bool wrong = false;
-            GameObject[] allBlocks = GameObject.FindGameObjectsWithTag("Block");
-            foreach (GameObject block in allBlocks)
-            {//각 블록별로 색이 바르게 칠해졌는지 확인한다.
-                bool result = block.GetComponent<Block>().verdict();
-                if (result == true)
-                {//맞은 것 하나당 1점
-                    this.score += 1; cnt += 1;
-                }
-                if(result==false)
-                {//틀린 상자가 있으면 표시
-                    wrong = true;
-                }
-            }
-            this.bonus = (this.bonus < cnt ? cnt : this.bonus);//최대 기억 수를 저장한다.
-            this.scoreboard.GetComponent<TextMeshProUGUI>().text = this.score.ToString();
-            if (wrong == false)
-            {//모두 정답일 경우 난이도를 올린다.
-                this.generator.difficulty_increase();
-            }
-            if(this.current<TOTAL)
-            {//다음 문제 내기
-                this.generator.reset_problem();
-            }
-            else
-            {
-                Debug.Log("게임이 끝났습니다.");
-            }
+            Debug.Log("게임이 끝났습니다.");
         }
     }
 }

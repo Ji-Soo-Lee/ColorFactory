@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2435926037164927836}
   m_Layer: 0
   m_Name: Block
-  m_TagString: Block
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,3 +118,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b9c8938ed51f8a4cb17dbedadbbd326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blank: {fileID: 2100000, guid: 6fde7e65b9873434db477e08fdd66b82, type: 2}
