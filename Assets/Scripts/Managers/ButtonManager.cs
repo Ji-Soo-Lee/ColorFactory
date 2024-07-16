@@ -11,6 +11,7 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public Button clickButton;
     public Image buttonSprite;
     public Image backgroundSprite;
+    public List<Robot> robots = new List<Robot>();
     [SerializeField] private int maxClicks = 24;
     [SerializeField] private int maxCycle = 4;
     [SerializeField] private List<Color> worldColors = new List<Color>();
@@ -19,6 +20,7 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private Color targetColor;
     private Color currentColor;
     [SerializeField] private float colorTransitionDuration = 1.0f; // Duration in seconds over which color change occurs
+    [SerializeField] private float colorTransitionDurationRobot = 5.0f;
     private int buttonColorLength;
     private float colorThreshold;
     private int itv;
@@ -54,38 +56,25 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (currentClickNum >= maxClicks) {
             // Debug.Log(clickNum);
             currentClickNum -= maxClicks;
-
-            // TODO : need to fix
-            do {
-                rewardIdx = Random.Range(0, buttonColorLength);
-            } while(buttonColors[rewardIdx].a == worldColors[rewardIdx].a);
-
-            Debug.Log(rewardIdx);
-            
-            buttonColors[rewardIdx] = new Color(buttonColors[rewardIdx].r, buttonColors[rewardIdx].g, buttonColors[rewardIdx].b, buttonColors[rewardIdx].a + worldColors[rewardIdx].a / maxCycle);
-
-            if (Enumerable.SequenceEqual(buttonColors, worldColors)) {
-                Debug.Log("You win!");
-                clickButton.interactable = false;
-            }
+            GetReward();
         }
         
         itv = (int) Mathf.Floor(clickNum / colorThreshold);
         targetColor = Color.Lerp(buttonColors[itv % buttonColorLength], buttonColors[(itv + 1) % buttonColorLength], ((float) (clickNum % colorThreshold)) / colorThreshold);
         
-        StopCoroutine("ChangeColor"); // Stop the current color transition coroutine if running
-        StartCoroutine("ChangeColor"); // Start the color transition coroutine
+        StopCoroutine(ChangeColor(colorTransitionDuration)); // Stop the current color transition coroutine if running
+        StartCoroutine(ChangeColor(colorTransitionDuration)); // Start the color transition coroutine
 
         // Continuously update the color to smoothly transition to the target color
         currentColor = Color.Lerp(currentColor, targetColor, Time.deltaTime / colorTransitionDuration);
         buttonSprite.color = currentColor;
     }
 
-    IEnumerator ChangeColor()
+    IEnumerator ChangeColor(float transitionDuration)
     {
         float elapsedTime = 0;
 
-        while (elapsedTime < colorTransitionDuration)
+        while (elapsedTime < transitionDuration)
         {
             currentColor = Color.Lerp(currentColor, targetColor, elapsedTime / colorTransitionDuration);
             buttonSprite.color = currentColor;
@@ -106,22 +95,45 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         backgroundSprite.sprite = backgrounds[0];
     }
 
-    // TODO : need to fix
-    public void Click(int n)
+    public void RobotClick(int n)
     {
+        clickButton.interactable = false;
+        
         clickNum += n;
         currentClickNum += n;
 
         if (currentClickNum >= maxClicks) {
-            Debug.Log(clickNum);
             currentClickNum -= maxClicks;
+            GetReward();
         }
         
         itv = (int) Mathf.Floor(clickNum / colorThreshold);
         targetColor = Color.Lerp(buttonColors[itv % buttonColorLength], buttonColors[(itv + 1) % buttonColorLength], ((float) (clickNum % colorThreshold)) / colorThreshold);
 
-        StopCoroutine("ChangeColor"); // Stop the current color transition coroutine if running
-        StartCoroutine("ChangeColor"); // Start the color transition coroutine
+        StopCoroutine(ChangeColor(colorTransitionDurationRobot)); // Stop the current color transition coroutine if running
+        StartCoroutine(ChangeColor(colorTransitionDurationRobot)); // Start the color transition coroutine
+
+        clickButton.interactable = true;
+    }
+
+    private void GetReward()
+    {
+        // TODO : need to fix
+        do {
+            rewardIdx = Random.Range(0, buttonColorLength);
+        } while(buttonColors[rewardIdx].a == worldColors[rewardIdx].a);
+
+        Debug.Log(rewardIdx);
+        
+        buttonColors[rewardIdx] = new Color(buttonColors[rewardIdx].r, buttonColors[rewardIdx].g, buttonColors[rewardIdx].b, buttonColors[rewardIdx].a + worldColors[rewardIdx].a / maxCycle);
+
+        if (Enumerable.SequenceEqual(buttonColors, worldColors)) {
+            Debug.Log("You win!");
+            clickButton.interactable = false;
+            for (int i = 0; i < robots.Count; i++) {
+                robots[i].robotButton.interactable = false;
+            }
+        }
     }
 }
 

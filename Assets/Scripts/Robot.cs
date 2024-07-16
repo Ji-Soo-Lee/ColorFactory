@@ -1,28 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // TODO : need to fix
 public class Robot : MonoBehaviour
 {
-    [SerializeField] float clickPeriod = 1f;
+    public Button robotButton;
     [SerializeField] int clickAmount = 10;
-    WaitForSeconds wait;
-
     [SerializeField] ButtonManager buttonManager;
 
-    private void Start()
+    private void Awake()
     {
-        wait = new WaitForSeconds(clickPeriod);
-        StartCoroutine(ClickRoutine());
+        buttonManager.robots.Add(this);
+        robotButton.onClick.AddListener(OnClickButton);
     }
 
-    IEnumerator ClickRoutine()
+    void OnClickButton()
     {
-        while(false)
-        {
-            buttonManager.Click(clickAmount);
-            yield return wait;
-        }
+        buttonManager.RobotClick(clickAmount);
     }
 }
