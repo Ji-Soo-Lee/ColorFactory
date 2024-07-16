@@ -478,6 +478,7 @@ GameObject:
   - component: {fileID: 500941307}
   - component: {fileID: 500941309}
   - component: {fileID: 500941308}
+  - component: {fileID: 500941310}
   m_Layer: 5
   m_Name: Virtual Joystick
   m_TagString: Untagged
@@ -504,7 +505,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 80, y: 80}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &500941308
 MonoBehaviour:
@@ -541,6 +542,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 500941306}
   m_CullTransparentMesh: 1
+--- !u!114 &500941310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500941306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96103fc5087fa54ea93e71f71b52616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isJoystickMoving: 0
+  dir: {x: 0, y: 0, z: 0}
 --- !u!1 &713065868
 GameObject:
   m_ObjectHideFlags: 0
@@ -688,7 +703,7 @@ GameObject:
   - component: {fileID: 795151219}
   - component: {fileID: 795151218}
   m_Layer: 5
-  m_Name: Stick
+  m_Name: Lever
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -999,6 +1014,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  isMoving: 0
+  playerColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!58 &1116770722
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1239,6 +1256,7 @@ GameObject:
   - component: {fileID: 1481363070}
   - component: {fileID: 1481363072}
   - component: {fileID: 1481363071}
+  - component: {fileID: 1481363073}
   m_Layer: 5
   m_Name: Interactive
   m_TagString: Untagged
@@ -1306,6 +1324,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1481363069}
   m_CullTransparentMesh: 1
+--- !u!114 &1481363073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481363069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3356683dfa2f34e94b486971cb27e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 1116770719}
+  Joystick: {fileID: 500941306}
+  isMovingKeyDown: 0
 --- !u!1 &1492020430
 GameObject:
   m_ObjectHideFlags: 0
