@@ -86,4 +86,12 @@ public class ColorUtils
     }
 
     // Todo : Return Color List w.Gradation
+
+    public bool CompareColor(Color color1, Color color2)
+    {
+        float errRange = 0.00001f;
+        return Mathf.Abs(color1.r - color2.r) < errRange &&
+            Mathf.Abs(color1.g - color2.g) < errRange &&
+            Mathf.Abs(color1.b - color2.b) < errRange;
+    }
 }
