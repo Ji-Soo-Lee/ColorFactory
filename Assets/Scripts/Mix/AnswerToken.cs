@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class AnswerToken : MonoBehaviour
 {
     public Image targetImage,btn1Image,btn2Image,btn3Image;
-    GameObject obj1;
     public int btn1Target, btn2Target, btn3Target, currentMixType;
+    public PaletteResult paletteResult;
     private float clickThreshold = 5;
     private Color color1, color2, color3;
     public void SetTargetColor(int _stage)
     {
-        currentMixType = obj1.GetComponent<PaletteResult>().mixType;
+        currentMixType = paletteResult.mixType;
         btn1Target = Random.Range(1,6);
         btn2Target = Random.Range(1,6);
         btn3Target = Random.Range(1,6);
@@ -41,7 +41,7 @@ public class AnswerToken : MonoBehaviour
     void Start()
     {
         targetImage = GetComponent<Image>();
-        obj1 = GameObject.Find("ResultImage");
+        paletteResult = GameObject.Find("ResultImage").GetComponent<PaletteResult>();
     }
 
     // Update is called once per frame
