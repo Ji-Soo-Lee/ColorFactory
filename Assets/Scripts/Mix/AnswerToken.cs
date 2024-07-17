@@ -7,15 +7,16 @@ public class AnswerToken : MonoBehaviour
 {
     public Image targetImage,btn1Image,btn2Image,btn3Image;
     GameObject obj1;
-    public int btn1Target, btn2Target, btn3Target;
-    public void SetTargetColor(int stage)
+    public int btn1Target, btn2Target, btn3Target, currentMixType;
+    private float clickThreshold = 5;
+    private Color color1, color2, color3;
+    public void SetTargetColor(int _stage)
     {
-        int currentMixType = obj1.GetComponent<PaletteResult>().mixType;
-        Color color1, color2, color3;
+        currentMixType = obj1.GetComponent<PaletteResult>().mixType;
         btn1Target = Random.Range(1,6);
         btn2Target = Random.Range(1,6);
         btn3Target = Random.Range(1,6);
-        if (stage < 2) //Determin which value will be 0
+        if (_stage < 2) //Determin which value will be 0
         {
             int tmp = Random.Range(0,3);
             if (tmp == 0) {btn1Target = 0;}
@@ -24,16 +25,16 @@ public class AnswerToken : MonoBehaviour
         }
         if (currentMixType == 0) //Additive Mixing
         {
-            color1 = btn1Image.color * (btn1Target / 5f);
-            color2 = btn2Image.color * (btn2Target / 5f);
-            color3 = btn3Image.color * (btn3Target / 5f);
+            color1 = btn1Image.color * (btn1Target / clickThreshold);
+            color2 = btn2Image.color * (btn2Target / clickThreshold);
+            color3 = btn3Image.color * (btn3Target / clickThreshold);
             targetImage.color = ColorUtils.MixLights(color1, ColorUtils.MixLights(color2, color3)); 
         }
         else //Subtractive Mixing
         {
-            color1 = Color.white - (Color.white - btn1Image.color) * btn1Target / 5f;
-            color2 = Color.white - (Color.white - btn2Image.color) * btn2Target / 5f;
-            color3 = Color.white - (Color.white - btn3Image.color) * btn3Target / 5f;
+            color1 = Color.white - (Color.white - btn1Image.color) * btn1Target / clickThreshold;
+            color2 = Color.white - (Color.white - btn2Image.color) * btn2Target / clickThreshold;
+            color3 = Color.white - (Color.white - btn3Image.color) * btn3Target / clickThreshold;
             targetImage.color = ColorUtils.MixColors(color1, ColorUtils.MixColors(color2, color3));
         }
     }
