@@ -47,7 +47,7 @@ public class ProblemGenerator : MonoBehaviour
         {//블록들을 설치한다.
             for (int j = 0; j < this.column; j++)
             {
-                Vector3 position = new Vector3((-0.5f * (this.column - 1)) + j, (0.5f * (this.row - 1)) - i, 0);
+                Vector3 position = new Vector3((-0.25f * (this.column - 1)) + j * 0.5f, (0.25f * (this.row - 1)) - i * 0.5f, 0);
                 GameObject block = Instantiate(this.blockPrefab, position, Quaternion.identity);
                 this.blocks[this.column * i + j + 1] = block.GetComponent<Block>();
             }
@@ -66,7 +66,7 @@ public class ProblemGenerator : MonoBehaviour
     {//팔레트 설치하기
         for (int i = 1; i <= this.kind; i++)
         {
-            Vector3 position = new Vector3(-4 + 2 * i, -4, 0);
+            Vector3 position = new Vector3(-2 + i, -3.5f, 0);
             GameObject palette = Instantiate(this.palettePrefab, position, Quaternion.identity);
             palette.GetComponent<Palette>().assign_color(i, game.color[i]);
         }
