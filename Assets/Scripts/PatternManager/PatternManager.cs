@@ -20,7 +20,7 @@ public class PatternManager : MonoBehaviour
 
                 if(cell1 != null && cell2 != null && cell3 != null)
                 {
-                    if(cell1.tag == cell2.tag && cell2.tag == cell3.tag)
+                    if(cell1.CompareTag(cell2.tag) && cell2.CompareTag(cell3.tag))
                     {
                         cells_Destroy.Add(cell1);
                         cells_Destroy.Add(cell2);
@@ -40,7 +40,7 @@ public class PatternManager : MonoBehaviour
 
                 if (cell1 != null && cell2 != null && cell3 != null)
                 {
-                    if (cell1.tag == cell2.tag && cell2.tag == cell3.tag)
+                    if (cell1.CompareTag(cell2.tag) && cell2.CompareTag(cell3.tag))
                     {
                         cells_Destroy.Add(cell1);
                         cells_Destroy.Add(cell2);
