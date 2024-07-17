@@ -1,10 +1,15 @@
+using System;
 using UnityEngine;
 
 public class TanmakPlayer : MonoBehaviour
 {
     public float speed = 5f;
-    [HideInInspector]
-    public bool isMoving;
+    [HideInInspector] public bool isMoving;
+    [SerializeField] private TanmakGameManager tanmakGM;
+
+    SpriteRenderer spriteRenderer;
+
+    int curColorIdx;
     Vector3 pos;
     Vector3 direction;
 
@@ -18,15 +23,46 @@ public class TanmakPlayer : MonoBehaviour
     }
 
     // stops moving
-    public void Stop()
+    public void StopMoving()
     {
         direction = new Vector3(0.0f, 0.0f, 0.0f);
         isMoving = false;
     }
 
+    public void ChangeColor()
+    {
+        curColorIdx = (curColorIdx + 1) % TanmakGameManager.colorSize;
+        spriteRenderer.color = tanmakGM.colors[curColorIdx];
+    }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.tag == "Tanmak")
+        {
+            
+            TempTanmak tanmak = collider.gameObject.GetComponent<TempTanmak>();
+            if (tanmak != null)
+            {
+                if (ColorUtils.CompareColor(tanmak.color, tanmakGM.colors[curColorIdx]))
+                {
+                    tanmakGM.ModifyScore(5);
+                }
+                else
+                {
+                    tanmakGM.ModifyScore(-10);
+                }
+            }
+        }
+    }
+
     void Start()
     {
-        Stop();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        curColorIdx = 0;
+        spriteRenderer.color = tanmakGM.colors[curColorIdx];
+
+        StopMoving();
     }
 
     void Update()
@@ -43,6 +79,7 @@ public class TanmakPlayer : MonoBehaviour
             direction.y = 0.0f;
         }
 
+        // normalize
         if (direction.magnitude > 1.0f)
         {
             direction = direction.normalized;

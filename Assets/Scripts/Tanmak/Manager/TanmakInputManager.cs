@@ -7,8 +7,14 @@ public class TanmakInputManager : MonoBehaviour
     public GameObject Joystick;
     [HideInInspector]
     public bool isMovingKeyDown;
-    
+
+    TanmakPlayer player;
     Vector3 dir;
+
+    void Start()
+    {
+        player = Player.GetComponent<TanmakPlayer>();
+    }
 
     void Update()
     {
@@ -46,15 +52,22 @@ public class TanmakInputManager : MonoBehaviour
         }
 
         // control player
-        if (Player.GetComponent<TanmakPlayer>() != null)
+        if (player != null)
         {
             if (isMovingKeyDown)
             {
-                Player.GetComponent<TanmakPlayer>().SetDirection(dir);
+                player.SetDirection(dir);
             }
-            else if (Player.GetComponent<TanmakPlayer>().isMoving)
+            else if (player.isMoving)
             {
-                Player.GetComponent<TanmakPlayer>().Stop();
+                player.StopMoving();
+            }
+
+
+            // change color if enter pressed
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                player.ChangeColor();
             }
         }
     }
