@@ -860,7 +860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72eda9ecee256484cae5619269279493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerText: {fileID: 0}
+  timerText: {fileID: 713065870}
   ScoreText: {fileID: 467407009}
 --- !u!4 &1055953859 stripped
 Transform:
@@ -1091,7 +1091,7 @@ GameObject:
   - component: {fileID: 1116770724}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
