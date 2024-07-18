@@ -22,9 +22,8 @@ public class Cell : MonoBehaviour
         transform.position = new Vector2(x, y);
     }
 
-    public void DestroyCell()
-    {
-        Destroy(gameObject);
-    }
-
+    //public void DestroyCell()
+    //{
+    //    Destroy(gameObject);
+    //}
 }
