@@ -50,9 +50,15 @@ public class PatternManager : MonoBehaviour
             }
         }
 
-        foreach(Cell cell in new HashSet<Cell>(cells_Destroy))
+        //foreach(Cell cell in new HashSet<Cell>(cells_Destroy))
+        //{
+        //    cell.DestroyCell();
+        //}
+
+        for(int i = cells_Destroy.Count - 1; i>=0; --i)
         {
-            cell.DestroyCell();
+            Destroy(cells_Destroy[i]);
+            cells_Destroy.Clear();
         }
 
         ApplyGravity();
