@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Tanmak
+  - Block
+  - Palette
   layers:
   - Default
   - TransparentFX
