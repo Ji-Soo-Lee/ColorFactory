@@ -5,6 +5,15 @@ public class TempTanmak : MonoBehaviour
     [HideInInspector]
     public Color color;
 
+    // Destroy bullet if touched Tanmak Border
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("TanmakBorder"))
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
     
