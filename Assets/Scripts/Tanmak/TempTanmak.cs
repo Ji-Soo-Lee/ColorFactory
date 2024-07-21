@@ -4,10 +4,12 @@ public class TempTanmak : MonoBehaviour
 {
     [HideInInspector]
     public Color color;
-    
+
     void Start()
     {
+    
         var tgmobj = GameObject.Find("Tanmak Game Manager Object");
+
         if (tgmobj != null)
         {
             // set initial tanmak color
