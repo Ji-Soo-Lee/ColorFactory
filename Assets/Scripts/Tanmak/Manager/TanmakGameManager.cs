@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,7 +27,8 @@ public class TanmakGameManager : MonoBehaviour
 
     void Start()
     {
-        timerManager.SetupTimer(100.0f, null);
+        timerManager.SetupTimer(50.0f, null);
+        timerManager.SetupClk(1, () => ModifyScore(5));
         timerManager.StartTimer();
     }
 
