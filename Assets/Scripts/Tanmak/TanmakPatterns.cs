@@ -5,15 +5,16 @@ using UnityEngine;
 public class TanmakConstruct : MonoBehaviour
 {
     public GameObject bulletPrefab; // bullet prefab
-    public float fireRate = 0.1f; // bullet fire time rate (s)
+    public float fireRate = 1f; // bullet fire time rate (s)
     public float bulletSpeed = 5f; // bullet speed (m/s)
+    public int bulletCount = 10; // bullet count
 
     void Start()
     {
-        StartCoroutine(FireBullets(50)); // It can be changed
+        StartCoroutine(FireBullets()); // It can be changed
     }
 
-    IEnumerator FireBullets(int bulletCount)
+    IEnumerator FireBullets()
     {
         while (true)
         {
@@ -25,8 +26,7 @@ public class TanmakConstruct : MonoBehaviour
                 bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
             }
 
+            yield return new WaitForSeconds(fireRate);
         }
-
-        yield return new WaitForSeconds(fireRate);
     }
 }
