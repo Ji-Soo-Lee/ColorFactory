@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator Gameover()
     {//한 문제를 만드는 사이클
-        Debug.Log("게임이 끝났습니다.");
         PlayerPrefs.SetInt("score", this.score);
         PlayerPrefs.SetInt("bonus", this.bonus);
         yield return new WaitForSeconds(3.0f);

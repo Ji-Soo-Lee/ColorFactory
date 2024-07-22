@@ -39,7 +39,7 @@ public class ProblemGenerator : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         show_problem();
         yield return new WaitForSeconds(3.0f);
-        show_palette();
+        game.playable = true;
     }
     void prepare_problem()
     {//블록 준비하기
@@ -61,16 +61,6 @@ public class ProblemGenerator : MonoBehaviour
             int x = Random.Range(1, this.kind + 1);
             StartCoroutine(blocks[i].assign_color(x, game.color[x]));
         }
-    }
-    void show_palette()
-    {//팔레트 설치하기
-        for (int i = 1; i <= this.kind; i++)
-        {
-            Vector3 position = new Vector3(-2 + i, -3.5f, 0);
-            GameObject palette = Instantiate(this.palettePrefab, position, Quaternion.identity);
-            palette.GetComponent<Palette>().assign_color(i, game.color[i]);
-        }
-        game.playable = true;
     }
     void difficulty_increase()
     {
