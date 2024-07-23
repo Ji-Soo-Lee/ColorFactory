@@ -15,7 +15,6 @@ public class PaletteResult : MonoBehaviour
     private Action ActionOnClick;
 
     private float clickThreshold = 5;
-    private int stage = 0;
 
     public void AdditiveMixing()
     {
@@ -84,6 +83,14 @@ public class PaletteResult : MonoBehaviour
         }
     }
 
+    public void ClickReset()
+    {
+        AClick = 0;
+        BClick = 0;
+        CClick = 0;
+        ActionOnClick?.Invoke();
+    }
+
     void Start()
     {
         answerToken = GameObject.Find("TargetImage").GetComponent<AnswerToken>();
@@ -114,34 +121,7 @@ public class PaletteResult : MonoBehaviour
         });
 
         btnReset.onClick.AddListener(() => {
-            AClick = 0;
-            BClick = 0;
-            CClick = 0;
-            ActionOnClick?.Invoke();
+            ClickReset();
         });
-
-        btnSubmission.onClick.AddListener(() =>
-        {
-            if (resultImage.color == targetImage.color)
-            {
-                Debug.Log("Correct");
-                stage++;
-                SetPaletteColor(stage);
-                SetOnClickAction(mixType);
-                answerToken.SetTargetColor(stage);
-                AClick = 0;
-                BClick = 0;
-                CClick = 0;
-                ActionOnClick?.Invoke();
-            }
-            else
-            {
-                Debug.Log("Wrong");
-            }
-        });
-
-        SetPaletteColor(stage);
-        SetOnClickAction(mixType);
-        answerToken.SetTargetColor(stage);
     }
 }
