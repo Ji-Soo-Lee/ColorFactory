@@ -3,17 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TanmakGameManager : MonoBehaviour
+public class TanmakGameManager : MiniGameManager
 {
     public TimerManager timerManager;
     public ScoreManager scoreManager;
     public TanmakUIManager TUIManager;
+    public DummySceneController sceneController;
 
     public Color[] colors;
     public static int colorSize = 3;
 
+    // Modify Tanmak Mini Game Score
     public void ModifyScore(int score)
     {
+        if (CheckPause()) return;
+
         if (score >= 0)
         {
             scoreManager.AddScore(score);
@@ -25,13 +29,31 @@ public class TanmakGameManager : MonoBehaviour
         TUIManager.SetScoreText(int.Parse(scoreManager.GetScoreAsString()));
     }
 
-    void EndGame()
+    public override void Pause()
+    {
+        base.Pause();
+        timerManager.PauseStopwatch();
+    }
+
+    public override void Resume()
+    {
+        base.Resume();
+        timerManager.StartStopwatch();
+    }
+
+    public void EndGame()
     {
         UnityEngine.Debug.Log("End Game");
+        Pause();
+        // End Logic Needed
+        // Save & Show Score
+        // Small Menu?
+        sceneController.LoadScene("Jisoo");
     }
 
     void Start()
     {
+        // Setup Stopwatch
         timerManager.ResetStopwatch();
         timerManager.SetupStopwatchTik(1, () => ModifyScore(5));
         timerManager.StartStopwatch();
@@ -48,8 +70,11 @@ public class TanmakGameManager : MonoBehaviour
         }
     }
 
-    void Update()
+    protected override void BeforePauseUpdate() { }
+
+    protected override void AfterPauseUpdate()
     {
+        // Set Timer UI
         TUIManager.SetTimerText(timerManager.GetStopwatchValue());
     }
 }

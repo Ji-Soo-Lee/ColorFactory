@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TanmakTestScene.unity
     guid: dc5e5392f689c48459b135d134314fd4
+  - enabled: 1
+    path: Assets/Scenes/Jisoo.unity
+    guid: 504cbf9b980b24f918b01863dae5ed12
   m_configObjects: {}

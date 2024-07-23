@@ -16,6 +16,8 @@ public class TanmakPlayer : MonoBehaviour
     // set direction of character to move
     public void SetDirection(Vector3 dir)
     {
+        if (tanmakGM.CheckPause()) return;
+
         if (direction == null) return;
         if (dir.z != 0.0f) dir.z = 0.0f;
         direction = dir;
@@ -25,18 +27,24 @@ public class TanmakPlayer : MonoBehaviour
     // stops moving
     public void StopMoving()
     {
+        if (tanmakGM.CheckPause()) return;
+
         direction = new Vector3(0.0f, 0.0f, 0.0f);
         isMoving = false;
     }
 
     public void ChangeColor()
     {
+        if (tanmakGM.CheckPause()) return;
+
         curColorIdx = (curColorIdx + 1) % TanmakGameManager.colorSize;
         spriteRenderer.color = tanmakGM.colors[curColorIdx];
     }
 
     void OnTriggerEnter2D(Collider2D collider)
     {
+        if (tanmakGM.CheckPause()) return;
+
         if (collider.tag == "Tanmak")
         {
             
@@ -50,6 +58,7 @@ public class TanmakPlayer : MonoBehaviour
                 else
                 {
                     tanmakGM.ModifyScore(-10);
+                    // tanmakGM.EndGame(); // Need Short Invincible Buff
                 }
             }
         }
@@ -67,6 +76,8 @@ public class TanmakPlayer : MonoBehaviour
 
     void Update()
     {
+        if (tanmakGM.CheckPause()) return;
+
         pos = transform.position;
 
         // stop for boundary
