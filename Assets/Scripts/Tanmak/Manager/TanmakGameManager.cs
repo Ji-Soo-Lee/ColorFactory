@@ -25,11 +25,16 @@ public class TanmakGameManager : MonoBehaviour
         TUIManager.SetScoreText(int.Parse(scoreManager.GetScoreAsString()));
     }
 
+    void EndGame()
+    {
+        UnityEngine.Debug.Log("End Game");
+    }
+
     void Start()
     {
-        timerManager.SetupTimer(50.0f, null);
-        timerManager.SetupClk(1, () => ModifyScore(5));
-        timerManager.StartTimer();
+        timerManager.ResetStopwatch();
+        timerManager.SetupStopwatchTik(1, () => ModifyScore(5));
+        timerManager.StartStopwatch();
     }
 
     void OnEnable()
@@ -45,6 +50,6 @@ public class TanmakGameManager : MonoBehaviour
 
     void Update()
     {
-        TUIManager.SetTimerText(timerManager.GetTimerValue());
+        TUIManager.SetTimerText(timerManager.GetStopwatchValue());
     }
 }

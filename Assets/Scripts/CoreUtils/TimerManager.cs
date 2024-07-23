@@ -10,11 +10,17 @@ public class TimerManager : MonoBehaviour
     protected float timerDuration;       // Duration of Timer
     protected float timer;               // Current Timer value
     protected bool isTimerRunning;       // Timer status
-    protected int timerClk;              // Timer Clock for callback
-    protected int timerClkStride;        // Stride for Clk
+    protected int timerTik;              // Timer Tik for callback
+    protected int timerTikStride;        // Stride for Tik
+
+    protected float stopwatchTime;       // Current Stopwatch Time Value
+    protected bool isStopwatchRunning;   // Stopwatch Status
+    protected int stopwatchTik;          // Timer Tik for callback
+    protected int stopwatchTikStride;    // Stride for Tik
 
     protected Action timerHandler;       // Timer handler
-    protected Action timerClkHandler;
+    protected Action timerTikHandler;    // Timer Tik handler
+    protected Action stopwatchTikHandler;// Stopwatch Tik handler
 
     // Configure Timer
     // Input : duration(sec), handler(method)
@@ -25,11 +31,22 @@ public class TimerManager : MonoBehaviour
         ResetTimer();
     }
 
-    public void SetupClk(int stride, Action handler)
+    // Configure Timer Tik
+    // Input : stride(sec), handler(method)
+    public void SetupTimerTik(int stride, Action handler)
     {
-        timerClkStride = stride;
-        timerClk = (int)timer;
-        timerClkHandler = handler;
+        timerTikStride = stride;
+        timerTik = (int)timer;
+        timerTikHandler = handler;
+    }
+
+    // Configure Stopwatch Tik
+    // Input : stride(sec), handler(method)
+    public void SetupStopwatchTik(int stride, Action handler)
+    {
+        stopwatchTik = 0;
+        stopwatchTikStride = stride;
+        stopwatchTikHandler = handler;
     }
 
     protected virtual void Update()
@@ -43,10 +60,23 @@ public class TimerManager : MonoBehaviour
                 TimerExpired();
             }
 
-            if ((timerClk - (int)timer) >= timerClkStride)
+            // Activate Timer Tik Logic : invoke handler for every tik
+            if ((timerTik - (int)timer) >= timerTikStride)
             {
-                timerClk = (int)timer;
-                timerClkHandler?.Invoke();
+                timerTik = (int)timer;
+                timerTikHandler?.Invoke();
+            }
+        }
+
+        if (isStopwatchRunning)
+        {
+            stopwatchTime += Time.deltaTime;
+
+            // Activate Stopwatch Tik Logic : invoke handler for every tik
+            if (((int)stopwatchTime - stopwatchTik) >= stopwatchTikStride)
+            {
+                stopwatchTik = (int)stopwatchTime;
+                stopwatchTikHandler?.Invoke();
             }
         }
     }
@@ -57,10 +87,22 @@ public class TimerManager : MonoBehaviour
         isTimerRunning = true;
     }
 
+    // Activate Stopwatch
+    public virtual void StartStopwatch()
+    {
+        isStopwatchRunning = true;
+    }
+
     // Pause Timer
     public virtual void PauseTimer()
     {
         isTimerRunning = false;
+    }
+
+    // Pause Stopwatch
+    public virtual void PauseStopwatch()
+    {
+        isStopwatchRunning = false;
     }
 
     // Reset Timer
@@ -68,8 +110,17 @@ public class TimerManager : MonoBehaviour
     {
         timer = timerDuration;
         isTimerRunning = false;
-        timerClk = 0;
-        timerClkStride = 0;
+        timerTik = 0;
+        timerTikStride = 0;
+    }
+
+    // Reset Stopwatch
+    public virtual void ResetStopwatch()
+    {
+        stopwatchTime = 0;
+        isStopwatchRunning = false;
+        stopwatchTik = 0;
+        stopwatchTikStride = 0;
     }
 
     protected virtual void TimerExpired()
@@ -81,5 +132,10 @@ public class TimerManager : MonoBehaviour
     public float GetTimerValue()
     {
         return timer;
+    }
+
+    public float GetStopwatchValue()
+    {
+        return stopwatchTime;
     }
 }
