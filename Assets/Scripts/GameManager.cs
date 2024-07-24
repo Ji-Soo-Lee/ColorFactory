@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,9 @@ public class GameManager : MonoBehaviour
     public bool playable = false;//현재 플레이어가 답을 할 수 있는지
     public Material[] color;//게임에서 사용하는 색
     public GameObject scoreboard;
+
+    public event Action new_problem;//ProblemGenerator과 느슨히 연결됨.
+
     const int TOTAL = 10;//총 문제 수
     int current = 0;
     int score = 0;//점수
@@ -39,7 +43,7 @@ public class GameManager : MonoBehaviour
         this.scoreboard.GetComponent<TextMeshProUGUI>().text = this.score.ToString();
         if (this.current < TOTAL)
         {//다음 문제 내기
-            this.generator.InitiateProblem();
+            new_problem();
         }
         else
         {//게임 종료

@@ -19,6 +19,7 @@ public class ProblemGenerator : MonoBehaviour
     void Start()
     {
         this.game = GameManager.game;
+        game.new_problem += InitiateProblem;
     }
     void Update()
     {//타이머가 돌아간다.
