@@ -7,6 +7,7 @@ public class TanmakGameManager : MiniGameManager
 {
     public TimerManager timerManager;
     public ScoreManager scoreManager;
+    public ScoreDataManager scoreDataManager;
     public TanmakUIManager TUIManager;
     public DummySceneController sceneController;
 
@@ -26,7 +27,7 @@ public class TanmakGameManager : MiniGameManager
         {
             scoreManager.SubtractScore(-score);
         }
-        TUIManager.SetScoreText(int.Parse(scoreManager.GetScoreAsString()));
+        TUIManager.SetScoreText(scoreManager.GetScore());
     }
 
     public override void Pause()
@@ -47,6 +48,7 @@ public class TanmakGameManager : MiniGameManager
         Pause();
         // End Logic Needed
         // Save & Show Score
+        scoreDataManager.finalMiniGameScore = scoreManager.GetScore();
         // Small Menu?
         TUIManager.ToggleGameOverPanel();
     }

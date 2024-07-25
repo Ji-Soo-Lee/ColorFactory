@@ -3059,6 +3059,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerManager: {fileID: 1709930363}
   scoreManager: {fileID: 1523484731}
+  scoreDataManager: {fileID: 1511934767}
   TUIManager: {fileID: 1006743070}
   sceneController: {fileID: 657853819}
   colors: []
@@ -3732,6 +3733,51 @@ Transform:
   - {fileID: 1723243595}
   m_Father: {fileID: 1494458689}
   m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1511934766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1511934768}
+  - component: {fileID: 1511934767}
+  m_Layer: 0
+  m_Name: Score Data Object
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1511934767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511934766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67687c005f6921b48b1a442b6c5cb8a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  finalMiniGameScore: 0
+--- !u!4 &1511934768
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511934766}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 215.9954, y: 232.72168, z: -2.3904717}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1523484729
 GameObject:
