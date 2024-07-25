@@ -7,6 +7,7 @@ public class TanmakUIManager : MonoBehaviour
 {
     public TMP_Text timerText;
     public TMP_Text ScoreText;
+    public GameObject GameOverPanel;
 
     public void SetTimerText(float time)
     {
@@ -16,5 +17,22 @@ public class TanmakUIManager : MonoBehaviour
     public void SetScoreText(int score)
     {
         ScoreText.text = "  Score : " + score.ToString();
+    }
+
+    public void ToggleGameOverPanel()
+    {
+        if (GameOverPanel.activeSelf)
+        {
+            GameOverPanel.SetActive(false);
+        }
+        else
+        {
+            GameOverPanel.SetActive(true);
+        }
+    }
+
+    void Start()
+    {
+        GameOverPanel.SetActive(false);
     }
 }

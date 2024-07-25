@@ -48,7 +48,7 @@ public class TanmakGameManager : MiniGameManager
         // End Logic Needed
         // Save & Show Score
         // Small Menu?
-        sceneController.LoadScene("Jisoo");
+        TUIManager.ToggleGameOverPanel();
     }
 
     void Start()

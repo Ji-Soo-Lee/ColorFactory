@@ -78,8 +78,8 @@ public class TanmakPlayer : MonoBehaviour
                 }
                 else
                 {
-                    tanmakGM.ModifyScore(-10);
-                    // tanmakGM.EndGame(); // Need Short Invincible Buff
+                    // tanmakGM.ModifyScore(-10);
+                    tanmakGM.EndGame();
                 }
             }
         }
