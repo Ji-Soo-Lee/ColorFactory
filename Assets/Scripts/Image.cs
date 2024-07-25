@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Image : MonoBehaviour
 {
-    const int DES=2000;
     Texture2D texture;
+    Color[] pixels;
     public void assign_image(string file)
     {
         byte[] image = File.ReadAllBytes(file);
@@ -15,6 +15,7 @@ public class Image : MonoBehaviour
         Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f);
         gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
         gameObject.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+        this.pixels = this.texture.GetPixels();
     }
     void OnMouseDown()
     {//클릭한 곳 기준으로 색칠하기
@@ -26,32 +27,43 @@ public class Image : MonoBehaviour
         int x = Mathf.RoundToInt(textureUV.x * this.texture.width);
         int y = Mathf.RoundToInt(textureUV.y * this.texture.height);
         FloodFill(x, y, Color.red);
-        this.texture.Apply();
     }
     void FloodFill(int x, int y, Color fill)
     {//텍스쳐의 해당 좌표 색칠하기
         Queue<Vector2Int> Q = new Queue<Vector2Int>();
+        bool[] check = new bool[this.pixels.Length];
         int[] xmove = new int[4] { -1, 0, 1, 0 };
         int[] ymove = new int[4] { 0, 1, 0, -1 };
         Q.Enqueue(new Vector2Int(x, y));
-        Color target = this.texture.GetPixel(x, y);//칠하기 이전 클릭한 곳의 색.
-        this.texture.SetPixel(x, y, fill);
+        Color target = this.pixels[index(x, y)];//칠하기 이전 클릭한 곳의 색.
+        this.pixels[index(x, y)] = fill; check[index(x, y)] = true;
+        int tmp = 0;
         while (Q.Count > 0)
         {
             Vector2Int now = Q.Dequeue();
+            tmp += 1;
             for(int i=0; i<=3; i++)
             {
                 int tx = now.x + xmove[i];
                 int ty = now.y + ymove[i];
                 if (tx >= 0 && tx < this.texture.width && ty >= 0 && ty < this.texture.height)
                 {//그림의 범위를 벗어나지 않는 경우
-                    if (this.texture.GetPixel(tx, ty) == target)
+                    int pos = index(tx, ty);
+                    if (this.pixels[pos] == target && !check[pos])
                     {//target과 인접한 색들을 모두 바꾼다.
-                        this.texture.SetPixel(tx, ty, fill);
                         Q.Enqueue(new Vector2Int(tx, ty));
+                        this.pixels[pos] = fill; check[pos] = true;
                     }
                 }
             }
         }
+        Debug.Log(tmp + "개의 칸이 변경되었습니다.");
+        this.texture.SetPixels(pixels);
+        this.texture.Apply();
+        Debug.Log("전체 칸"+this.pixels.Length+" 개, 작업 끝");
+    }
+    int index(int x,int y)
+    {//Flood-fill에서 사용하는 픽셀 인덱스
+        return (y * this.texture.width + x);
     }
 }
