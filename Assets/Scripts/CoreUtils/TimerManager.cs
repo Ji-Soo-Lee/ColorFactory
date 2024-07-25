@@ -10,13 +10,13 @@ public class TimerManager : MonoBehaviour
     protected float timerDuration;       // Duration of Timer
     protected float timer;               // Current Timer value
     protected bool isTimerRunning;       // Timer status
-    protected int timerTik;              // Timer Tik for callback
-    protected int timerTikStride;        // Stride for Tik
+    protected float timerTik;              // Timer Tik for callback
+    protected float timerTikStride;        // Stride for Tik
 
     protected float stopwatchTime;       // Current Stopwatch Time Value
     protected bool isStopwatchRunning;   // Stopwatch Status
-    protected int stopwatchTik;          // Timer Tik for callback
-    protected int stopwatchTikStride;    // Stride for Tik
+    protected float stopwatchTik;          // Timer Tik for callback
+    protected float stopwatchTikStride;    // Stride for Tik
 
     protected Action timerHandler;       // Timer handler
     protected Action timerTikHandler;    // Timer Tik handler
@@ -33,16 +33,16 @@ public class TimerManager : MonoBehaviour
 
     // Configure Timer Tik
     // Input : stride(sec), handler(method)
-    public void SetupTimerTik(int stride, Action handler)
+    public void SetupTimerTik(float stride, Action handler)
     {
         timerTikStride = stride;
-        timerTik = (int)timer;
+        timerTik = timer;
         timerTikHandler = handler;
     }
 
     // Configure Stopwatch Tik
     // Input : stride(sec), handler(method)
-    public void SetupStopwatchTik(int stride, Action handler)
+    public void SetupStopwatchTik(float stride, Action handler)
     {
         stopwatchTik = 0;
         stopwatchTikStride = stride;
@@ -61,9 +61,9 @@ public class TimerManager : MonoBehaviour
             }
 
             // Activate Timer Tik Logic : invoke handler for every tik
-            if ((timerTik - (int)timer) >= timerTikStride)
+            if ((timerTik - timer) >= timerTikStride)
             {
-                timerTik = (int)timer;
+                timerTik = timer;
                 timerTikHandler?.Invoke();
             }
         }
@@ -73,9 +73,9 @@ public class TimerManager : MonoBehaviour
             stopwatchTime += Time.deltaTime;
 
             // Activate Stopwatch Tik Logic : invoke handler for every tik
-            if (((int)stopwatchTime - stopwatchTik) >= stopwatchTikStride)
+            if ((stopwatchTime - stopwatchTik) >= stopwatchTikStride)
             {
-                stopwatchTik = (int)stopwatchTime;
+                stopwatchTik = stopwatchTime;
                 stopwatchTikHandler?.Invoke();
             }
         }
