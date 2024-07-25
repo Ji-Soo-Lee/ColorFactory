@@ -33,9 +33,8 @@ public class ProblemGenerator : MonoBehaviour
             else
             {//색칠하는 부분
                 GameObject part = Instantiate(this.partPrefab, this.frame.transform);
-                part.GetComponent<SpriteRenderer>().sprite = sprite;
-                PolygonCollider2D collider = part.GetComponent<PolygonCollider2D>();
-                collider.points = part.GetComponent<SpriteRenderer>().sprite.vertices;
+                part.GetComponent<SpriteRenderer>().sprite = sprite;//색칠하는 영역의 스프라이트를 부여한다.
+                part.AddComponent<PolygonCollider2D>();//그 스프라이트에 맞는 콜라이더를 준다.
                 part.GetComponent<ColorPart>().x = i;
             }//각 부분들은 frame의 자손으로 넣는다.
         }
