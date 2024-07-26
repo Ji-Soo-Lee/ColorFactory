@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ProblemGenerator : MonoBehaviour
+public class BrainProblemGenerator : MonoBehaviour
 {
     BrainGameManager game;
     public GameObject blockPrefab;

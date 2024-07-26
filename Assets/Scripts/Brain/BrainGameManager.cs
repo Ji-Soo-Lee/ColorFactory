@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class BrainGameManager : MonoBehaviour
 {
     public static BrainGameManager game;
-    ProblemGenerator generator;
+    BrainProblemGenerator generator;
     public int selected = 0;//현재 선택된 색
     public bool playable = false;//현재 플레이어가 답을 할 수 있는지
     public Material[] color;//게임에서 사용하는 색
@@ -33,7 +33,7 @@ public class BrainGameManager : MonoBehaviour
     }
     void Start()
     {
-        this.generator = GameObject.Find("ProblemGenerator").GetComponent<ProblemGenerator>();
+        this.generator = GameObject.Find("ProblemGenerator").GetComponent<BrainProblemGenerator>();
     }
     public void apply_result(int correct)
     {//점수 반영하기
