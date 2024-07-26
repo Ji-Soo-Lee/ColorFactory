@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TanmakGameManager : MiniGameManager
+public class TanmakGameManager : PausableMonoBehaviour
 {
     public TimerManager timerManager;
     public ScoreManager scoreManager;
@@ -71,8 +71,6 @@ public class TanmakGameManager : MiniGameManager
             colors[i] = ColorUtils.GetRandomColor();
         }
     }
-
-    protected override void BeforePauseUpdate() { }
 
     protected override void AfterPauseUpdate()
     {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DummyMiniGM : MiniGameManager
+public class DummyMiniGM : PausableMonoBehaviour
 {
     protected override void BeforePauseUpdate()
     {

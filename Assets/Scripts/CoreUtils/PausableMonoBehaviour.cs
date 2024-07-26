@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MiniGameManager : MonoBehaviour
+public class PausableMonoBehaviour : MonoBehaviour
 {
     private bool isPause;
 
@@ -35,7 +35,6 @@ public abstract class MiniGameManager : MonoBehaviour
         AfterPauseUpdate();
     }
 
-    // Below methods must be implemented
-    protected abstract void BeforePauseUpdate(); // doesn't pause
-    protected abstract void AfterPauseUpdate(); // can be paused
+    protected virtual void BeforePauseUpdate() { } // doesn't pause
+    protected virtual void AfterPauseUpdate() { } // can be paused
 }
