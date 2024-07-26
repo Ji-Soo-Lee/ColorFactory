@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class ColorPart : MonoBehaviour
 {
-    public int x;
+    ColoringGameManager game;
     SpriteRenderer sprite;
     void Start()
     {
+        this.game = ColoringGameManager.game;
         this.sprite = GetComponent<SpriteRenderer>();
     }
     void OnMouseDown()
     {
-        Debug.Log(this.x + " 번 영역을 클릭했습니다.");
-        this.sprite.color = Color.red;
+        this.sprite.color = this.game.now_color;
     }
 }

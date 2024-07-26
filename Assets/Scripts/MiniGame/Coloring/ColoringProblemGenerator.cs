@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
 
-public class ColoringProblemGenerator : MonoBehaviour
+public class ColoringProblemGenerator: MonoBehaviour
 {
     ColoringGameManager game;
     string DexFile = "./Assets/ColoringDex.json";//문제은행. 여기서 무작위로 한 문제를 출제한다.
