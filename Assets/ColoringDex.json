@@ -1,0 +1,16 @@
+{
+    "problemset": [
+        {
+            "file": "problem_zzangu.png",
+            "scale": 0.65,
+            "palette": [
+                {
+                    "color": "#FF0000"
+                },
+                {
+                    "color": "#00FF00"
+                }
+            ]
+        }
+    ]
+}
