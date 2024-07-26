@@ -50,6 +50,12 @@ public class ScoreManager : MonoBehaviour
         AddScore(scoreToAdd);
     }
 
+    // Get Score in Int
+    public int GetScore()
+    {
+        return currentScore;
+    }
+
     // Get Score in String
     public string GetScoreAsString()
     {

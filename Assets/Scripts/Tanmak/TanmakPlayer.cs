@@ -13,9 +13,13 @@ public class TanmakPlayer : MonoBehaviour
     Vector3 pos;
     Vector3 direction;
 
+    bool isInvincible;
+
     // set direction of character to move
     public void SetDirection(Vector3 dir)
     {
+        if (tanmakGM.CheckPause()) return;
+
         if (direction == null) return;
         if (dir.z != 0.0f) dir.z = 0.0f;
         direction = dir;
@@ -25,19 +29,44 @@ public class TanmakPlayer : MonoBehaviour
     // stops moving
     public void StopMoving()
     {
+        if (tanmakGM.CheckPause()) return;
+
         direction = new Vector3(0.0f, 0.0f, 0.0f);
         isMoving = false;
     }
 
     public void ChangeColor()
     {
+        if (tanmakGM.CheckPause()) return;
+
         curColorIdx = (curColorIdx + 1) % TanmakGameManager.colorSize;
         spriteRenderer.color = tanmakGM.colors[curColorIdx];
     }
 
+    public void SetInvincible(bool invincible)
+    {
+        isInvincible = invincible;
+    }
+
+    public void ToggleRenderer()
+    {
+        Color curColor = tanmakGM.colors[curColorIdx];
+        if (spriteRenderer.color.a <= 0.01f)
+        {
+            curColor.a = 1.0f;
+        }
+        else
+        {
+            curColor.a = 0.0f;
+        }
+        spriteRenderer.color = curColor;
+    }
+
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.tag == "Tanmak")
+        if (tanmakGM.CheckPause()) return;
+
+        if (!isInvincible && collider.tag == "Tanmak")
         {
             
             TempTanmak tanmak = collider.gameObject.GetComponent<TempTanmak>();
@@ -49,7 +78,8 @@ public class TanmakPlayer : MonoBehaviour
                 }
                 else
                 {
-                    tanmakGM.ModifyScore(-10);
+                    // tanmakGM.ModifyScore(-10);
+                    tanmakGM.EndGame();
                 }
             }
         }
@@ -65,8 +95,26 @@ public class TanmakPlayer : MonoBehaviour
         StopMoving();
     }
 
+    void OnEnable()
+    {
+        Action timerAction = () => SetInvincible(false);
+        timerAction += () =>
+        {
+            // Ensure Visibility
+            spriteRenderer.color = tanmakGM.colors[curColorIdx];
+        };
+
+        SetInvincible(true);
+
+        tanmakGM.timerManager.SetupTimer(5.0f, timerAction);
+        tanmakGM.timerManager.SetupTimerTik(0.2f, ToggleRenderer);// Blink
+        tanmakGM.timerManager.StartTimer();
+    }
+
     void Update()
     {
+        if (tanmakGM.CheckPause()) return;
+
         pos = transform.position;
 
         // stop for boundary
