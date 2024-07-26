@@ -1286,6 +1286,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9d4798d3164419458d96a93a815aab6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &682469987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 682469988}
+  - component: {fileID: 682469989}
+  m_Layer: 0
+  m_Name: Stopwatch Manager Object
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &682469988
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682469987}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1494458689}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &682469989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682469987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab979a916c5ea014bb8ce2f7e54ed627, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &713065868
 GameObject:
   m_ObjectHideFlags: 0
@@ -3058,6 +3102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerManager: {fileID: 1709930363}
+  stopwatchManager: {fileID: 682469989}
   scoreManager: {fileID: 1523484731}
   scoreDataManager: {fileID: 1511934767}
   TUIManager: {fileID: 1006743070}
@@ -3688,6 +3733,7 @@ Transform:
   - {fileID: 1492020431}
   - {fileID: 1260355400}
   - {fileID: 1709930362}
+  - {fileID: 682469988}
   - {fileID: 1523484730}
   - {fileID: 1006743069}
   - {fileID: 657853818}

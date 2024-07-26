@@ -6,6 +6,7 @@ using UnityEngine;
 public class TanmakGameManager : PausableMonoBehaviour
 {
     public TimerManager timerManager;
+    public StopwatchManager stopwatchManager;
     public ScoreManager scoreManager;
     public ScoreDataManager scoreDataManager;
     public TanmakUIManager TUIManager;
@@ -33,13 +34,13 @@ public class TanmakGameManager : PausableMonoBehaviour
     public override void Pause()
     {
         base.Pause();
-        timerManager.PauseStopwatch();
+        stopwatchManager.PauseStopwatch();
     }
 
     public override void Resume()
     {
         base.Resume();
-        timerManager.StartStopwatch();
+        stopwatchManager.StartStopwatch();
     }
 
     public void EndGame()
@@ -56,9 +57,9 @@ public class TanmakGameManager : PausableMonoBehaviour
     void Start()
     {
         // Setup Stopwatch
-        timerManager.ResetStopwatch();
-        timerManager.SetupStopwatchTik(1, () => ModifyScore(5));
-        timerManager.StartStopwatch();
+        stopwatchManager.ResetStopwatch();
+        stopwatchManager.SetupStopwatchTik(1, () => ModifyScore(5));
+        stopwatchManager.StartStopwatch();
     }
 
     void OnEnable()
@@ -75,6 +76,6 @@ public class TanmakGameManager : PausableMonoBehaviour
     protected override void AfterPauseUpdate()
     {
         // Set Timer UI
-        TUIManager.SetTimerText(timerManager.GetStopwatchValue());
+        TUIManager.SetTimerText(stopwatchManager.GetStopwatchValue());
     }
 }
