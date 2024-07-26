@@ -164,13 +164,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 379688557}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f51caa35909b72e49b120f96c86747e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a7909264df3bd94294744fb801fe5ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blockPrefab: {fileID: 2857128608868314411, guid: 44f1ffb3c73e00f418514dbb2a536121,
     type: 3}
-  palettePrefab: {fileID: 3363570773404843869, guid: 3fbdb558954d9884b88278ad3cd1f942,
-    type: 3}
+  palettePrefab: {fileID: 0}
   playing: 0
 --- !u!1 &460217908
 GameObject:
@@ -213,7 +212,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 460217908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81d8910cae4bf474ea28b3e183e872f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f8d8b04f9e651848b2beeb7f84774d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &611930204
@@ -1712,7 +1711,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1996298579}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22008c0d66538494a9af82dc34c68e78, type: 3}
+  m_Script: {fileID: 11500000, guid: 920f40004e8ac9c439abcb47c69ae795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
