@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    GameManager game;
+    BrainGameManager game;
     public Material blank;//흰색(빈칸)
     int answer = 0, selected = 0;
     void Start()
     {
-        this.game = GameManager.game;
+        this.game = BrainGameManager.game;
     }
     public IEnumerator assign_color(int x, Material m)
     {//블록의 색 보여주기. 3초 후 색을 숨긴다.

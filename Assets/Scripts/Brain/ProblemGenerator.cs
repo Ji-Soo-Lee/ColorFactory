@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ProblemGenerator : MonoBehaviour
 {
-    GameManager game;
+    BrainGameManager game;
     public GameObject blockPrefab;
     public GameObject palettePrefab;
     public bool playing = false;
@@ -18,7 +18,7 @@ public class ProblemGenerator : MonoBehaviour
 
     void Start()
     {
-        this.game = GameManager.game;
+        this.game = BrainGameManager.game;
         game.new_problem += InitiateProblem;
     }
     void Update()

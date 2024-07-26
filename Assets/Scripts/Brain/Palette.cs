@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Palette : MonoBehaviour
 {
-    GameManager game;
+    BrainGameManager game;
     void Start()
     {
-        this.game = GameManager.game;
+        this.game = BrainGameManager.game;
     }
     public void ChangeColor(int x)
     {

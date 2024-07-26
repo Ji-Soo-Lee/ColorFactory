@@ -5,9 +5,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class BrainGameManager : MonoBehaviour
 {
-    public static GameManager game;
+    public static BrainGameManager game;
     ProblemGenerator generator;
     public int selected = 0;//현재 선택된 색
     public bool playable = false;//현재 플레이어가 답을 할 수 있는지
