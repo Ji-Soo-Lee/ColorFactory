@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BrainResult.unity
     guid: aaa0408452ef23f4fb5f0f4b5a90bc42
+  - enabled: 1
+    path: Assets/Scenes/Coloring.unity
+    guid: 95d6dd6034ba0244fb68d225395ff8cd
   m_configObjects: {}
