@@ -16,8 +16,7 @@ public class TanmakConstruct : MonoBehaviour
     void Start()
     {
         // StartCoroutine(FireBulletsCircularPattern()); // It can be changed
-
-        StartCoroutine(FireBulletsRectangularPattern(bulletCountRow, bulletCountCol, bulletSpacing));
+        StartCoroutine(FireBulletsRectangularPattern(bulletCountRow, bulletCountCol, bulletSpacing, 90));
     }
 
     // Fire multiple bullets in a circular pattern
@@ -37,13 +36,19 @@ public class TanmakConstruct : MonoBehaviour
         }
     }
 
+    // Fire multiple bullets in a shape of circle
+    IEnumerator FireBulletsCirclePattern(int bulletCount)
+    {
+        // Todo
+    }
+
 
     // Fire multiple bullets in a rectengular pattern
     // Fire start from transform.position
     // row: the number of row
     // col: the number of column
     // spacing: space between adjacent bullets
-    IEnumerator FireBulletsRectangularPattern(int row, int col, float spacing)
+    IEnumerator FireBulletsRectangularPattern(int row, int col, float spacing, float angle)
     {
         while (true)
         {
@@ -52,12 +57,29 @@ public class TanmakConstruct : MonoBehaviour
                 for (int j = 0; j < col; ++j)
                 {
                     Vector3 positionOffset = new Vector3(j * bulletSpacing, i * spacing, 0);
+                    Vector3 direction = new Vector3(Mathf.Cos(angle * Mathf.PI / 180f), Mathf.Sin(angle * Mathf.PI / 180f), 0);
                     GameObject bullet = Instantiate(bulletPrefab, transform.position + positionOffset, Quaternion.identity);
-                    bullet.GetComponent<Rigidbody2D>().velocity = new Vector3(0, bulletSpeed, 0); // 위쪽으로 발사
+                    bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
                 }
             }
 
             yield return new WaitForSeconds(fireRate);
+        }
+    }
+
+    IEnumerator FireBulletsRectangularSpreadingPattern(int row, int col, float spacing)
+    {
+        while (true)
+        {
+            // Todo: 탄막이 사각형 형태로 퍼지는 패턴
+        }
+    }
+
+    IEnumerator FireBulletsTriangularSpreadingPattern()
+    {
+        while (true)
+        {
+            // Todo: 정삼각형 형태로 퍼지는 패
         }
     }
 }
