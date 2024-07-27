@@ -15,14 +15,13 @@ public class ColoringProblemGenerator: MonoBehaviour
     public GameObject panel;
     public GameObject buttonPrefab;
     ColoringPage[] problemset;
-    string sprite_base = "Assets/Sprites/";
+    string sprite_base = "Assets/MyResources/Sprites/";
     void Start()
     {//문제은행
         this.game = ColoringGameManager.game;
         string dex = File.ReadAllText(DexFile);//문제은행 파일 읽기
         ColoringDex book = JsonUtility.FromJson<ColoringDex>(dex);
         this.problemset = book.problemset;
-        Debug.Log(this.problemset[0].file);
         pick_problem(this.problemset[0]);
     }
     void pick_problem(ColoringPage picture)
@@ -63,9 +62,11 @@ public class ColoringProblemGenerator: MonoBehaviour
         for (int i = 0; i < palette.Length; i++)
         {
             Color color = palette[i].get_color();
-            Button button = Instantiate(this.buttonPrefab, this.panel.transform).GetComponent<Button>();
+            GameObject btn = Instantiate(this.buttonPrefab, this.panel.transform);
+            btn.transform.localPosition = new Vector3(18 + 36 * i, -120, 0);
+            Button button = btn.GetComponent<Button>();
             ColorBlock cb = button.colors;
-            cb.normalColor = color; cb.selectedColor = color;
+            cb.normalColor = color; cb.highlightedColor = color; cb.selectedColor = color;
             button.colors = cb;
             button.onClick.AddListener(() => change_color(color));
         }

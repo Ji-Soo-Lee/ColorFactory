@@ -5,10 +5,25 @@
             "scale": 0.65,
             "palette": [
                 {
-                    "color": "#FF0000"
+                    "color": "#fbd5ad"
                 },
                 {
-                    "color": "#00FF00"
+                    "color": "#e40028"
+                },
+                {
+                    "color": "#fff797"
+                },
+                {
+                    "color": "#ffdb73"
+                },
+                {
+                    "color": "#b96666"
+                },
+                {
+                    "color": "#1e110d"
+                },
+                {
+                    "color": "#ffffff"
                 }
             ]
         }

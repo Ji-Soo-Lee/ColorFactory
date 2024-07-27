@@ -6,6 +6,7 @@ public class ColorPart : MonoBehaviour
 {
     ColoringGameManager game;
     SpriteRenderer sprite;
+    Color answer;//이 조각의 정답
     void Start()
     {
         this.game = ColoringGameManager.game;
