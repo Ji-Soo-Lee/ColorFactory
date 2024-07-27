@@ -16,7 +16,8 @@ public class TanmakConstruct : MonoBehaviour
     void Start()
     {
         // StartCoroutine(FireBulletsCircularPattern()); // It can be changed
-        StartCoroutine(FireBulletsRectangularPattern(bulletCountRow, bulletCountCol, bulletSpacing, 90));
+        // StartCoroutine(FireBulletsRectangularPattern(bulletCountRow, bulletCountCol, bulletSpacing, 90));
+        StartCoroutine(FireBulletsCirclePattern(20, 3, 0));
     }
 
     // Fire multiple bullets in a circular pattern
@@ -37,9 +38,25 @@ public class TanmakConstruct : MonoBehaviour
     }
 
     // Fire multiple bullets in a shape of circle
-    IEnumerator FireBulletsCirclePattern(int bulletCount)
+    // bulletCount: 원을 구성하는 총알의 개수
+    // radius: 반지름
+    // angle: 발사 각도
+    IEnumerator FireBulletsCirclePattern(int bulletCount, int radius, float angle)
     {
-        // Todo
+        while (true)
+        {
+            Vector3 direction = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
+            float circleAngle = 0, circleAngleIter = Mathf.PI * 2 / bulletCount;
+            for (; circleAngle < Mathf.PI + Mathf.PI; circleAngle += circleAngleIter)
+            {
+                Vector3 positionOffset = new Vector3(radius * Mathf.Cos(circleAngle), radius * Mathf.Sin(circleAngle), 0);
+                GameObject bullet = Instantiate(bulletPrefab, transform.position + positionOffset, Quaternion.identity);
+                bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+            }
+
+            yield return new WaitForSeconds(fireRate);
+        }
+
     }
 
 
@@ -67,14 +84,16 @@ public class TanmakConstruct : MonoBehaviour
         }
     }
 
+
     IEnumerator FireBulletsRectangularSpreadingPattern(int row, int col, float spacing)
     {
         while (true)
         {
-            // Todo: 탄막이 사각형 형태로 퍼지는 패턴
+            
         }
     }
 
+    /*
     IEnumerator FireBulletsTriangularSpreadingPattern()
     {
         while (true)
@@ -82,4 +101,5 @@ public class TanmakConstruct : MonoBehaviour
             // Todo: 정삼각형 형태로 퍼지는 패
         }
     }
+    */
 }
