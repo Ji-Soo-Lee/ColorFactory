@@ -3,6 +3,26 @@
         {
             "file": "problem_zzangu.png",
             "scale": 0.65,
+            "answer": [
+                { "color": "#fbd5ad" },
+                { "color": "#e40028" },
+                { "color": "#fff797" },
+                { "color": "#fbd5ad" },
+                { "color": "#ffffff" },
+                { "color": "#feda73" },
+                { "color": "#fbd5ad" },
+                { "color": "#ffffff" },
+                { "color": "#feda73" },
+                { "color": "#b96666" },
+                { "color": "#fbd5ad" },
+                { "color": "#fbd5ad" },
+                { "color": "#e40028" },
+                { "color": "#ffffff" },
+                { "color": "#ffffff" },
+                { "color": "#1e110d" },
+                { "color": "#1e110d" },
+                { "color": "#1e110d" }
+            ],
             "palette": [
                 {
                     "color": "#fbd5ad"
@@ -14,7 +34,7 @@
                     "color": "#fff797"
                 },
                 {
-                    "color": "#ffdb73"
+                    "color": "#feda73"
                 },
                 {
                     "color": "#b96666"
