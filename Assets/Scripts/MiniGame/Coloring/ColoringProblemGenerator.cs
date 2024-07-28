@@ -15,14 +15,21 @@ public class ColoringProblemGenerator: MonoBehaviour
     public GameObject panel;
     public GameObject buttonPrefab;
     ColoringPage[] problemset;
+
     string sprite_base = "Assets/MyResources/Sprites/";//스프라이트 파일의 경로.
     void Start()
     {//문제은행 가져오기
         this.game = ColoringGameManager.game;
+        game.new_problem += InitiateProblem;
         string dex = File.ReadAllText(DexFile);//문제은행 파일 읽기
         ColoringDex book = JsonUtility.FromJson<ColoringDex>(dex);
         this.problemset = book.problemset;
-        generate_problem(this.problemset[0]);
+        InitiateProblem();
+    }
+    void InitiateProblem()
+    {//무작위로 한 문제를 출제한다.
+        int d = Random.Range(0, this.problemset.Length);
+        generate_problem(this.problemset[d]);
     }
     void generate_problem(ColoringPage picture)
     {//문제 내기
