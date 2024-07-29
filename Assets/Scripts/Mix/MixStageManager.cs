@@ -19,7 +19,7 @@ public class MixStageManager : MonoBehaviour
     private PaletteResult paletteResult;
     public Button btn1;
     public Color targetColor, resultColor;
-    public TMP_Text timeText, scoreText;
+    public TMP_Text timeText, scoreText, stageText;
 
     protected virtual void Start()
     {
@@ -70,7 +70,7 @@ public class MixStageManager : MonoBehaviour
 
         if (isStageActive)
         {
-            timeText.text = timerManager.GetTimerValue().ToString();
+            timeText.text = (Mathf.Ceil(timerManager.GetTimerValue()*10)/10).ToString();
         }
 
         // General update logic if needed
@@ -96,6 +96,7 @@ public class MixStageManager : MonoBehaviour
         InitializeGameElements();
 
         timerManager.StartTimer();
+        stageText.text = "stage"+currentStage.ToString();
 
         Debug.Log("Stage " + (currentStage + 1) + "started.");
     }
@@ -109,7 +110,7 @@ public class MixStageManager : MonoBehaviour
         CalculateFinalScore();
         Debug.Log("Stage " + (currentStage + 1) + "ended.");
         Debug.Log("Total Score: " + scoreManager.GetScoreAsString());
-        scoreText.text = scoreManager.GetScoreAsString();
+        scoreText.text = "Score : "+ scoreManager.GetScoreAsString();
 
         if (currentStage < totalStages - 1)
         {
