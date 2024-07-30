@@ -13,7 +13,6 @@ public class Bulb : MonoBehaviour
     }
     public IEnumerator blink(Color color)
     {
-        StopAllCoroutines();
         this.sprite.color = color;
         yield return new WaitForSeconds(0.5f);
         this.sprite.color = Color.white;
