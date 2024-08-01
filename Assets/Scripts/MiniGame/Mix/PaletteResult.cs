@@ -4,15 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using UnityEngine.Rendering;
+using TMPro;
 
 public class PaletteResult : MonoBehaviour
 {
-    public Button btn1, btn2, btn3, btnReset, btnSubmission;
-    public Image resultImage, btn1Image, btn2Image, btn3Image, targetImage;
+    public Button btn1, btn2, btn3, btnPaletteMod, btnSubmission;
+    public Image resultImage, btn1Image, btn2Image, btn3Image, targetImage, btn4Image, btn5Image;
     public int AClick = 0, BClick = 0, CClick = 0, mixType = 1;
+    private int paletteType = 0;
     private Color colorA, colorB, colorC;
     private AnswerToken answerToken;
     private Action ActionOnClick;
+    public TMP_Text textBtn1, textBtn2, textBtn3;
 
     private float clickThreshold = 5;
 
@@ -88,6 +91,9 @@ public class PaletteResult : MonoBehaviour
         AClick = 0;
         BClick = 0;
         CClick = 0;
+        textBtn1.text = "";
+        textBtn2.text = "";
+        textBtn3.text = "";
         ActionOnClick?.Invoke();
     }
 
@@ -97,31 +103,77 @@ public class PaletteResult : MonoBehaviour
         resultImage = GetComponent<Image>();
 
         btn1.onClick.AddListener(() => {
-            if (AClick < clickThreshold)
+            if (paletteType == 0)
             {
-                AClick++;
-                ActionOnClick?.Invoke();
+                if (AClick < clickThreshold)
+                {
+                    AClick++;
+                }
             }
+            else
+            {
+                if(AClick > 0 ) 
+                {
+                    AClick--;
+                }
+            }
+            textBtn1.text = AClick.ToString();
+            if (AClick == 0) { textBtn1.text = ""; }
+            ActionOnClick?.Invoke();
         });
 
         btn2.onClick.AddListener(() => {
-            if (BClick < clickThreshold)
+            if (paletteType == 0)
             {
-                BClick++;
-                ActionOnClick?.Invoke();
+                if (BClick < clickThreshold)
+                {
+                    BClick++;
+                }
             }
+            else
+            {
+                if (BClick > 0)
+                {
+                    BClick--;
+                }
+            }
+            textBtn2.text = BClick.ToString();
+            if (BClick == 0) { textBtn2.text = ""; }
+            ActionOnClick?.Invoke();
         });
 
         btn3.onClick.AddListener(() => {
-            if (CClick < clickThreshold)
+            if (paletteType == 0)
             {
-                CClick++;
-                ActionOnClick?.Invoke();
+                if (CClick < clickThreshold)
+                {
+                    CClick++;
+                }
             }
+            else
+            {
+                if (CClick > 0)
+                {
+                    CClick--;
+                }
+            }
+            textBtn3.text = CClick.ToString();
+            if (CClick == 0) { textBtn3.text = ""; }
+            ActionOnClick?.Invoke();
         });
 
-        btnReset.onClick.AddListener(() => {
-            ClickReset();
+        btnPaletteMod.onClick.AddListener(() => {
+            paletteType = (paletteType + 1) % 2;
+            if (paletteType == 0)
+            {
+                btn4Image.color = Color.green;
+                btn5Image.color = Color.red;
+            }
+            else
+            {
+                btn4Image.color = Color.red;
+                btn5Image.color = Color.green;
+            }
         });
     }
 }
