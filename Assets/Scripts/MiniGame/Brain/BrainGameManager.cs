@@ -9,8 +9,10 @@ public class BrainGameManager : MonoBehaviour
 {
     public static BrainGameManager game;
     public bool playable = false;//현재 플레이어가 답을 할 수 있는지
+    bool pause = false;
     public Color now_color;
     public GameObject scoreboard;
+    public GameObject pausepanel;
 
     public event Action new_problem;//ProblemGenerator과 느슨히 연결됨.
     public event Action stop_problem;
@@ -49,16 +51,21 @@ public class BrainGameManager : MonoBehaviour
             StartCoroutine(Gameover());
         }
     }
-    public void reset_problem()
-    {//문제 리셋하고 새로운 문제 내기
-        stop_problem();
+    public void toggle_pause()
+    {//게임 일시정지
+        this.pause = !(this.pause);
+        this.pausepanel.SetActive(this.pause);
         game.playable = false;
-        GameObject[] obj = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject x in obj)
-        {
-            Destroy(x);
+        stop_problem();//게임을 일시정지한 경우 문제 출제를 중지한다.
+        if(this.pause==false)
+        {//게임을 다시 켠 경우 문제를 다시 낸다.
+            GameObject[] obj = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject x in obj)
+            {
+                Destroy(x);
+            }
+            new_problem();
         }
-        new_problem();
     }
     IEnumerator Gameover()
     {//게임 종료. 기록을 저장하고 다음 화면에서 결과를 보여줌.
