@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class SimonGameManager : MonoBehaviour
+public class SimonGameManager : StageManager
 {
     public static SimonGameManager game;
     public bool playable = false;
@@ -19,16 +19,7 @@ public class SimonGameManager : MonoBehaviour
     int level = 1;//현재 레벨. 레벨의 수 만큼의 색을 외워야 한다.
     int current = 0;
 
-    public GameObject DummyEndGamePannel;
-    int score = 5;
-
-    public void EndGame()
-    {
-        ScoreDataManager.Inst.SaveResult(score);
-        DummyEndGamePannel.SetActive(true);
-    }
-
-    void Awake()
+    protected override void Awake()
     {//게임 매니저를 전역 싱글톤으로 설정하기.
         if (game == null)
         {
@@ -38,8 +29,9 @@ public class SimonGameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        base.Awake();
     }
-    void Start()
+    protected override void Start()
     {
         this.bulb = GameObject.Find("Bulb").GetComponent<Bulb>();
         for (int i = 0; i < this.buttons.Length; i++)
@@ -110,7 +102,7 @@ public class SimonGameManager : MonoBehaviour
             }
         }
     }
-    void Update()
+    protected override void Update()
     {//타이머
         this.elapsed += Time.deltaTime;
         if(this.elapsed>=5.0f && this.playable==true)

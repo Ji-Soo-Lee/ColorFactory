@@ -106,9 +106,9 @@ public class TanmakPlayer : MonoBehaviour
 
         SetInvincible(true);
 
-        tanmakGM.timerManager.SetupTimer(5.0f, timerAction);
-        tanmakGM.timerManager.SetupTimerTik(0.2f, ToggleRenderer);// Blink
-        tanmakGM.timerManager.StartTimer();
+        tanmakGM.invincibleTimer.SetupTimer(5.0f, timerAction);
+        tanmakGM.invincibleTimer.SetupTimerTik(0.2f, ToggleRenderer);// Blink
+        tanmakGM.invincibleTimer.StartTimer();
     }
 
     void Update()
