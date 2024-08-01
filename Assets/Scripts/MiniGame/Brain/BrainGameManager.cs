@@ -8,13 +8,12 @@ using UnityEngine.SceneManagement;
 public class BrainGameManager : MonoBehaviour
 {
     public static BrainGameManager game;
-    BrainProblemGenerator generator;
     public bool playable = false;//현재 플레이어가 답을 할 수 있는지
     public Color now_color;
-    public GameObject[] palette;
     public GameObject scoreboard;
 
     public event Action new_problem;//ProblemGenerator과 느슨히 연결됨.
+    public event Action stop_problem;
 
     const int TOTAL = 10;//총 문제 수
     int current = 0;
@@ -31,6 +30,10 @@ public class BrainGameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    void Start()
+    {
+        new_problem();
+    }
     public void apply_result(int correct)
     {//점수 반영하기
         this.current += 1;
@@ -45,6 +48,17 @@ public class BrainGameManager : MonoBehaviour
         {//게임 종료
             StartCoroutine(Gameover());
         }
+    }
+    public void reset_problem()
+    {//문제 리셋하고 새로운 문제 내기
+        stop_problem();
+        game.playable = false;
+        GameObject[] obj = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject x in obj)
+        {
+            Destroy(x);
+        }
+        new_problem();
     }
     IEnumerator Gameover()
     {//게임 종료. 기록을 저장하고 다음 화면에서 결과를 보여줌.

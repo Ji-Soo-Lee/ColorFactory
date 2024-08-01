@@ -22,7 +22,7 @@ public class Block : MonoBehaviour
     }
     void OnMouseDown()
     {
-        if(game.playable==true)
+        if(game.playable)
         {//플레이어가 상자를 클릭하는 경우
             this.sprite.color = this.game.now_color;
         }

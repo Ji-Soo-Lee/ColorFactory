@@ -17,7 +17,8 @@ public class BrainProblemGenerator : MonoBehaviour
     {
         this.game = BrainGameManager.game;
         game.new_problem += InitiateProblem;
-        for(int i=0; i<this.kind; i++)
+        game.stop_problem += stop_problem;
+        for (int i=0; i<this.kind; i++)
         {
             Button button = this.palette[i].GetComponent<Button>();
             Color color = this.colors[i];
@@ -26,7 +27,6 @@ public class BrainProblemGenerator : MonoBehaviour
             button.colors = cb;
             button.onClick.AddListener(() => change_color(color));
         }
-        InitiateProblem();
     }
     void change_color(Color x)
     {//버튼에 넣는 함수. 현재 색 바꾸기.
@@ -38,7 +38,7 @@ public class BrainProblemGenerator : MonoBehaviour
     }
     IEnumerator ProblemCycle()
     {//한 문제를 만드는 사이클
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(2.0f);
         prepare_problem();
         yield return new WaitForSeconds(4.0f);
         game.playable = true;
@@ -69,7 +69,7 @@ public class BrainProblemGenerator : MonoBehaviour
     }
     public void judge_answer()
     {//응답 채점하기
-        if(game.playable==true)
+        if(game.playable)
         {
             game.playable = false;
             int cnt = 0;
@@ -95,5 +95,9 @@ public class BrainProblemGenerator : MonoBehaviour
                 difficulty_increase();
             }
         }
+    }
+    void stop_problem()
+    {//현 문제 중지. 기존 문제를 버리고 다시 문제를 낼 때 사용한다.
+        StopAllCoroutines();
     }
 }
