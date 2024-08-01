@@ -6,7 +6,16 @@ using UnityEngine.SceneManagement;
 public class ScoreDataManager : MonoBehaviour
 {
     public static ScoreDataManager Inst;
-    [HideInInspector] public int finalMiniGameScore;
+    // [HideInInspector]
+    public int finalMiniGameScore;
+    // [HideInInspector]
+    public string resultSceneName;
+
+    public void SaveResult(int score)
+    {
+        finalMiniGameScore = score;
+        resultSceneName = SceneManager.GetActiveScene().name;
+    }
 
     void Awake()
     {

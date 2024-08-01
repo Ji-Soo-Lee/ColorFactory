@@ -14,6 +14,9 @@ public class ColoringGameManager : MonoBehaviour
 
     public event Action new_problem;//ProblemGenerator
 
+    int score = 5;
+    public GameObject DummyEndGamePannel;
+
     void Awake()
     {//게임 매니저를 전역 싱글톤으로 설정하기.
         if (game == null)
@@ -46,7 +49,14 @@ public class ColoringGameManager : MonoBehaviour
             else
             {
                 Debug.Log("게임이 끝났습니다.");
+                EndGame();
             }
         }//채점이 끝난 이후에는 프레임을 치운다.
+    }
+
+    public void EndGame()
+    {
+        ScoreDataManager.Inst.SaveResult(score);
+        DummyEndGamePannel.SetActive(true);
     }
 }

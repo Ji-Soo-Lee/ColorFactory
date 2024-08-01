@@ -21,6 +21,8 @@ public class MixStageManager : MonoBehaviour
     public Color targetColor, resultColor;
     public TMP_Text timeText, scoreText, stageText;
 
+    public GameObject DummyEndGamePannel;
+
     protected virtual void Start()
     {
         if (stageTimeLimits.Length != totalStages || stageScores.Length != totalStages)
@@ -144,5 +146,7 @@ public class MixStageManager : MonoBehaviour
     {
         Debug.Log("Game completed.");
         // Game termination logic (ex: Show result page, Move to main menu etc.)
+        ScoreDataManager.Inst.SaveResult(scoreManager.GetScore());
+        DummyEndGamePannel.SetActive(true);
     }
 }

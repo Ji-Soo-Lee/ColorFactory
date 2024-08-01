@@ -19,6 +19,15 @@ public class SimonGameManager : MonoBehaviour
     int level = 1;//현재 레벨. 레벨의 수 만큼의 색을 외워야 한다.
     int current = 0;
 
+    public GameObject DummyEndGamePannel;
+    int score = 5;
+
+    public void EndGame()
+    {
+        ScoreDataManager.Inst.SaveResult(score);
+        DummyEndGamePannel.SetActive(true);
+    }
+
     void Awake()
     {//게임 매니저를 전역 싱글톤으로 설정하기.
         if (game == null)

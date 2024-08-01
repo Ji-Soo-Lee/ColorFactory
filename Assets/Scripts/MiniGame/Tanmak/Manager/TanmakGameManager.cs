@@ -49,7 +49,7 @@ public class TanmakGameManager : PausableMonoBehaviour
         Pause();
         // End Logic Needed
         // Save & Show Score
-        scoreDataManager.finalMiniGameScore = scoreManager.GetScore();
+        scoreDataManager.SaveResult(scoreManager.GetScore());
         // Small Menu?
         TUIManager.ToggleGameOverPanel();
     }
