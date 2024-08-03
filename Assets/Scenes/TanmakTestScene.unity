@@ -2322,7 +2322,7 @@ MonoBehaviour:
   totalStages: 5
   stageTimeLimits: []
   stageScores: 
-  isTimerBased: 1
+  currentStage: 0
   DummyEndGamePannel: {fileID: 580616254}
   scoreManager: {fileID: 0}
   scoreDataManager: {fileID: 0}
@@ -3790,7 +3790,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 24857169}
         m_TargetAssemblyTypeName: DummySceneController, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
