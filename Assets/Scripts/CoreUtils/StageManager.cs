@@ -8,10 +8,8 @@ public class StageManager : PausableMonoBehaviour
     public float[] stageTimeLimits;         // Time limit for each stage
     public int[] stageScores;               // Current score for each stage
 
-    private int currentStage = 0;           // Index of current stage
-    private bool isStageActive = false;     // Status of stage (active or not)
-
-    public bool isTimerBased = true;
+    public int currentStage = 0;           // Index of current stage
+    protected bool isStageActive = false;     // Status of stage (active or not)
 
     public GameObject DummyEndGamePannel;
     [HideInInspector] public ScoreManager scoreManager;
@@ -22,6 +20,7 @@ public class StageManager : PausableMonoBehaviour
     protected virtual void Awake()
     {
         InitializeStageTimer();
+        InitializeStageStopwatch();
         InitializeScoreManager();
         InitializeScoreDataManager();
     }
@@ -44,7 +43,7 @@ public class StageManager : PausableMonoBehaviour
         {
             gameObject.AddComponent<ScoreManager>();
         }
-        scoreManager = gameObject.AddComponent<ScoreManager>();
+        scoreManager = gameObject.GetComponent<ScoreManager>();
     }
 
     protected virtual void InitializeStageTimer()
@@ -53,7 +52,7 @@ public class StageManager : PausableMonoBehaviour
         {
             gameObject.AddComponent<TimerManager>();
         }
-        stageTimer = gameObject.AddComponent<TimerManager>();
+        stageTimer = gameObject.GetComponent<TimerManager>();
     }
 
     protected virtual void InitializeStageStopwatch()
@@ -62,7 +61,7 @@ public class StageManager : PausableMonoBehaviour
         {
             gameObject.AddComponent<StopwatchManager>();
         }
-        stageStopwatch = gameObject.AddComponent<StopwatchManager>();
+        stageStopwatch = gameObject.GetComponent<StopwatchManager>();
     }
 
     protected virtual void InitializeScoreDataManager()
