@@ -4,26 +4,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class MixStageManager : MonoBehaviour
+public class MixStageManager : StageManager
 {
-    public int totalStages = 5;             // The number of Stages
-    public float[] stageTimeLimits = new float[5] { 10f, 10f, 20f, 20f, 30f };         // Time limit for each stage
-    public int[] stageScores = new int[5] { 100, 200, 300, 400, 500 };               // Current score for each stage
-
-    private int currentStage = 0;           // Index of current stage
-    protected TimerManager timerManager;      // Timer Manager
-    protected ScoreManager scoreManager;      // Score Manager
-    private bool isStageActive = false;     // Status of stage (active or not)
-
     private AnswerToken answerToken;
     private PaletteResult paletteResult;
     public Button btn1;
     public Color targetColor, resultColor;
     public TMP_Text timeText, scoreText, stageText;
 
-    public GameObject DummyEndGamePannel;
+    protected override void Awake()
+    {
+        base.Awake();
 
-    protected virtual void Start()
+        totalStages = 5;
+        stageTimeLimits = new float[5] { 10f, 10f, 20f, 20f, 30f };
+        stageScores = new int[5] { 100, 200, 300, 400, 500 };
+
+        currentStage = 0;
+        isStageActive = false;
+    }
+
+    protected override void Start()
     {
         if (stageTimeLimits.Length != totalStages || stageScores.Length != totalStages)
         {
@@ -31,7 +32,7 @@ public class MixStageManager : MonoBehaviour
             return;
         }
 
-        InitializeTimerManager();
+        InitializeStageTimer();
         InitializeScoreManager();
 
         answerToken = GameObject.Find("TargetImage").GetComponent<AnswerToken>();
@@ -56,63 +57,35 @@ public class MixStageManager : MonoBehaviour
         StartStage(0);  // Start first stage
     }
 
-    protected virtual void InitializeScoreManager()
-    {
-        scoreManager = gameObject.AddComponent<ScoreManager>();
-    }
-
-    protected virtual void InitializeTimerManager()
-    {
-        timerManager = gameObject.AddComponent<TimerManager>();
-    }
-
-    protected virtual void Update()
+    protected override void Update()
     {
         // Check if a stage is currently active
 
         if (isStageActive)
         {
-            timeText.text = (Mathf.Ceil(timerManager.GetTimerValue()*10)/10).ToString();
+            timeText.text = (Mathf.Ceil(stageTimer.GetTimerValue()*10)/10).ToString();
         }
 
         // General update logic if needed
     }
 
-    protected virtual void StartStage(int stageIndex)
+    protected override void StartStage(int stageIndex)
     {
-        if (stageIndex < 0 || stageIndex >= totalStages)
-        {
-            Debug.LogError("Stage index error.");
-            return;
-        }
+        base.StartStage(stageIndex);
 
-        currentStage = stageIndex;
-
-        // Timer Setup
-        float stageTimeLimit = stageTimeLimits[currentStage];
-        timerManager.SetupTimer(stageTimeLimit, EndStage);
-
-        isStageActive = true;
-
-        // Initialize
-        InitializeGameElements();
-
-        timerManager.StartTimer();
-        stageText.text = "stage"+currentStage.ToString();
-
-        Debug.Log("Stage " + (currentStage + 1) + "started.");
+        stageText.text = "stage" + currentStage.ToString();
     }
 
-    protected virtual void EndStage()
+    protected override void EndStage()
     {
         isStageActive = false;
-        timerManager.PauseTimer();
+        stageTimer.PauseTimer();
 
         // Score Calculation
         CalculateFinalScore();
         Debug.Log("Stage " + (currentStage + 1) + "ended.");
         Debug.Log("Total Score: " + scoreManager.GetScoreAsString());
-        scoreText.text = "Score : "+ scoreManager.GetScoreAsString();
+        scoreText.text = "Score : " + scoreManager.GetScoreAsString();
 
         if (currentStage < totalStages - 1)
         {
@@ -126,27 +99,12 @@ public class MixStageManager : MonoBehaviour
         }
     }
 
-    protected virtual void InitializeGameElements()
+    protected override void InitializeGameElements()
     {
         // Initialize logic (ex: Player location initialize, Color initialize etc.)
         paletteResult.SetPaletteColor(currentStage);
         paletteResult.SetOnClickAction(paletteResult.mixType);
         answerToken.SetTargetColor(currentStage);
         paletteResult.ClickReset();
-    }
-
-    protected virtual void CalculateFinalScore()
-    {
-        // Score Calculation logic (ex: Remaining time, Color sync rate etc.)
-        float remainingTime = timerManager.GetTimerValue();
-        scoreManager.OnStageClear(remainingTime);
-    }
-
-    protected virtual void EndGame()
-    {
-        Debug.Log("Game completed.");
-        // Game termination logic (ex: Show result page, Move to main menu etc.)
-        ScoreDataManager.Inst.SaveResult(scoreManager.GetScore());
-        DummyEndGamePannel.SetActive(true);
     }
 }
