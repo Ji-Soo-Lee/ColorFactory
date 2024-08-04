@@ -16,6 +16,7 @@ public class PaletteResult : MonoBehaviour
     private AnswerToken answerToken;
     private Action ActionOnClick;
     public TMP_Text textBtn1, textBtn2, textBtn3;
+    public bool isMixable = false;
 
     private float clickThreshold = 5;
 
@@ -105,14 +106,14 @@ public class PaletteResult : MonoBehaviour
         btn1.onClick.AddListener(() => {
             if (paletteType == 0)
             {
-                if (AClick < clickThreshold)
+                if (AClick < clickThreshold && isMixable)
                 {
                     AClick++;
                 }
             }
             else
             {
-                if(AClick > 0 ) 
+                if(AClick > 0 && isMixable ) 
                 {
                     AClick--;
                 }
@@ -125,14 +126,14 @@ public class PaletteResult : MonoBehaviour
         btn2.onClick.AddListener(() => {
             if (paletteType == 0)
             {
-                if (BClick < clickThreshold)
+                if (BClick < clickThreshold && isMixable)
                 {
                     BClick++;
                 }
             }
             else
             {
-                if (BClick > 0)
+                if (BClick > 0 && isMixable )
                 {
                     BClick--;
                 }
@@ -145,14 +146,14 @@ public class PaletteResult : MonoBehaviour
         btn3.onClick.AddListener(() => {
             if (paletteType == 0)
             {
-                if (CClick < clickThreshold)
+                if (CClick < clickThreshold && isMixable)
                 {
                     CClick++;
                 }
             }
             else
             {
-                if (CClick > 0)
+                if (CClick > 0 && isMixable)
                 {
                     CClick--;
                 }
@@ -163,16 +164,19 @@ public class PaletteResult : MonoBehaviour
         });
 
         btnPaletteMod.onClick.AddListener(() => {
-            paletteType = (paletteType + 1) % 2;
-            if (paletteType == 0)
+            if (isMixable)
             {
-                btn4Image.color = Color.green;
-                btn5Image.color = Color.red;
-            }
-            else
-            {
-                btn4Image.color = Color.red;
-                btn5Image.color = Color.green;
+                paletteType = (paletteType + 1) % 2;
+                if (paletteType == 0)
+                {
+                    btn4Image.color = Color.green;
+                    btn5Image.color = Color.red;
+                }
+                else
+                {
+                    btn4Image.color = Color.red;
+                    btn5Image.color = Color.green;
+                }
             }
         });
     }
