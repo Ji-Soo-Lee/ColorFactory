@@ -22,9 +22,6 @@ public class BrainProblemGenerator : MonoBehaviour
         {
             Button button = this.palette[i].GetComponent<Button>();
             Color color = this.colors[i];
-            ColorBlock cb = button.colors;
-            cb.normalColor = color; cb.highlightedColor = color; cb.selectedColor = color;
-            button.colors = cb;
             button.onClick.AddListener(() => change_color(color));
         }
     }
@@ -41,7 +38,7 @@ public class BrainProblemGenerator : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         prepare_problem();
         yield return new WaitForSeconds(4.0f);
-        game.playable = true;
+        game.toggle_player(true);
     }
     void prepare_problem()
     {//블록 준비하기
@@ -71,7 +68,7 @@ public class BrainProblemGenerator : MonoBehaviour
     {//응답 채점하기
         if(game.playable)
         {
-            game.playable = false;
+            game.toggle_player(false);
             int cnt = 0;
             bool wrong = false;
             GameObject[] obj = GameObject.FindGameObjectsWithTag("Player");
