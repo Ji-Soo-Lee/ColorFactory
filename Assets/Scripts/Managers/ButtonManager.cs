@@ -16,7 +16,7 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private int maxClicks = 24;
     [SerializeField] private int maxCycle = 4;
     [SerializeField] private List<Color> worldColors = new List<Color>();
-    [SerializeField] private List<Sprite> buttonBackgrounds = new List<Sprite>();
+    // [SerializeField] private List<Sprite> buttonBackgrounds = new List<Sprite>();
     private List<Color> buttonColors = new List<Color>();
     private Color targetColor;
     private Color currentColor;
@@ -29,6 +29,7 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private int currentClickNum;
     private int rewardIdx;
     private Color color;
+    private Vector3 originalScale;
     // private Coroutine colorChangeCoroutine;
 
     void Awake()
@@ -51,7 +52,9 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         buttonSprite.color = currentColor;
         clickButton.onClick.AddListener(OnClickButton);
 
-        backgroundSprite.sprite = buttonBackgrounds[0];
+        // backgroundSprite.sprite = buttonBackgrounds[0];
+
+        originalScale = clickButton.transform.localScale;
     }
 
     void OnClickButton()
@@ -98,18 +101,20 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        backgroundSprite.sprite = buttonBackgrounds[1];
+        clickButton.transform.localScale = originalScale * 0.9f;
+        backgroundSprite.transform.localScale = originalScale * 0.9f;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        backgroundSprite.sprite = buttonBackgrounds[0];
+        clickButton.transform.localScale = originalScale;
+        backgroundSprite.transform.localScale = originalScale;
     }
 
     public void RobotClick(int n)
     {
         clickButton.interactable = false;
-    
+        
         StartCoroutine(SimulateMultipleClicks(n));
     }
 
