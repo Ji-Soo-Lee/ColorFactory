@@ -106,12 +106,12 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         backgroundSprite.sprite = buttonBackgrounds[0];
     }
 
-public void RobotClick(int n)
-{
-    clickButton.interactable = false;
+    public void RobotClick(int n)
+    {
+        clickButton.interactable = false;
     
-    StartCoroutine(SimulateMultipleClicks(n));
-}
+        StartCoroutine(SimulateMultipleClicks(n));
+    }
 
     private IEnumerator SimulateMultipleClicks(int n)
     {
@@ -161,15 +161,27 @@ public void RobotClick(int n)
     private void GetReward()
     {
         // TODO : need to fix
-        do {
-            rewardIdx = Random.Range(0, buttonColorLength);
-        } while(buttonColors[rewardIdx].a == worldColors[rewardIdx].a);
+        int rewardIdx = -1;
+        List<int> validIndices = new List<int>();
 
-        Debug.Log(rewardIdx);
-        
-        color = new Color(buttonColors[rewardIdx].r, buttonColors[rewardIdx].g, buttonColors[rewardIdx].b, buttonColors[rewardIdx].a + worldColors[rewardIdx].a / maxCycle);
-        buttonColors[rewardIdx] = color;
-        backgrounds[rewardIdx].color = color;
+        for (int i = 0; i < buttonColorLength; i++)
+        {
+            if (buttonColors[i].a != worldColors[i].a)
+            {
+                validIndices.Add(i);
+            }
+        }
+
+        if (validIndices.Count > 0)
+        {
+            rewardIdx = validIndices[Random.Range(0, validIndices.Count)];
+
+            Debug.Log(rewardIdx);
+
+            color = new Color(buttonColors[rewardIdx].r, buttonColors[rewardIdx].g, buttonColors[rewardIdx].b, buttonColors[rewardIdx].a + worldColors[rewardIdx].a / maxCycle);
+            buttonColors[rewardIdx] = color;
+            backgrounds[rewardIdx].color = color;
+        }
 
         if (Enumerable.SequenceEqual(buttonColors, worldColors)) {
             Debug.Log("You win!");
