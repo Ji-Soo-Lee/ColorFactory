@@ -82,11 +82,10 @@ public class ColoringProblemGenerator: MonoBehaviour
         {
             Color color = palette[i].get_color();
             GameObject btn = Instantiate(this.buttonPrefab, this.panel.transform);
-            btn.transform.localPosition = new Vector3(18 + 36 * (i % 7), -120 - 36 * (i / 7), 0);
+            btn.transform.localScale = new Vector3(3, 3, 1);
+            btn.transform.localPosition = new Vector3(30 + 105 * (i % 8), -50 - 36 * (i / 8), 0);
+            btn.GetComponent<Image>().color = color;
             Button button = btn.GetComponent<Button>();
-            ColorBlock cb = button.colors;
-            cb.normalColor = color; cb.highlightedColor = color; cb.selectedColor = color;
-            button.colors = cb;
             button.onClick.AddListener(() => change_color(color));
         }
     }
