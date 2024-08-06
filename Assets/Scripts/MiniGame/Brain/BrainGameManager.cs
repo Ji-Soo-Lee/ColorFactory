@@ -11,14 +11,17 @@ public class BrainGameManager : MonoBehaviour
     public bool playable = false;//현재 플레이어가 답을 할 수 있는지
     bool pause = false;
     public Color now_color;
+
     public GameObject scoreboard;
     public GameObject pausepanel;
+    public GameObject questionboard;
+    public GameObject submitButton;
 
     public event Action new_problem;//ProblemGenerator과 느슨히 연결됨.
     public event Action stop_problem;
 
     const int TOTAL = 10;//총 문제 수
-    int current = 0;
+    int current = 1;
     int score = 0;//점수
     int bonus = 0;//최대 기억 수(보너스 점수)
     void Awake()
@@ -42,8 +45,9 @@ public class BrainGameManager : MonoBehaviour
         this.score += correct;//맞은 것 하나당 1점
         this.bonus = (this.bonus < correct ? correct : this.bonus);//최대 기억 수는 수에 따라 보너스 점수를 준다.
         this.scoreboard.GetComponent<TextMeshProUGUI>().text = this.score.ToString();
-        if (this.current < TOTAL)
+        if (this.current <= TOTAL)
         {//다음 문제 내기
+            this.questionboard.GetComponent<TextMeshProUGUI>().text = "Q " + this.current + "/" + TOTAL;
             new_problem();
         }
         else
@@ -51,11 +55,16 @@ public class BrainGameManager : MonoBehaviour
             StartCoroutine(Gameover());
         }
     }
+    public void toggle_player(bool toggle)
+    {//플레이어의 입력 차례인지 체크하기
+        this.playable = toggle;
+        this.submitButton.SetActive(toggle);
+    }
     public void toggle_pause()
     {//게임 일시정지
         this.pause = !(this.pause);
         this.pausepanel.SetActive(this.pause);
-        game.playable = false;
+        toggle_player(false);
         stop_problem();//게임을 일시정지한 경우 문제 출제를 중지한다.
         if(this.pause==false)
         {//게임을 다시 켠 경우 문제를 다시 낸다.
