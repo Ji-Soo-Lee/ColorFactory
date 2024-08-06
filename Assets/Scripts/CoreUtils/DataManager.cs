@@ -7,7 +7,7 @@ using System;
 
 public class DataManager
 {
-    private static string default_path = Application.persistentDataPath; // OR dataPath
+    private static string default_path = Application.dataPath; // OR persistentDataPath
 
     public static T LoadJSON<T>(string fileName)
     {
