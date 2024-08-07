@@ -6,6 +6,12 @@ MonoImporter:
   defaultReferences:
   - bulletPrefab: {fileID: 7035965164254283205, guid: 83cd8df31488728458dad0b6b232d9c7,
       type: 3}
+  - bulletPrefab1: {fileID: 7035965164254283205, guid: 7dfc51f07f2da4ff6af5731888d16bcf,
+      type: 3}
+  - bulletPrefab2: {fileID: 7035965164254283205, guid: ba565de2e855d42e59a968a29df68989,
+      type: 3}
+  - bulletPrefab3: {fileID: 7035965164254283205, guid: 21edc8ae2d54e456caefb678e7dde982,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

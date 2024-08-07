@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TanmakConstruct : MonoBehaviour
+public class TanmakPatterns : MonoBehaviour
 {
     public GameObject bulletPrefab; // bullet prefab
+    public GameObject bulletPrefab1; // First Color Prefab
+    public GameObject bulletPrefab2; // Second Color Prefab
+    public GameObject bulletPrefab3; // Third Color Prefab
     public float fireRate = 1f; // bullet fire time rate (s)
     public float bulletSpeed = 5f; // bullet speed (m/s)
     public int bulletCount = 10; // bullet count
@@ -15,13 +18,41 @@ public class TanmakConstruct : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Debug log in TanmakPatterns");
+        // Log the assigned prefab names to confirm they are set
+        Debug.Log("bulletPrefab : " + bulletPrefab);
+        Debug.Log("bulletPrefab1: " + bulletPrefab1);
+        Debug.Log("bulletPrefab2: " + bulletPrefab2);
+        Debug.Log("bulletPrefab3: " + bulletPrefab3);
+        Debug.Log("============");
+
         // StartCoroutine(FireBulletsCircularPattern()); // It can be changed
         // StartCoroutine(FireBulletsRectangularPattern(bulletCountRow, bulletCountCol, bulletSpacing, 90));
         StartCoroutine(FireBulletsCirclePattern(20, 3, 0));
+        //StartCoroutine(FireColorTest());
+    }
+
+    IEnumerator FireColorTest()
+    {
+        Vector3 direction = new Vector3(1, 0, 0);
+        GameObject bullet1 = Instantiate(bulletPrefab1, transform.position, Quaternion.identity);
+        bullet1.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+
+        yield return new WaitForSeconds(1f);
+
+        GameObject bullet2 = Instantiate(bulletPrefab2, transform.position, Quaternion.identity);
+        bullet2.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+
+        yield return new WaitForSeconds(1f);
+
+        GameObject bullet3 = Instantiate(bulletPrefab1, transform.position, Quaternion.identity);
+        bullet3.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+
+        yield return new WaitForSeconds(1f);
     }
 
     // Fire multiple bullets in a circular pattern
-    IEnumerator FireBulletsCircularPattern() 
+    IEnumerator FireBulletsCircularPattern()
     {
         while (true)
         {
@@ -38,9 +69,9 @@ public class TanmakConstruct : MonoBehaviour
     }
 
     // Fire multiple bullets in a shape of circle
-    // bulletCount: 원을 구성하는 총알의 개수
-    // radius: 반지름
-    // angle: 발사 각도
+    // bulletCount: ?? ???? ??? ??
+    // radius: ???
+    // angle: ?? ??
     IEnumerator FireBulletsCirclePattern(int bulletCount, int radius, float angle)
     {
         while (true)
@@ -50,7 +81,7 @@ public class TanmakConstruct : MonoBehaviour
             for (; circleAngle < Mathf.PI + Mathf.PI; circleAngle += circleAngleIter)
             {
                 Vector3 positionOffset = new Vector3(radius * Mathf.Cos(circleAngle), radius * Mathf.Sin(circleAngle), 0);
-                GameObject bullet = Instantiate(bulletPrefab, transform.position + positionOffset, Quaternion.identity);
+                GameObject bullet = Instantiate(bulletPrefab1, transform.position + positionOffset, Quaternion.identity);
                 bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
             }
 
@@ -89,7 +120,7 @@ public class TanmakConstruct : MonoBehaviour
     {
         while (true)
         {
-            
+
         }
     }
 
@@ -98,7 +129,7 @@ public class TanmakConstruct : MonoBehaviour
     {
         while (true)
         {
-            // Todo: 정삼각형 형태로 퍼지는 패
+            // Todo: ???? ??? ??? ?
         }
     }
     */

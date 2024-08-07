@@ -16,7 +16,6 @@ public class TempTanmak : MonoBehaviour
 
     void Start()
     {
-    
         var tgmobj = GameObject.Find("Tanmak Game Manager Object");
 
         if (tgmobj != null)
@@ -25,8 +24,20 @@ public class TempTanmak : MonoBehaviour
             TanmakGameManager tanmakGM = tgmobj.GetComponent<TanmakGameManager>();
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
 
-            color = tanmakGM.colors[UnityEngine.Random.Range(0, TanmakGameManager.colorSize)];
-            spriteRenderer.color = color;
+            string prefabName = gameObject.name.Replace("(Clone)", "").Trim();
+            Debug.Log($"Prefab Name: {prefabName}");
+
+            // If color is assigned by prefab name
+            if (tanmakGM.bulletColorMapping.TryGetValue(prefabName, out color))
+            {
+                spriteRenderer.color = color;
+            }
+            else 
+            {
+                // random color among colors list
+                color = tanmakGM.colors[UnityEngine.Random.Range(0, TanmakGameManager.colorSize)];
+                spriteRenderer.color = color;
+            }
         }
     }
 }
