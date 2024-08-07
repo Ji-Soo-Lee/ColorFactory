@@ -9,13 +9,13 @@ using TMPro;
 public class PaletteResult : MonoBehaviour
 {
     public Button btn1, btn2, btn3, btnPaletteMod, btnSubmission;
-    public Image resultImage, btn1Image, btn2Image, btn3Image, targetImage, btn4Image, btn5Image;
+    public Image resultImage, btn1Image, btn2Image, btn3Image, targetImage, btnPlusImage, btnMinusImage;
     public int AClick = 0, BClick = 0, CClick = 0, mixType = 1;
     private int paletteType = 0;
     private Color colorA, colorB, colorC;
     private AnswerToken answerToken;
     private Action ActionOnClick;
-    public TMP_Text textBtn1, textBtn2, textBtn3;
+    public TMP_Text textBtn1, textBtn2, textBtn3, textPlus, textMinus;
     public bool isMixable = false;
 
     private float clickThreshold = 5;
@@ -82,7 +82,7 @@ public class PaletteResult : MonoBehaviour
         {
             btn1Image.color = ColorUtils.GetRandomColor();
             btn2Image.color = new Color(UnityEngine.Random.Range(0f, 1f- btn1Image.color.r), UnityEngine.Random.Range(0f, 1f - btn1Image.color.g), UnityEngine.Random.Range(0f, 1f - btn1Image.color.b));
-            btn3Image.color = new Color(1,1,1) - btn1Image.color - btn2Image.color;
+            btn3Image.color = new Color(1f - btn1Image.color.r - btn2Image.color.r, 1f - btn1Image.color.g - btn2Image.color.g, 1f - btn1Image.color.b - btn2Image.color.b);
             mixType = 1;
         }
     }
@@ -169,13 +169,17 @@ public class PaletteResult : MonoBehaviour
                 paletteType = (paletteType + 1) % 2;
                 if (paletteType == 0)
                 {
-                    btn4Image.color = Color.green;
-                    btn5Image.color = Color.red;
+                    btnPlusImage.color = new Color(1, 1, 1, 1);
+                    btnMinusImage.color = new Color(1, 1, 1, 0);
+                    textPlus.color = new Color(0, 0, 0, 1);
+                    textMinus.color = new Color(1, 1, 1, 1);
                 }
                 else
                 {
-                    btn4Image.color = Color.red;
-                    btn5Image.color = Color.green;
+                    btnPlusImage.color = new Color(1, 1, 1, 0);
+                    btnMinusImage.color = new Color(1, 1, 1, 1);
+                    textPlus.color = new Color(1, 1, 1, 1);
+                    textMinus.color = new Color(0, 0, 0, 1);
                 }
             }
         });
