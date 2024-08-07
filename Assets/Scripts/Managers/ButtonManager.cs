@@ -23,12 +23,8 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private float colorTransitionDuration = 1.0f; // Duration in seconds over which color change occurs
     [SerializeField] private float robotColorTransitionDuration = 5.0f;
     private int buttonColorLength;
-    private int itv;
     private float colorThreshold;
-    private int currentColorIndex;
     private int currentClickNum;
-    private int rewardIdx;
-    private Color color;
     private Vector3 originalScale;
     // private Coroutine colorChangeCoroutine;
 
@@ -37,7 +33,7 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         clickNum = 0;
 
         for (int i = 0; i < worldColors.Count; i++) {
-            color = new Color(worldColors[i].r, worldColors[i].g, worldColors[i].b, worldColors[i].a / maxCycle);
+            Color color = new Color(worldColors[i].r, worldColors[i].g, worldColors[i].b, worldColors[i].a / maxCycle);
             buttonColors.Add(color);
             backgrounds[i].color = color;
         }
@@ -55,6 +51,24 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         // backgroundSprite.sprite = buttonBackgrounds[0];
 
         originalScale = clickButton.transform.localScale;
+
+        // Load Data
+        ClickerData data = ClickerDataManager.LoadData();
+        if (data != null)
+        {
+            clickNum = data.clickNum;
+            currentClickNum = data.currentClickNum;
+            currentColor = data.currentColor;
+            buttonColors = data.buttonColors;
+
+            // Apply on Sprites
+            buttonSprite.color = currentColor;
+            for (int i = 0;i < buttonColors.Count; i++)
+            {
+                Color c = buttonColors[i];
+                backgrounds[i].color = new Color(c.r, c.g, c.b, c.a);
+            }
+        }
     }
 
     void OnClickButton()
@@ -62,7 +76,7 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         clickNum++;
         currentClickNum++;
         
-        itv = (int) Mathf.Floor(clickNum / colorThreshold);
+        int itv = (int) Mathf.Floor(clickNum / colorThreshold);
         targetColor = Color.Lerp(buttonColors[itv % buttonColorLength], buttonColors[(itv + 1) % buttonColorLength], ((float) (clickNum % colorThreshold)) / colorThreshold);
         
         StopCoroutine(ChangeColor(colorTransitionDuration));
@@ -75,10 +89,11 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
 
         // Continuously update the color to smoothly transition to the target color
-        currentColor = Color.Lerp(currentColor, targetColor, Time.deltaTime / colorTransitionDuration);
-        buttonSprite.color = currentColor;
+        //currentColor = Color.Lerp(currentColor, targetColor, Time.deltaTime / colorTransitionDuration);
+        //buttonSprite.color = currentColor;
     }
 
+    // Slowly Change Color During transitionDuration
     IEnumerator ChangeColor(float transitionDuration)
     {
         Debug.Log("DEBUG");
@@ -94,6 +109,7 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             yield return null;
         }
 
+        // Ensure Final Color
         currentColor = targetColor;
         buttonSprite.color = currentColor;
     }
@@ -118,6 +134,7 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         StartCoroutine(SimulateMultipleClicks(n));
     }
 
+    // Add Clicks for Robots
     private IEnumerator SimulateMultipleClicks(int n)
     {
 
@@ -127,7 +144,7 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             clickNum++;
             currentClickNum++;
 
-            itv = (int)Mathf.Floor(clickNum / colorThreshold);
+            int itv = (int)Mathf.Floor(clickNum / colorThreshold);
             targetColor = Color.Lerp(buttonColors[itv % buttonColorLength], buttonColors[(itv + 1) % buttonColorLength], ((float)(clickNum % colorThreshold)) / colorThreshold);
 
             yield return StartCoroutine(ChangeColor(stepColorTransitionDuration)); // Adjust duration for faster transitions
@@ -163,12 +180,14 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     //     buttonSprite.color = currentColor;
     // }
 
+    // Get Color Reward
     private void GetReward()
     {
         // TODO : need to fix
         int rewardIdx = -1;
         List<int> validIndices = new List<int>();
 
+        // Get Valid Indices
         for (int i = 0; i < buttonColorLength; i++)
         {
             if (buttonColors[i].a != worldColors[i].a)
@@ -179,22 +198,31 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         if (validIndices.Count > 0)
         {
+            // Get Random Reward
             rewardIdx = validIndices[Random.Range(0, validIndices.Count)];
 
             Debug.Log(rewardIdx);
 
-            color = new Color(buttonColors[rewardIdx].r, buttonColors[rewardIdx].g, buttonColors[rewardIdx].b, buttonColors[rewardIdx].a + worldColors[rewardIdx].a / maxCycle);
+            Color color = new Color(buttonColors[rewardIdx].r, buttonColors[rewardIdx].g, buttonColors[rewardIdx].b, buttonColors[rewardIdx].a + worldColors[rewardIdx].a / maxCycle);
             buttonColors[rewardIdx] = color;
             backgrounds[rewardIdx].color = color;
         }
 
         if (Enumerable.SequenceEqual(buttonColors, worldColors)) {
+            // End Logic
             Debug.Log("You win!");
             clickButton.interactable = false;
             for (int i = 0; i < robots.Count; i++) {
                 robots[i].robotButton.interactable = false;
             }
         }
+    }
+
+    void OnDisable()
+    {
+        // Save Data
+        ClickerData data = ClickerDataManager.CreateClickerData(clickNum, currentClickNum, currentColor, buttonColors);
+        ClickerDataManager.SaveData(data);
     }
 }
 

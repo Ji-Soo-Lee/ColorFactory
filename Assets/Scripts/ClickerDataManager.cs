@@ -6,32 +6,32 @@ using UnityEngine;
 public class ClickerData
 {
     public int clickNum;
+    public int currentClickNum;
+    public Color currentColor;
+    public List<Color> buttonColors;
 }
 
-public class ClickerDataManager : MonoBehaviour
+public class ClickerDataManager
 {
-    public ButtonManager buttonManager;
-
-    public void SaveData()
+    public static ClickerData CreateClickerData(int clickNum, int currentClickNum, Color currentColor, List<Color> buttonColors)
     {
-        ClickerData data = new ClickerData();
-        data.clickNum = buttonManager.clickNum;
+        ClickerData clickerData = new ClickerData();
+        clickerData.clickNum = clickNum;
+        clickerData.currentClickNum = currentClickNum;
+        clickerData.currentColor = currentColor;
+        clickerData.buttonColors = buttonColors;
 
+        return clickerData;
+    }
+
+    public static void SaveData(ClickerData data)
+    {
         DataManager.SaveJSON<ClickerData>(data, "clicker_save_data");
     }
 
-    public void LoadData()
+    public static ClickerData LoadData()
     {
         ClickerData data = DataManager.LoadJSON<ClickerData>("clicker_save_data");
-        if (data != null)
-        {
-            buttonManager.clickNum = data.clickNum;
-            // currentClickNum, color
-        }
-    }
-
-    void Awake()
-    {
-        LoadData();
+        return data;
     }
 }
