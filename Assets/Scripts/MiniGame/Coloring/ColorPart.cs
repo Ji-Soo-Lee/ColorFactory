@@ -7,6 +7,7 @@ public class ColorPart : MonoBehaviour
     ColoringGameManager game;
     SpriteRenderer sprite;
     Color answer;//이 조각의 정답
+    Color chosen;//이 조각에 어떤 색을 칠했는지
     void Start()
     {
         this.game = ColoringGameManager.game;
@@ -25,10 +26,29 @@ public class ColorPart : MonoBehaviour
         if(this.game.playable)
         {
             this.sprite.color = this.game.now_color;
+            this.chosen = this.game.now_color;
         }
     }
     public bool verdict()
     {//이 조각에 답을 바르게 했는지 확인하기
-        return (this.sprite.color == this.answer);
+        bool result = (this.sprite.color == this.answer);
+        return result;
+    }
+    public IEnumerator hint()
+    {//이 조각의 힌트 주기
+        this.sprite.color = this.answer;
+        yield return new WaitForSeconds(3.0f);
+        this.sprite.color = this.chosen;
+    }
+    public IEnumerator blink()
+    {//이 조각 깜빡이기
+        this.sprite.color = Color.clear;
+        yield return new WaitForSeconds(0.2f);
+        this.sprite.color = this.chosen;
+        yield return new WaitForSeconds(0.2f);
+        this.sprite.color = Color.clear;
+        yield return new WaitForSeconds(0.2f);
+        this.sprite.color = this.chosen;
+        yield return new WaitForSeconds(0.2f);
     }
 }

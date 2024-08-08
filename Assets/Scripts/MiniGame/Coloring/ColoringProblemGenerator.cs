@@ -24,7 +24,7 @@ public class ColoringProblemGenerator: MonoBehaviour
         string dex = File.ReadAllText(DexFile);//문제은행 파일 읽기
         ColoringDex book = JsonUtility.FromJson<ColoringDex>(dex);
         this.problemset = book.problemset;
-        InitiateProblem();
+        this.game.StartGame();
     }
     void InitiateProblem()
     {//무작위로 한 문제를 출제한다.
@@ -47,7 +47,7 @@ public class ColoringProblemGenerator: MonoBehaviour
         yield return new WaitForSeconds(5.0f);
         ColorEntry[] palette = picture.palette;
         make_palette(palette);//팔레트 생성하기
-        this.game.playable = true;
+        this.game.toggle_player(true);
     }
     void show_problem(ColoringPage picture)
     {//문제 보여주기. 한 문제는 윤곽선(프레임) 하나와 여러 조각들로 이루어져 있다.
