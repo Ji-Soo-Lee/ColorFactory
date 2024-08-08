@@ -75,7 +75,7 @@ public class MixStageManager : StageManager
 
         // Timer Setup
         float stageTimeLimit = stageTimeLimits[currentStage];
-        timerManager.SetupTimer(stageTimeLimit, EndStage);
+        stageTimer.SetupTimer(stageTimeLimit, EndStage);
 
         isStageActive = true;
         paletteResult.isMixable = true;
@@ -83,7 +83,7 @@ public class MixStageManager : StageManager
         // Initialize
         InitializeGameElements();
 
-        timerManager.StartTimer();
+        stageTimer.StartTimer();
         stageText.text = "stage"+currentStage.ToString();
 
         Debug.Log("Stage " + (currentStage + 1) + "started.");
@@ -93,7 +93,7 @@ public class MixStageManager : StageManager
     {
         isStageActive = false;
         paletteResult.isMixable = false;
-        timerManager.PauseTimer();
+        stageTimer.PauseTimer();
         stageTimer.PauseTimer();
 
         // Score Calculation

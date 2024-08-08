@@ -15,11 +15,9 @@ public class ColoringGameManager : StageManager
     int hint_used = 0;//�� ����� ��Ʈ ��
     float elapsed = 0.0f;
     public event Action new_problem;//ProblemGenerator
-    int score = 5;
 
     AudioSource[] sound;
     public GameObject questionboard;
-    public GameObject DummyEndGamePannel;
 
     protected override void Awake()
     {
@@ -35,7 +33,7 @@ public class ColoringGameManager : StageManager
             Destroy(gameObject);
         }
     }
-    void Start()
+    protected override void Start()
     {
         this.sound = GetComponents<AudioSource>();
     }
@@ -117,16 +115,11 @@ public class ColoringGameManager : StageManager
             }
         }//ä���� ���� ���Ŀ��� �������� ġ���.
     }
-    void Update()
+    protected override void Update()
     {//�ð� ����. ������ Ǫ�� ���϶��� ����.
         if(this.playable)
         {
             this.elapsed += Time.deltaTime;
         }
-    }
-    public void EndGame()
-    {
-        ScoreDataManager.Inst.SaveResult(score);
-        DummyEndGamePannel.SetActive(true);
     }
 }
