@@ -1416,7 +1416,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 5223ea3d80dc649d9bff555c6959e0cf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1451,8 +1451,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 45}
-  m_SizeDelta: {x: 125, y: 125}
+  m_AnchoredPosition: {x: 35, y: 60}
+  m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1428207343
 GameObject:
@@ -1491,8 +1491,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 45}
-  m_SizeDelta: {x: 125, y: 125}
+  m_AnchoredPosition: {x: 35, y: 60}
+  m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1428207345
 MonoBehaviour:
@@ -1527,9 +1527,6 @@ MonoBehaviour:
   - {r: 1, g: 0.40784314, b: 0.41960785, a: 1}
   - {r: 0.9254902, g: 0.9529412, b: 0.61960787, a: 1}
   - {r: 0.25882354, g: 0.16862746, b: 0.14509805, a: 1}
-  buttonBackgrounds:
-  - {fileID: 21300000, guid: 2360414d8df864469b8990a4e0ba3736, type: 3}
-  - {fileID: 21300000, guid: bbb2e006357c34192aba98afc8ea3427, type: 3}
   colorTransitionDuration: 0.5
   robotColorTransitionDuration: 3
 --- !u!114 &1428207346
@@ -1551,7 +1548,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1562,7 +1559,7 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 21300000, guid: bbb2e006357c34192aba98afc8ea3427, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: e3d8e5519e6074294a368e5147905a47, type: 3}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
@@ -1596,7 +1593,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2360414d8df864469b8990a4e0ba3736, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5223ea3d80dc649d9bff555c6959e0cf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
