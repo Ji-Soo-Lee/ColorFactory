@@ -93,6 +93,7 @@ public class MixStageManager : MonoBehaviour
         timerManager.SetupTimer(stageTimeLimit, EndStage);
 
         isStageActive = true;
+        paletteResult.isMixable = true;
 
         // Initialize
         InitializeGameElements();
@@ -106,6 +107,7 @@ public class MixStageManager : MonoBehaviour
     protected virtual void EndStage()
     {
         isStageActive = false;
+        paletteResult.isMixable = false;
         timerManager.PauseTimer();
 
         // Score Calculation
