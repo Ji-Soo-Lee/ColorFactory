@@ -11,7 +11,8 @@ public class TanmakGameManager : StageManager
 
     public Color[] colors;
     public static int colorSize = 3;
-
+    public Dictionary<string, Color> bulletColorMapping;
+ 
     // Modify Tanmak Mini Game Score
     public void ModifyScore(int score)
     {
@@ -66,6 +67,13 @@ public class TanmakGameManager : StageManager
         {
             colors[i] = ColorUtils.GetRandomColor();
         }
+
+        bulletColorMapping = new Dictionary<string, Color>()
+        {
+            { "BulletPrefab1", colors[0] },
+            { "BulletPrefab2", colors[1] },
+            { "BulletPrefab3", colors[2] },
+        };
     }
 
     protected override void AfterPauseUpdate()
