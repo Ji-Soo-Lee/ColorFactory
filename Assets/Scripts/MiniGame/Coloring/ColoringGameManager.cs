@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ColoringGameManager : StageManager
 {
@@ -9,15 +10,22 @@ public class ColoringGameManager : StageManager
     public static ColoringGameManager game;
     public Color now_color;
     public bool playable = false;
-    const int TOTAL = 3;//ÃÑ ¹®Á¦ ¼ö
-    int current = 0;//ÇöÀç ¹®Á¦
-
+    const int TOTAL = 3;//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    int current = 1;//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    int hint_used = 0;//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½
+    float elapsed = 0.0f;
     public event Action new_problem;//ProblemGenerator
+    int score = 5;
+
+    AudioSource[] sound;
+    public GameObject questionboard;
+    public GameObject DummyEndGamePannel;
 
     protected override void Awake()
     {
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½.
         base.Awake();
-        //°ÔÀÓ ¸Å´ÏÀú¸¦ Àü¿ª ½Ì±ÛÅæÀ¸·Î ¼³Á¤ÇÏ±â.
+    
         if (game == null)
         {
             game = this;
@@ -27,29 +35,98 @@ public class ColoringGameManager : StageManager
             Destroy(gameObject);
         }
     }
+    void Start()
+    {
+        this.sound = GetComponents<AudioSource>();
+    }
+    public void StartGame()
+    {//problem generatorï¿½ï¿½ ï¿½Øºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+        new_problem();
+    }
+    public void toggle_player(bool toggle)
+    {
+        this.playable = toggle;
+    }
+    public void hint()
+    {//ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+        if (!this.playable)
+        {
+            this.hint_used += 1;
+            StartCoroutine(hint_procedure());
+        }
+    }
+    IEnumerator hint_procedure()
+    {//ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ 3ï¿½Ê°ï¿½ ï¿½Ã´Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+        toggle_player(false);
+        GameObject[] obj = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject x in obj)
+        {
+            ColorPart part = x.GetComponent<ColorPart>();
+            if (part != null)
+            {
+                StartCoroutine(part.hint());
+            }
+        }
+        yield return new WaitForSeconds(3.0f);
+        toggle_player(true);
+    }
     public void judge_answer()
-    {//´ä¾È Ã¤Á¡ÇÏ±â
+    {//ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½Ï±ï¿½
         if (this.playable == true)
         {
-            this.playable = false;
-            this.current += 1;
+            bool wrong = false;
+            StopAllCoroutines();
+            toggle_player(false);
             GameObject[] obj = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject x in obj)
-            {//¸ðµç ±×¸² Á¶°¢µéÀº player ÅÂ±×°¡ ºÙ¾î ÀÖ´Ù.
+            {//ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½È·ï¿½Æ®ï¿½ï¿½ player ï¿½Â±×°ï¿½ ï¿½Ù¾ï¿½ ï¿½Ö´ï¿½.
                 ColorPart part = x.GetComponent<ColorPart>();
-                //Debug.Log(part.verdict());
-                Destroy(x);
+                if(part!=null)
+                {//ï¿½×¸ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï±ï¿½
+                    bool result = part.verdict();
+                    if(!result)
+                    {
+                        StartCoroutine(part.blink());
+                        wrong = true;
+                    }
+                }
             }
-            GameObject.Find("Frame").GetComponent<SpriteRenderer>().sprite = null;
-            if (this.current < TOTAL)
-            {
-                new_problem();
+            if(!wrong)
+            {//ï¿½ï¿½ï¿½ ï¿½Â´ï¿½ ï¿½ï¿½ï¿½
+                this.current += 1;
+                this.sound[0].Play();
+                foreach (GameObject x in obj)
+                {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä¡ï¿½ï¿½ï¿½.
+                    Destroy(x);
+                }
+                GameObject.Find("Frame").GetComponent<SpriteRenderer>().sprite = null;
+                if (this.current < TOTAL)
+                {//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                    this.questionboard.GetComponent<TextMeshProUGUI>().text = "Q " + this.current + "/" + TOTAL;
+                    new_problem();
+                }
+                else
+                {//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                    EndGame();
+                }
             }
             else
-            {
-                Debug.Log("°ÔÀÓÀÌ ³¡³µ½À´Ï´Ù.");
-                EndGame();
+            {//Æ²ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
+                this.sound[1].Play();
+                toggle_player(true);
             }
-        }//Ã¤Á¡ÀÌ ³¡³­ ÀÌÈÄ¿¡´Â ÇÁ·¹ÀÓÀ» Ä¡¿î´Ù.
+        }//Ã¤ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä¡ï¿½ï¿½ï¿½.
+    }
+    void Update()
+    {//ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Çªï¿½ï¿½ ï¿½ï¿½ï¿½Ï¶ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+        if(this.playable)
+        {
+            this.elapsed += Time.deltaTime;
+        }
+    }
+    public void EndGame()
+    {
+        ScoreDataManager.Inst.SaveResult(score);
+        DummyEndGamePannel.SetActive(true);
     }
 }

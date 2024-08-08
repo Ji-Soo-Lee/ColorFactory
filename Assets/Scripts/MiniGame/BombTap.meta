@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/MiniGame/BombTap.meta
 guid: 71868c63bf231754a81a766828de93fd
+========
+guid: 968a5fbe27b0e854ba87dd0e7d53f486
+>>>>>>>> origin/coloring:Assets/MyResources/Sprites/UI.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
