@@ -3,14 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TanmakGameManager : PausableMonoBehaviour
+public class TanmakGameManager : StageManager
 {
-    public TimerManager timerManager;
+    public TimerManager invincibleTimer;
     public StopwatchManager stopwatchManager;
-    public ScoreManager scoreManager;
-    public ScoreDataManager scoreDataManager;
     public TanmakUIManager TUIManager;
-    public DummySceneController sceneController;
 
     public Color[] colors;
     public static int colorSize = 3;
@@ -43,19 +40,17 @@ public class TanmakGameManager : PausableMonoBehaviour
         stopwatchManager.StartStopwatch();
     }
 
-    public void EndGame()
+    public override void EndGame()
     {
         UnityEngine.Debug.Log("End Game");
         Pause();
         // End Logic Needed
-        // Save & Show Score
-        scoreDataManager.SaveResult(scoreManager.GetScore());
-        // Small Menu?
-        TUIManager.ToggleGameOverPanel();
+        base.EndGame();
     }
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         // Setup Stopwatch
         stopwatchManager.ResetStopwatch();
         stopwatchManager.SetupStopwatchTik(1, () => ModifyScore(5));

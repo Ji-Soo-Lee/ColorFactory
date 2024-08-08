@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class ColorPallete
+{
+    public List<Color> colors;
+}
+
 public class ColorUtils
 {
     // Get Random Color (Without Candidate)
@@ -93,5 +99,17 @@ public class ColorUtils
         return Mathf.Abs(color1.r - color2.r) < errRange &&
             Mathf.Abs(color1.g - color2.g) < errRange &&
             Mathf.Abs(color1.b - color2.b) < errRange;
+    }
+    
+    public static void SaveColorPallete(ColorPallete colorPallete, string fileName = "color_pallete")
+    {
+        DataManager.SaveJSON<ColorPallete>(colorPallete, fileName);
+    }
+
+    public static ColorPallete LoadColorPallete(string fileName = "color_pallete")
+    {
+        ColorPallete colorPallete = DataManager.LoadJSON<ColorPallete>(fileName);
+
+        return colorPallete;
     }
 }
