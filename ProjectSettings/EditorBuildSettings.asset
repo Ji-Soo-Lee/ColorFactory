@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Coloring_tmp.unity
+    path: Assets/Scenes/Coloring.unity
     guid: d17a7c97921440446b12a3c4d2c0f82c
   - enabled: 0
     path: Assets/Scenes/TanmakTestScene.unity
