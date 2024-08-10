@@ -23,6 +23,7 @@ public class ColorEntry
 public class ColoringPage
 {//각 문제별 정보
     public string file;//파일명
+    public int count;//총 조각의 수
     public float scale;//크기 조정
     public ColorEntry[] answer;//문제의 각 조각별 정답. 순서는 스프라이트의 번호 순이며 0번 인덱스는 쓰지 않는다.
     public ColorEntry[] palette;//팔레트에 들어갈 색

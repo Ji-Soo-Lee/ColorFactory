@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEditor;
 
 public class ColoringProblemGenerator: MonoBehaviour
@@ -33,13 +35,18 @@ public class ColoringProblemGenerator: MonoBehaviour
     }
     void generate_problem(ColoringPage picture)
     {//문제 내기
-        Sprite file = AssetDatabase.LoadAssetAtPath<Sprite>(sprite_base + picture.file);//문제로 쓸 파일
-        if (file == null)
-        {//파일이 없거나 경로가 잘못된 경우
-            Debug.Log("파일을 찾지 못했습니다.");
-            return;
-        }
-        StartCoroutine(problem_cycle(picture));
+        Addressables.LoadAssetAsync<Sprite>(sprite_base + picture.file + ".png").Completed += handle =>
+        {
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                Sprite file = handle.Result;
+                StartCoroutine(problem_cycle(picture));
+            }
+            else
+            {
+                Debug.LogError("파일을 찾지 못했습니다.");
+            }
+        };
     }
     IEnumerator problem_cycle(ColoringPage picture)
     {//출제 사이클
@@ -51,29 +58,36 @@ public class ColoringProblemGenerator: MonoBehaviour
     }
     void show_problem(ColoringPage picture)
     {//문제 보여주기. 한 문제는 윤곽선(프레임) 하나와 여러 조각들로 이루어져 있다.
-        Object[] problem = AssetDatabase.LoadAllAssetRepresentationsAtPath(sprite_base + picture.file);//문제를 구성하는 스프라이트. 하나의 윤곽선과 여러 색칠하는 부분들로 나뉜다.
         float scale = picture.scale;//그림의 크기
         ColorEntry[] answer = picture.answer;
-        for (int i = 0; i < (problem.Length - 1); i++)
-        {//그림 조각들을 스프라이트화 하고 화면에 보여준다.
-            Sprite sprite = problem[i] as Sprite;
-            if (sprite == null)
-            {//로딩 중 오류 발생
-                Debug.LogError("파일을 불러오는 중 오류가 발생했습니다.");
-                return;
-            }
-            if (i == 0)
-            {//윤곽선. 색칠하는 부분은 아니며 그림 조각들을 구분하는 역할을 한다.
-                this.frame.GetComponent<SpriteRenderer>().sprite = sprite;
-            }
-            else
-            {//그림 조각. 플레이어가 클릭해 색칠하는 부분이다. 이들은 frame의 자손에 넣는다.
-                GameObject part = Instantiate(this.partPrefab, this.frame.transform);
-                part.GetComponent<SpriteRenderer>().sprite = sprite;//색칠하는 영역의 스프라이트를 부여한다.
-                part.AddComponent<PolygonCollider2D>();//그 스프라이트에 맞는 콜라이더를 배정한다.
-                StartCoroutine(part.GetComponent<ColorPart>().SetAnswer(answer[i - 1].get_color()));
-            }
-        }//모든 그림 파일의 마지막 부분은 배경인데, 이것은 경우에 따라 쓸 수도 있고 안 쓸 수도 있다.(수정 예정)
+        int total = picture.count;//조각의 개수
+        for (int i = 0; i <= total; i++)
+        {
+            Color color = (i == 0 ? Color.black : answer[i - 1].get_color());
+            bool is_frame = (i == 0);
+            Addressables.LoadAssetAsync<Sprite>(sprite_base + picture.file + ".png[" + picture.file + "_" + i + "]").Completed += handle =>
+            {
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    Sprite sprite = handle.Result;
+                    if (is_frame)
+                    {
+                        this.frame.GetComponent<SpriteRenderer>().sprite = sprite;
+                    }
+                    else
+                    {
+                        GameObject part = Instantiate(this.partPrefab, this.frame.transform);
+                        part.GetComponent<SpriteRenderer>().sprite = sprite;//색칠하는 영역의 스프라이트를 부여한다.
+                        part.AddComponent<PolygonCollider2D>();//그 스프라이트에 맞는 콜라이더를 배정한다.
+                        StartCoroutine(part.GetComponent<ColorPart>().SetAnswer(color));
+                    }
+                }
+                else
+                {
+                    Debug.LogError("파일을 찾지 못했습니다.");
+                }
+            };
+        }
         this.frame.transform.localScale = new Vector3(scale, scale, 1);//그림 크기 조정하기.
     }
     void make_palette(ColorEntry[] palette)
