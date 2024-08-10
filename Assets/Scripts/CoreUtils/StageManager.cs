@@ -11,7 +11,7 @@ public class StageManager : PausableMonoBehaviour
     public int currentStage = 0;           // Index of current stage
     protected bool isStageActive = false;     // Status of stage (active or not)
 
-    public GameObject DummyEndGamePannel;
+    public GameObject ResultPannel;
     [HideInInspector] public ScoreManager scoreManager;
     [HideInInspector] public ScoreDataManager scoreDataManager;
     [HideInInspector] public TimerManager stageTimer;
@@ -151,6 +151,6 @@ public class StageManager : PausableMonoBehaviour
 
         // Save Score & Activate End Game Panel
         ScoreDataManager.Inst.SaveResult(scoreManager.GetScore());
-        DummyEndGamePannel.SetActive(true);
+        ResultPannel.SetActive(true);
     }
 }

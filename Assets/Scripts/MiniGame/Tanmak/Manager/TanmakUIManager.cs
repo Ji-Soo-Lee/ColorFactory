@@ -7,32 +7,32 @@ public class TanmakUIManager : MonoBehaviour
 {
     public TMP_Text timerText;
     public TMP_Text ScoreText;
-    public GameObject GameOverPanel;
+    public GameObject ResultPanel;
 
     public void SetTimerText(float time)
     {
-        timerText.text = "  Time : " + time.ToString();
+        timerText.text = "Time " + ((int)time).ToString();
     }
 
     public void SetScoreText(int score)
     {
-        ScoreText.text = "  Score : " + score.ToString();
+        ScoreText.text = score.ToString();
     }
 
     public void ToggleGameOverPanel()
     {
-        if (GameOverPanel.activeSelf)
+        if (ResultPanel.activeSelf)
         {
-            GameOverPanel.SetActive(false);
+            ResultPanel.SetActive(false);
         }
         else
         {
-            GameOverPanel.SetActive(true);
+            ResultPanel.SetActive(true);
         }
     }
 
     void Start()
     {
-        GameOverPanel.SetActive(false);
+        ResultPanel.SetActive(false);
     }
 }
