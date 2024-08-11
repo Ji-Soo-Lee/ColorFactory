@@ -42,4 +42,6 @@ public abstract class BulletPatternBase : MonoBehaviour
     }
 
     public abstract IEnumerator FirePattern();
+
+    public virtual void SetParameters(Dictionary<string, object> parameters) { }
 }
