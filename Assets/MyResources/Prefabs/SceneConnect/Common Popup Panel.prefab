@@ -1683,7 +1683,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1723977854095329763}
         m_TargetAssemblyTypeName: CommonPopupUIManager, Assembly-CSharp
         m_MethodName: SetActivePausePanel
         m_Mode: 6
@@ -2812,7 +2812,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1723977854095329763}
         m_TargetAssemblyTypeName: CommonPopupUIManager, Assembly-CSharp
         m_MethodName: SetActivePausePanel
         m_Mode: 6
