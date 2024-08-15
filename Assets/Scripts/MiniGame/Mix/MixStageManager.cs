@@ -11,6 +11,7 @@ public class MixStageManager : StageManager
     public Button btn1;
     public Color targetColor, resultColor;
     public TMP_Text timeText, scoreText, stageText;
+    public GameObject ob1;
 
     protected override void Awake()
     {
@@ -52,6 +53,8 @@ public class MixStageManager : StageManager
             else
             {
                 Debug.Log("Wrong");
+                ob1.SetActive(true);
+                Invoke("HideMessage", 1.5f);
             }
         });
 
@@ -123,5 +126,10 @@ public class MixStageManager : StageManager
         paletteResult.SetOnClickAction(paletteResult.mixType);
         answerToken.SetTargetColor(currentStage);
         paletteResult.ClickReset();
+    }
+
+    protected void HideMessage()
+    {
+        ob1.SetActive(false);
     }
 }
