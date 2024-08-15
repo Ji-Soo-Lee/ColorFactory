@@ -150,7 +150,7 @@ public class StageManager : PausableMonoBehaviour
         // Game termination logic (ex: Show result page, Move to main menu etc.)
 
         // Save Score & Activate End Game Panel
-        ScoreDataManager.Inst.SaveResult(scoreManager.GetScore());
+        ScoreDataManager.Inst.SaveResult(scoreManager.GetScore(), true);
         ResultPannel.SetActive(true);
     }
 }

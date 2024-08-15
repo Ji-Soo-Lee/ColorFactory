@@ -7,17 +7,19 @@ public class ClickerData
 {
     public int clickNum;
     public int currentClickNum;
+    public int feverGauge;
     public Color currentColor;
     public List<Color> buttonColors;
 }
 
 public class ClickerDataManager
 {
-    public static ClickerData CreateClickerData(int clickNum, int currentClickNum, Color currentColor, List<Color> buttonColors)
+    public static ClickerData CreateClickerData(int clickNum, int currentClickNum, int feverGauge, Color currentColor, List<Color> buttonColors)
     {
         ClickerData clickerData = new ClickerData();
         clickerData.clickNum = clickNum;
         clickerData.currentClickNum = currentClickNum;
+        clickerData.feverGauge = feverGauge;
         clickerData.currentColor = currentColor;
         clickerData.buttonColors = buttonColors;
 

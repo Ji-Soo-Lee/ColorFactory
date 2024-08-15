@@ -6,14 +6,14 @@ using UnityEngine.SceneManagement;
 public class ScoreDataManager : MonoBehaviour
 {
     public static ScoreDataManager Inst;
-    // [HideInInspector]
-    public int finalMiniGameScore;
-    // [HideInInspector]
-    public string resultSceneName;
+    public int finalMiniGameScore { get; private set; } = 0;
+    public bool isMiniGameClear { get; private set; } = false;
+    public string resultSceneName { get; private set; }
 
-    public void SaveResult(int score)
+    public void SaveResult(int score, bool isClear)
     {
         finalMiniGameScore = score;
+        isMiniGameClear = isClear;
         resultSceneName = SceneManager.GetActiveScene().name;
     }
 
@@ -42,6 +42,7 @@ public class ScoreDataManager : MonoBehaviour
         if (scene.name != "Jisoo")
         {
             finalMiniGameScore = 0;
+            isMiniGameClear = false;
         }
     }
 }

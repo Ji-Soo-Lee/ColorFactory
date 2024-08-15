@@ -221,8 +221,8 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     void OnDisable()
     {
         // Save Data
-        ClickerData data = ClickerDataManager.CreateClickerData(clickNum, currentClickNum, currentColor, buttonColors);
-        ClickerDataManager.SaveData(data);
+        //ClickerData data = ClickerDataManager.CreateClickerData(clickNum, currentClickNum, currentColor, buttonColors);
+        //ClickerDataManager.SaveData(data);
     }
 }
 

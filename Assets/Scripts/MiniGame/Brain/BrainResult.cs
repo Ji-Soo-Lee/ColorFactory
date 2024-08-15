@@ -14,7 +14,7 @@ public class BrainResult : MonoBehaviour
     {
         this.score = PlayerPrefs.GetInt("score");
         this.bonus = PlayerPrefs.GetInt("bonus");
-        ScoreDataManager.Inst.SaveResult(this.score);
+        ScoreDataManager.Inst.SaveResult(this.score, true);
         StartCoroutine(announce_result());
     }
     IEnumerator announce_result()

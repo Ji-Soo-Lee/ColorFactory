@@ -24,35 +24,6 @@ public class RobotManager : MonoBehaviour
 
     public void RobotClick(int clickNum)
     {
-        StartCoroutine(SimulateMultipleClicks(clickNum));
-    }
-
-
-    private IEnumerator SimulateMultipleClicks(int clickNum)
-    {
-        // Spinlock if preceding coroutine exists
-        // Cannot guarantee the order if blocked
-        // while (currentClickCoroutine != null) yield return currentClickCoroutine;
-        // isClickCoroutineRunning = true;
-
-        float stepColorTransitionDuration = robotColorTransitionDuration / clickNum;
-
-        clickerUIManager.mainButton.SetInteractive(false);
-
-        for (int i = 0; i < clickNum; i++)
-        {
-            clickerGM.IncrementClickCount();
-
-            clickerUIManager.UpdateButtonColor(robotColorTransitionDuration);
-
-            if (i != clickNum - 1)
-            {
-                yield return new WaitForSeconds(0.05f);
-            }
-        }
-
-        clickerUIManager.mainButton.SetInteractive(true);
-
-        // isClickCoroutineRunning = false;
+        StartCoroutine(clickerGM.SimulateMultipleClicks(clickNum, robotColorTransitionDuration));
     }
 }

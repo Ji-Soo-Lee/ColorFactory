@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -8,9 +9,10 @@ public class ClickerGameManager : MonoBehaviour
 {
     public ClickerUIManager clickerUIManager;
     public RobotManager robotManager;
+    public Fever feverManager;
 
-    public int clickNum;
-    public int currentClickNum;
+    public int clickNum { get; private set; } = 0;
+    public int currentClickNum { get; private set; } = 0;
     public int maxClicks { get; private set; } = 24;
     public int maxCycle { get; private set; } = 4;
 
@@ -19,23 +21,10 @@ public class ClickerGameManager : MonoBehaviour
 
     private int buttonColorLength;
     private float colorThreshold;
-
-    public void IncrementClickCount()
-    {
-        clickNum++;
-        currentClickNum++;
-
-        if (currentClickNum >= maxClicks)
-        {
-            currentClickNum -= maxClicks;
-            GetReward();
-        }
-    }
+    private int feverWeight = 1;
 
     void Start()
     {
-        clickNum = 0;
-
         InitColors();
 
         clickerUIManager.InitColors();
@@ -46,13 +35,83 @@ public class ClickerGameManager : MonoBehaviour
         {
             LoadGameData(data);
         }
+
+        // Check MiniGame Result
+        ScoreDataManager scoreDataManager = GameObject.FindObjectOfType<ScoreDataManager>();
+        if (scoreDataManager != null)
+        {
+            int score = scoreDataManager.finalMiniGameScore;
+            float weight = 1.0f;
+
+            if (scoreDataManager.resultSceneName == "TanmakTestScene")
+            {
+                weight = 0.5f;
+            }
+
+            score = (int)(score * weight);
+
+            StartCoroutine(SimulateMultipleClicks(score, score / 100.0f));
+
+            if (scoreDataManager.isMiniGameClear)
+            {
+                feverManager.AddFeverGauge(1);
+            }
+        }
     }
 
     void OnDisable()
     {
         // Save Data
-        ClickerData data = ClickerDataManager.CreateClickerData(clickNum, currentClickNum, clickerUIManager.currentColor, buttonColors);
+        ClickerData data = ClickerDataManager.CreateClickerData(clickNum, currentClickNum,
+            feverManager.feverGauge, clickerUIManager.currentColor, buttonColors);
         ClickerDataManager.SaveData(data);
+    }
+
+    public void SetFeverWeight(int weight)
+    {
+        if (feverWeight < 1) return;
+        feverWeight = weight;
+    }
+
+    public void IncrementClickCount()
+    {
+        int inc = (int)(1 + 0.1 * ((feverWeight << 1) + feverWeight));
+        clickNum += inc;
+        currentClickNum += inc;
+
+        if (currentClickNum >= maxClicks)
+        {
+            currentClickNum -= maxClicks;
+            GetReward();
+        }
+    }
+
+    public IEnumerator SimulateMultipleClicks(int clickNum, float duration)
+    {
+        // Spinlock if preceding coroutine exists
+        // Cannot guarantee the order if blocked
+        // while (currentClickCoroutine != null) yield return currentClickCoroutine;
+        // isClickCoroutineRunning = true;
+
+        float stepColorTransitionDuration = duration / clickNum;
+
+        clickerUIManager.mainButton.SetInteractive(false);
+
+        for (int i = 0; i < clickNum; i++)
+        {
+            IncrementClickCount();
+
+            clickerUIManager.UpdateButtonColor(duration);
+
+            if (i != clickNum - 1)
+            {
+                yield return new WaitForSeconds(0.05f);
+            }
+        }
+
+        clickerUIManager.mainButton.SetInteractive(true);
+
+        // isClickCoroutineRunning = false;
     }
 
     private void InitColors()
@@ -76,6 +135,8 @@ public class ClickerGameManager : MonoBehaviour
         clickNum = data.clickNum;
         currentClickNum = data.currentClickNum;
         buttonColors = data.buttonColors;
+
+        feverManager.SetFeverGauge(data.feverGauge);
 
         // Apply on Sprites
         clickerUIManager.SetButtonColor(data.currentColor);

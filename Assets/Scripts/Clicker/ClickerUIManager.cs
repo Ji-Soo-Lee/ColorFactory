@@ -10,8 +10,10 @@ public class ClickerUIManager : MonoBehaviour
     public MainButton mainButton;
     public Image mainButtonSprite;
     public Image backgroundButtonSprite;
+    public Image feverGaugeImage;
 
     public List<Image> backgrounds = new List<Image>();
+    public List<Sprite> feverGaugeSprites;
 
     public Color currentColor { get; private set; }
     private Coroutine currentButtonColorCoroutine;
@@ -20,6 +22,12 @@ public class ClickerUIManager : MonoBehaviour
     {
         currentColor = backgrounds[0].color;
         mainButtonSprite.color = currentColor;
+    }
+
+    public void SetFeverGaugeSprite(int feverGauge)
+    {
+        if (feverGauge < 0 || feverGauge >= feverGaugeSprites.Count) return;
+        feverGaugeImage.sprite = feverGaugeSprites[feverGauge];
     }
 
     public void SetButtonColor(Color color)
