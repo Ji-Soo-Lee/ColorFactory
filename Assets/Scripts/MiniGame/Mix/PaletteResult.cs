@@ -64,26 +64,13 @@ public class PaletteResult : MonoBehaviour
             btn3Image.color = Color.blue;
             mixType = 0;
         }
-        else if( _stage == 2)
-        {
-            btn1Image.color = new Color(1, UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
-            btn2Image.color = new Color(UnityEngine.Random.Range(0f,1f), 1f, 1f-btn1Image.color.b);
-            btn3Image.color = new Color(1f - btn2Image.color.r, 1f - btn1Image.color.g, 1f);
-            mixType = 1;
-        }
-        else if(_stage  == 3)
-        {
-            btn1Image.color = new Color(0, UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
-            btn2Image.color = new Color(UnityEngine.Random.Range(0f, 1f), 0, 1f - btn1Image.color.b);
-            btn3Image.color = new Color(1f - btn2Image.color.r, 1f - btn1Image.color.g, 0);
-            mixType = 0;
-        }
         else
         {
-            btn1Image.color = ColorUtils.GetRandomColor();
-            btn2Image.color = new Color(UnityEngine.Random.Range(0f, 1f- btn1Image.color.r), UnityEngine.Random.Range(0f, 1f - btn1Image.color.g), UnityEngine.Random.Range(0f, 1f - btn1Image.color.b));
-            btn3Image.color = new Color(1f - btn1Image.color.r - btn2Image.color.r, 1f - btn1Image.color.g - btn2Image.color.g, 1f - btn1Image.color.b - btn2Image.color.b);
-            mixType = 1;
+            btn1Image.color = new Color(0, UnityEngine.Random.Range(0.2f, 0.8f), UnityEngine.Random.Range(0.2f, 0.8f));
+            btn2Image.color = new Color(UnityEngine.Random.Range(0.2f, 0.8f), 0, 1f - btn1Image.color.b);
+            btn3Image.color = new Color(1f - btn2Image.color.r, 1f - btn1Image.color.g, 0);
+            mixType = 0;
+            if (_stage % 2 == 0) { mixType = 1; }
         }
     }
 

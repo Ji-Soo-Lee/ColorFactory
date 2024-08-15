@@ -89,7 +89,7 @@ public class MixStageManager : StageManager
         InitializeGameElements();
 
         stageTimer.StartTimer();
-        stageText.text = "stage"+currentStage.ToString();
+        stageText.text = "stage"+(currentStage+1).ToString();
 
         Debug.Log("Stage " + (currentStage + 1) + "started.");
     }
