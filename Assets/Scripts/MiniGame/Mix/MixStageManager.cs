@@ -38,6 +38,7 @@ public class MixStageManager : StageManager
         answerToken = GameObject.Find("TargetImage").GetComponent<AnswerToken>();
         paletteResult = GameObject.Find("ResultImage").GetComponent<PaletteResult>();
         btn1 = GameObject.Find("SubmissionButton").GetComponent<Button>();
+        //submit button
         btn1.onClick.AddListener(() =>
         {
             targetColor = GameObject.Find("TargetImage").GetComponent<Image>().color;
@@ -55,6 +56,7 @@ public class MixStageManager : StageManager
         });
 
         StartStage(0);  // Start first stage
+        scoreText.text = "0";
     }
 
     protected override void Update()
