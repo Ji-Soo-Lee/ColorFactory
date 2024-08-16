@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class ClickerGameManager : MonoBehaviour
     public ClickerUIManager clickerUIManager;
     public RobotManager robotManager;
     public Fever feverManager;
+    public DummySceneController dummySceneController;
 
     public int clickNum { get; private set; } = 0;
     public int currentClickNum { get; private set; } = 0;
@@ -37,34 +39,12 @@ public class ClickerGameManager : MonoBehaviour
         }
 
         // Check MiniGame Result
-        ScoreDataManager scoreDataManager = GameObject.FindObjectOfType<ScoreDataManager>();
-        if (scoreDataManager != null)
-        {
-            int score = scoreDataManager.finalMiniGameScore;
-            float weight = 1.0f;
-
-            if (scoreDataManager.resultSceneName == "TanmakTestScene")
-            {
-                weight = 0.5f;
-            }
-
-            score = (int)(score * weight);
-
-            StartCoroutine(SimulateMultipleClicks(score, score / 100.0f));
-
-            if (scoreDataManager.isMiniGameClear)
-            {
-                feverManager.AddFeverGauge(1);
-            }
-        }
+        ApplyMiniGameResult();
     }
 
     void OnDisable()
     {
-        // Save Data
-        ClickerData data = ClickerDataManager.CreateClickerData(clickNum, currentClickNum,
-            feverManager.feverGauge, clickerUIManager.currentColor, buttonColors);
-        ClickerDataManager.SaveData(data);
+        SaveGameData();
     }
 
     public void SetFeverWeight(int weight)
@@ -130,6 +110,47 @@ public class ClickerGameManager : MonoBehaviour
         colorThreshold = maxClicks / buttonColorLength;
     }
 
+    private void ApplyMiniGameResult()
+    {
+        ScoreDataManager scoreDataManager = GameObject.FindObjectOfType<ScoreDataManager>();
+        if (scoreDataManager != null)
+        {
+            int score = scoreDataManager.finalMiniGameScore;
+            string sceneName = scoreDataManager.resultSceneName;
+
+            int robotIdx = 0;
+            float weight = 1.0f;
+            
+            // Set Weight & Robot with Scene Name
+            if (dummySceneController.sceneNames.Contains(sceneName))
+            {
+                weight = 0.5f;
+                robotIdx = dummySceneController.sceneNames.FindIndex(x => x.Equals(sceneName)) - 1;
+            }
+
+            // Weight Score
+            int weightedScore = (int)(score * weight);
+
+            // Add Robot Clicks
+            robotManager.robots[robotIdx].AddClickAmount(weightedScore);
+
+            // Add Fever Gauge
+            if (scoreDataManager.isMiniGameClear)
+            {
+                feverManager.AddFeverGauge(1);
+            }
+        }
+    }
+
+    private void SaveGameData()
+    {
+        // Save Data
+        ClickerData data = ClickerDataManager.CreateClickerData(clickNum, currentClickNum,
+            feverManager.feverGauge, clickerUIManager.currentColor,
+            buttonColors, robotManager.GetClickAmounts(), robotManager.GetMaxClicks());
+        ClickerDataManager.SaveData(data);
+    }
+
     private void LoadGameData(ClickerData data)
     {
         clickNum = data.clickNum;
@@ -145,6 +166,10 @@ public class ClickerGameManager : MonoBehaviour
             Color c = buttonColors[i];
             clickerUIManager.backgrounds[i].color = new Color(c.r, c.g, c.b, c.a);
         }
+
+        // Apply on Robots
+        robotManager.SetClickAmounts(data.robotClickAmounts);
+        robotManager.SetMaxClicks(data.robotMaxClicks);
     }
 
     private void GetReward()

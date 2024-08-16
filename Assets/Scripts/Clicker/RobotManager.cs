@@ -10,15 +10,57 @@ public class RobotManager : MonoBehaviour
 
     public float robotColorTransitionDuration = 5.0f;
 
-    public List<Robot> robots = new List<Robot>();
-
-    private bool isClickCoroutineRunning;
+    public List<RobotV2> robots = new List<RobotV2>();
 
     public void SetAllRobotsInteractable(bool isInteractable)
     {
-        foreach (Robot robot in robots)
+        foreach (RobotV2 robot in robots)
         {
             robot.robotButton.interactable = isInteractable;
+        }
+    }
+
+    public List<int> GetClickAmounts()
+    {
+        List<int> clickAmounts = new List<int>();
+
+        foreach (RobotV2 robot in robots)
+        {
+            clickAmounts.Add(robot.clickAmount);
+        }
+
+        return clickAmounts;
+    }
+
+    public List<int> GetMaxClicks()
+    {
+        List<int> maxClicks = new List<int>();
+
+        foreach (RobotV2 robot in robots)
+        {
+            maxClicks.Add(robot.MAX_CLICK);
+        }
+
+        return maxClicks;
+    }
+
+    public void SetClickAmounts(List<int> amounts)
+    {
+        int minLen = Mathf.Min(robots.Count, amounts.Count);
+
+        for (int i = 0; i < minLen; i++)
+        {
+            robots[i].SetClickAmount(amounts[i]);
+        }
+    }
+
+    public void SetMaxClicks(List<int> maxClicks)
+    {
+        int minLen = Mathf.Min(robots.Count, maxClicks.Count);
+
+        for (int i = 0; i < minLen; i++)
+        {
+            robots[i].SetMaxClick(maxClicks[i]);
         }
     }
 

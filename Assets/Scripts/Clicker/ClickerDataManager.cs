@@ -10,11 +10,14 @@ public class ClickerData
     public int feverGauge;
     public Color currentColor;
     public List<Color> buttonColors;
+    public List<int> robotClickAmounts;
+    public List<int> robotMaxClicks;
 }
 
 public class ClickerDataManager
 {
-    public static ClickerData CreateClickerData(int clickNum, int currentClickNum, int feverGauge, Color currentColor, List<Color> buttonColors)
+    public static ClickerData CreateClickerData(int clickNum, int currentClickNum, int feverGauge, Color currentColor,
+        List<Color> buttonColors, List<int> robotClickAmounts, List<int> robotMaxClicks)
     {
         ClickerData clickerData = new ClickerData();
         clickerData.clickNum = clickNum;
@@ -22,6 +25,8 @@ public class ClickerDataManager
         clickerData.feverGauge = feverGauge;
         clickerData.currentColor = currentColor;
         clickerData.buttonColors = buttonColors;
+        clickerData.robotClickAmounts = robotClickAmounts;
+        clickerData.robotMaxClicks = robotMaxClicks;
 
         return clickerData;
     }
