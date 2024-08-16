@@ -28,8 +28,8 @@ public class TanmakPatterns : MonoBehaviour
 
         // StartCoroutine(FireBulletsCircularPattern()); // It can be changed
         // StartCoroutine(FireBulletsRectangularPattern(bulletCountRow, bulletCountCol, bulletSpacing, 90));
-        StartCoroutine(FireBulletsCirclePattern(20, 3, 0));
-        //StartCoroutine(FireColorTest());
+        //StartCoroutine(FireBulletsCirclePattern(20, 3, 0));
+        StartCoroutine(FireColorTest());
     }
 
     IEnumerator FireColorTest()
@@ -45,7 +45,7 @@ public class TanmakPatterns : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        GameObject bullet3 = Instantiate(bulletPrefab1, transform.position, Quaternion.identity);
+        GameObject bullet3 = Instantiate(bulletPrefab3, transform.position, Quaternion.identity);
         bullet3.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
 
         yield return new WaitForSeconds(1f);
