@@ -5,7 +5,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class BrainGameManager : MonoBehaviour
+public class BrainGameManager : StageManager
 {
     public static BrainGameManager game;
     public bool playable = false;//현재 플레이어가 답을 할 수 있는지
@@ -24,8 +24,9 @@ public class BrainGameManager : MonoBehaviour
     int current = 1;
     int score = 0;//점수
     int bonus = 0;//최대 기억 수(보너스 점수)
-    void Awake()
+    protected override void Awake()
     {//게임 매니저를 전역 싱글톤으로 설정하기.
+        base.Awake();
         if(game==null)
         {
             game = this;
@@ -35,8 +36,9 @@ public class BrainGameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         new_problem();
     }
     public void apply_result(int correct)
@@ -52,7 +54,8 @@ public class BrainGameManager : MonoBehaviour
         }
         else
         {//게임 종료
-            StartCoroutine(Gameover());
+            // StartCoroutine(Gameover());
+            EndGame();
         }
     }
     public void toggle_player(bool toggle)
@@ -82,5 +85,11 @@ public class BrainGameManager : MonoBehaviour
         PlayerPrefs.SetInt("bonus", this.bonus);
         yield return new WaitForSeconds(3.0f);
         SceneManager.LoadScene("BrainResult");
+    }
+
+    public override void EndGame()
+    {
+        base.EndGame();
+        commonPopupUIManager.SetResultText(0, this.score, true);
     }
 }

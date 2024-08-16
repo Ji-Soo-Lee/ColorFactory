@@ -11,7 +11,7 @@ public class CommonPopupUIManager : MonoBehaviour
 
     public TMP_Text timeText;
     public TMP_Text scoreText;
-    public TMP_Text colorMixText;
+    public TMP_Text feverGaugeText;
 
 
     void Start()
@@ -36,13 +36,13 @@ public class CommonPopupUIManager : MonoBehaviour
         PausePanelObject.SetActive(isActive);
     }
 
-    public void SetResultText(int time, int score, int colorMix)
+    public void SetResultText(int time, int score, bool isFever)
     {
         if (ResultPanelObject.activeSelf)
         {
             timeText.text = time.ToString();
             scoreText.text = score.ToString();
-            colorMixText.text = "+" + colorMix.ToString() + " COLORMIX";
+            feverGaugeText.text = "+" + (isFever?1:0).ToString() + " Fever Gauge";
         }
     }
 }

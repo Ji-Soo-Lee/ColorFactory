@@ -316,12 +316,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1577566677}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &314069138 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2212275649689671668, guid: 7b4536f65dc41af479bc89e75be66511,
-    type: 3}
-  m_PrefabInstance: {fileID: 1619825093316590860}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &356824895
 GameObject:
   m_ObjectHideFlags: 0
@@ -2216,7 +2210,7 @@ MonoBehaviour:
   stageTimeLimits: []
   stageScores: 
   currentStage: 0
-  ResultPannel: {fileID: 314069138}
+  commonPopupUIManager: {fileID: 13206653}
   scoreManager: {fileID: 0}
   scoreDataManager: {fileID: 0}
   stageTimer: {fileID: 0}
@@ -3773,6 +3767,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 24857169}
+    - target: {fileID: 1366584450735435025, guid: 7b4536f65dc41af479bc89e75be66511,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: ClickerTestScene
+      objectReference: {fileID: 0}
     - target: {fileID: 2212275649689671668, guid: 7b4536f65dc41af479bc89e75be66511,
         type: 3}
       propertyPath: m_IsActive
@@ -3783,6 +3782,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 24857169}
+    - target: {fileID: 2539449388684917160, guid: 7b4536f65dc41af479bc89e75be66511,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: ClickerTestScene
+      objectReference: {fileID: 0}
     - target: {fileID: 3346790226254314642, guid: 7b4536f65dc41af479bc89e75be66511,
         type: 3}
       propertyPath: m_IsActive

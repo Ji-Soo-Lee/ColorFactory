@@ -18,21 +18,4 @@ public class TanmakUIManager : MonoBehaviour
     {
         ScoreText.text = score.ToString();
     }
-
-    public void ToggleGameOverPanel()
-    {
-        if (ResultPanel.activeSelf)
-        {
-            ResultPanel.SetActive(false);
-        }
-        else
-        {
-            ResultPanel.SetActive(true);
-        }
-    }
-
-    void Start()
-    {
-        ResultPanel.SetActive(false);
-    }
 }

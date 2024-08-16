@@ -11,7 +11,7 @@ public class StageManager : PausableMonoBehaviour
     public int currentStage = 0;           // Index of current stage
     protected bool isStageActive = false;     // Status of stage (active or not)
 
-    public GameObject ResultPannel;
+    public CommonPopupUIManager commonPopupUIManager;
     [HideInInspector] public ScoreManager scoreManager;
     [HideInInspector] public ScoreDataManager scoreDataManager;
     [HideInInspector] public TimerManager stageTimer;
@@ -89,7 +89,7 @@ public class StageManager : PausableMonoBehaviour
     {
         if (stageIndex < 0 || stageIndex >= totalStages)
         {
-            Debug.LogError("Stage index error.");
+            Debug.LogWarning("Stage index error.");
             return;
         }
 
@@ -151,6 +151,7 @@ public class StageManager : PausableMonoBehaviour
 
         // Save Score & Activate End Game Panel
         ScoreDataManager.Inst.SaveResult(scoreManager.GetScore(), true);
-        ResultPannel.SetActive(true);
+        commonPopupUIManager.SetActiveResultPanel(true);
+        commonPopupUIManager.SetResultText((int)stageTimer.GetTimerValue(), scoreManager.GetScore(), true);
     }
 }

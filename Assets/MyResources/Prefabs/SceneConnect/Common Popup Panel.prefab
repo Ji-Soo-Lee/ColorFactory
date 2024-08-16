@@ -231,7 +231,7 @@ MonoBehaviour:
   PausePanelObject: {fileID: 3346790226254314642}
   timeText: {fileID: 2584887661538502941}
   scoreText: {fileID: 7137396850025821179}
-  colorMixText: {fileID: 3204688258601087871}
+  feverGaugeText: {fileID: 3204688258601087871}
 --- !u!1 &665146507775206551
 GameObject:
   m_ObjectHideFlags: 0
@@ -2342,7 +2342,7 @@ GameObject:
   - component: {fileID: 8178794517705331156}
   - component: {fileID: 2046388905390108}
   m_Layer: 5
-  m_Name: Colormix Image
+  m_Name: Fever Gauge Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2418,7 +2418,7 @@ GameObject:
   - component: {fileID: 74970669008272038}
   - component: {fileID: 3204688258601087871}
   m_Layer: 5
-  m_Name: Colormix Text
+  m_Name: Fever Gauge Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

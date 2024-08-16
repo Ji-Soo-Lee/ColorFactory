@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class DummySceneController : MonoBehaviour
 {
-    public List<string> sceneNames = new List<string>()
+    [HideInInspector] public List<string> sceneNames = new List<string>()
         {"ClickerTestScene",
         "TanmakTestScene",
         "Brain",
