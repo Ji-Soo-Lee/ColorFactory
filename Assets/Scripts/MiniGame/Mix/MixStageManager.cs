@@ -11,6 +11,7 @@ public class MixStageManager : StageManager
     public Button btn1;
     public Color targetColor, resultColor;
     public TMP_Text timeText, scoreText, stageText;
+    public GameObject ob1;
 
     protected override void Awake()
     {
@@ -38,6 +39,7 @@ public class MixStageManager : StageManager
         answerToken = GameObject.Find("TargetImage").GetComponent<AnswerToken>();
         paletteResult = GameObject.Find("ResultImage").GetComponent<PaletteResult>();
         btn1 = GameObject.Find("SubmissionButton").GetComponent<Button>();
+        //submit button
         btn1.onClick.AddListener(() =>
         {
             targetColor = GameObject.Find("TargetImage").GetComponent<Image>().color;
@@ -51,10 +53,13 @@ public class MixStageManager : StageManager
             else
             {
                 Debug.Log("Wrong");
+                ob1.SetActive(true);
+                Invoke("HideMessage", 1.5f);
             }
         });
 
         StartStage(0);  // Start first stage
+        scoreText.text = "0";
     }
 
     protected override void Update()
@@ -84,7 +89,7 @@ public class MixStageManager : StageManager
         InitializeGameElements();
 
         stageTimer.StartTimer();
-        stageText.text = "stage"+currentStage.ToString();
+        stageText.text = "stage"+(currentStage+1).ToString();
 
         Debug.Log("Stage " + (currentStage + 1) + "started.");
     }
@@ -121,5 +126,10 @@ public class MixStageManager : StageManager
         paletteResult.SetOnClickAction(paletteResult.mixType);
         answerToken.SetTargetColor(currentStage);
         paletteResult.ClickReset();
+    }
+
+    protected void HideMessage()
+    {
+        ob1.SetActive(false);
     }
 }
