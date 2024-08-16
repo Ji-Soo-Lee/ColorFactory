@@ -5,6 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class DummySceneController : MonoBehaviour
 {
+    public List<string> sceneNames = new List<string>()
+        {"ClickerTestScene",
+        "TanmakTestScene",
+        "Brain",
+        "Coloring",
+        "Hoo",
+        "dgim608",
+        "Simon"};
+
     public void LoadScene(int sceneID)
     {
         SceneManager.LoadScene(sceneID);
