@@ -24,17 +24,17 @@ public class Fever : MonoBehaviour
 
     public void AddFeverGauge(int inc)
     {
-        if (inc < 0 || inc > MAX_FEVER_GAUGE) return;
+        int sum = feverGauge + inc;
+        if (inc < 0 || sum < feverGauge) return;
 
-        int gauge = feverGauge + inc;
-        SetFeverGauge(gauge > MAX_FEVER_GAUGE ? MAX_FEVER_GAUGE : gauge);
+        sum = Mathf.Clamp(sum, 0, MAX_FEVER_GAUGE);
+
+        SetFeverGauge(sum);
     }
 
     public void SetFeverGauge(int gauge)
     {
-        if (gauge < 0 || gauge > MAX_FEVER_GAUGE) return;
-
-        feverGauge = gauge;
+        feverGauge = Mathf.Clamp(gauge, 0, MAX_FEVER_GAUGE);
 
         clickerUIManager.SetFeverGaugeSprite(feverGauge);
     }
