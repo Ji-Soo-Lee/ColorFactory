@@ -1,7 +1,8 @@
 {
     "problemset": [
         {
-            "file": "problem_zzangu.png",
+            "file": "problem_zzangu",
+            "count": 18,
             "scale": 0.65,
             "answer": [
                 { "color": "#fbd5ad" },

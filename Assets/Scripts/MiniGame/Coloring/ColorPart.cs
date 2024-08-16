@@ -12,6 +12,7 @@ public class ColorPart : MonoBehaviour
     {
         this.game = ColoringGameManager.game;
         this.sprite = GetComponent<SpriteRenderer>();
+        this.sprite.color = Color.clear;
     }
     public IEnumerator SetAnswer(Color color)
     {//이 조각의 정답에 해당하는 색.

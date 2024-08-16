@@ -6,13 +6,12 @@ using TMPro;
 
 public class ColoringGameManager : StageManager
 {
-    // Start is called before the first frame update
     public static ColoringGameManager game;
     public Color now_color;
     public bool playable = false;
-    const int TOTAL = 3;//�� ���� ��
-    int current = 1;//���� ����
-    int hint_used = 0;//�� ����� ��Ʈ ��
+    const int TOTAL = 3;//총 문제 수
+    int current = 1;//현재 문제 번호
+    int hint_used = 0;//힌트 사용한 횟수
     float elapsed = 0.0f;
     public event Action new_problem;//ProblemGenerator
 
@@ -21,7 +20,6 @@ public class ColoringGameManager : StageManager
 
     protected override void Awake()
     {
-        //���� �Ŵ����� ���� �̱������� �����ϱ�.
         base.Awake();
     
         if (game == null)
@@ -38,7 +36,7 @@ public class ColoringGameManager : StageManager
         this.sound = GetComponents<AudioSource>();
     }
     public void StartGame()
-    {//problem generator�� �غ� ������ ���� �����ϱ�
+    {//problem generator 작동시키기
         new_problem();
     }
     public void toggle_player(bool toggle)
@@ -46,7 +44,7 @@ public class ColoringGameManager : StageManager
         this.playable = toggle;
     }
     public void hint()
-    {//��Ʈ ����ϱ�
+    {//힌트 사용하기
         if (!this.playable)
         {
             this.hint_used += 1;
@@ -54,7 +52,7 @@ public class ColoringGameManager : StageManager
         }
     }
     IEnumerator hint_procedure()
-    {//��� ��ü ���� 3�ʰ� �ôٰ� �������.
+    {//3초간 전체 색을 보여주었다 지운다.
         toggle_player(false);
         GameObject[] obj = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject x in obj)
@@ -116,7 +114,7 @@ public class ColoringGameManager : StageManager
         }//ä���� ���� ���Ŀ��� �������� ġ���.
     }
     protected override void Update()
-    {//�ð� ����. ������ Ǫ�� ���϶��� ����.
+    {//시간 기록하기
         if(this.playable)
         {
             this.elapsed += Time.deltaTime;
