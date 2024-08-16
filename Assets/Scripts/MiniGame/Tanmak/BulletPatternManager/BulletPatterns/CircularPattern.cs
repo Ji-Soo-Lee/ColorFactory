@@ -4,6 +4,19 @@ using UnityEngine;
 
 public class CircularPattern : BulletPatternBase
 {
+    public GameObject prefab0;
+    public GameObject prefab1;
+    public GameObject prefab2;
+    public GameObject prefab3;
+
+    private void Awake()
+    {
+        bulletPrefab0 = prefab0;
+        bulletPrefab1 = prefab1;
+        bulletPrefab2 = prefab2;
+        bulletPrefab3 = prefab3;
+    }
+
     private int bulletCount = 10;
     private float radius = 5f;
 
@@ -13,7 +26,7 @@ public class CircularPattern : BulletPatternBase
         {
             Vector3 direction = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0).normalized;
             Vector3 position = transform.position + direction * radius;
-            StartCoroutine(FireBullet(position, direction));
+            StartCoroutine(FireBullet(position, direction, 0));
         }
         yield break;
     }
