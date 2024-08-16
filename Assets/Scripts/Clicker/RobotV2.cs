@@ -10,8 +10,8 @@ public class RobotV2 : MonoBehaviour
 {
     public RobotManager robotManager;
     public Button robotButton;
-    public int clickAmount { get; private set; } = 0;
-    public int MAX_CLICK { get; private set; } = 100;
+    [field: SerializeField] public int clickAmount { get; private set; } = 0;
+    [field: SerializeField] public int MAX_CLICK { get; private set; } = 100;
 
     public void OnClickButton()
     {

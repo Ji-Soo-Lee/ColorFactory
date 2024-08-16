@@ -68,4 +68,12 @@ public class RobotManager : MonoBehaviour
     {
         StartCoroutine(clickerGM.SimulateMultipleClicks(clickNum, robotColorTransitionDuration));
     }
+
+    public void ConsumeAllRobotClicks()
+    {
+        foreach (RobotV2 robot in robots)
+        {
+            robot.OnClickButton();
+        }
+    }
 }

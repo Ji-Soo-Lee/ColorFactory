@@ -289,7 +289,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 14133485}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1815135002}
+        m_TargetAssemblyTypeName: RobotManager, Assembly-CSharp
+        m_MethodName: ConsumeAllRobotClicks
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &14133485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1157,6 +1169,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   robotManager: {fileID: 1815135002}
   robotButton: {fileID: 237753456}
+  <clickAmount>k__BackingField: 0
+  <MAX_CLICK>k__BackingField: 100
 --- !u!114 &237753456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3261,6 +3275,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   robotManager: {fileID: 1815135002}
   robotButton: {fileID: 786449577}
+  <clickAmount>k__BackingField: 0
+  <MAX_CLICK>k__BackingField: 100
 --- !u!1 &786903984
 GameObject:
   m_ObjectHideFlags: 0
@@ -3410,6 +3426,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   robotManager: {fileID: 1815135002}
   robotButton: {fileID: 786903986}
+  <clickAmount>k__BackingField: 0
+  <MAX_CLICK>k__BackingField: 100
 --- !u!1 &801406597
 GameObject:
   m_ObjectHideFlags: 0
@@ -4479,6 +4497,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   robotManager: {fileID: 1815135002}
   robotButton: {fileID: 1068937155}
+  <clickAmount>k__BackingField: 0
+  <MAX_CLICK>k__BackingField: 100
 --- !u!1 &1081847355
 GameObject:
   m_ObjectHideFlags: 0
@@ -5685,6 +5705,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   robotManager: {fileID: 1815135002}
   robotButton: {fileID: 1237064128}
+  <clickAmount>k__BackingField: 0
+  <MAX_CLICK>k__BackingField: 100
 --- !u!1 &1239678824
 GameObject:
   m_ObjectHideFlags: 0
@@ -7061,6 +7083,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   robotManager: {fileID: 1815135002}
   robotButton: {fileID: 1724281400}
+  <clickAmount>k__BackingField: 10000
+  <MAX_CLICK>k__BackingField: 100
 --- !u!1 &1726909344
 GameObject:
   m_ObjectHideFlags: 0
