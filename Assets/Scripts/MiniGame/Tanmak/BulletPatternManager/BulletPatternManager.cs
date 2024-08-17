@@ -21,16 +21,26 @@ namespace Tanmak
 
         void Start()
         {
-            BulletPatternBase circularPattern = gameObject.AddComponent<CircularPattern>();
+            BulletPatternBase circularSpreading = gameObject.AddComponent<CircularSpreading>();
 
-            circularPattern.SetParameters(new Dictionary<string, object> {
+            BulletPatternBase rectangular = gameObject.AddComponent<Rectangular>();
+
+            circularSpreading.SetParameters(new Dictionary<string, object> {
             {"bulletCount", 12 },
             { "radius", 6f }
         });
 
+            rectangular.SetParameters(new Dictionary<string, object> {
+            {"rowCount", 3 },
+            {"colCount", 3 },
+            {"spacing", 1.0f },
+            {"directionWithAngle", 3 * Mathf.PI / 2 }
+        });
+
             interpreter.schedules = new List<PatternSchedule>
         {
-            new PatternSchedule(circularPattern, 0f, 5f),
+            new PatternSchedule(circularSpreading, 0f, 5f),
+            new PatternSchedule(rectangular, 10f, 15f)
         };
         }
     }

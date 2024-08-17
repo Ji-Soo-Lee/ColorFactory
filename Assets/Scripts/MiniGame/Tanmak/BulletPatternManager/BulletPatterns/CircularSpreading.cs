@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tanmak.BulletPatterns
 {
-    public class CircularPattern : BulletPatternBase
+    public class CircularSpreading : BulletPatternBase
     {
         private int bulletCount = 10;
         private float radius = 5f;
