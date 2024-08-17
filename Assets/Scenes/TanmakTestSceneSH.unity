@@ -1286,6 +1286,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9d4798d3164419458d96a93a815aab6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneNames:
+  - ClickerTestScene
+  - TanmakTestScene
+  - Brain
+  - Coloring
+  - Hoo
+  - dgim608
+  - Simon
 --- !u!1 &682469987
 GameObject:
   m_ObjectHideFlags: 0
@@ -2402,7 +2410,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerText: {fileID: 713065870}
   ScoreText: {fileID: 467407009}
-  GameOverPanel: {fileID: 580616254}
+  ResultPanel: {fileID: 0}
 --- !u!4 &1055953859 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6217926513705065469, guid: 83cd8df31488728458dad0b6b232d9c7,
@@ -3105,7 +3113,7 @@ MonoBehaviour:
   stageTimeLimits: []
   stageScores: 
   currentStage: 0
-  DummyEndGamePannel: {fileID: 0}
+  commonPopupUIManager: {fileID: 0}
   scoreManager: {fileID: 1523484731}
   scoreDataManager: {fileID: 1511934767}
   stageTimer: {fileID: 0}
@@ -3816,8 +3824,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67687c005f6921b48b1a442b6c5cb8a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  finalMiniGameScore: 0
-  resultSceneName: 
 --- !u!4 &1511934768
 Transform:
   m_ObjectHideFlags: 0
@@ -4610,6 +4616,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1712108576}
   - component: {fileID: 1712108577}
+  - component: {fileID: 1712108578}
+  - component: {fileID: 1712108579}
   m_Layer: 0
   m_Name: Bullet Spawner
   m_TagString: Untagged
@@ -4645,6 +4653,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interpreter: {fileID: 0}
+--- !u!114 &1712108578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712108574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eeb9b6dc7a1b4b8b9dfc41a244f809c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabPath: 
+  fireRate: 1
+  bulletSpeed: 5
+--- !u!114 &1712108579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712108574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2ce4f4aff3c84347bb0a5c8e3dc94a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab0: {fileID: 7035965164254283205, guid: 83cd8df31488728458dad0b6b232d9c7,
+    type: 3}
+  bulletPrefab1: {fileID: 7035965164254283205, guid: 7dfc51f07f2da4ff6af5731888d16bcf,
+    type: 3}
+  bulletPrefab2: {fileID: 7035965164254283205, guid: ba565de2e855d42e59a968a29df68989,
+    type: 3}
+  bulletPrefab3: {fileID: 7035965164254283205, guid: 21edc8ae2d54e456caefb678e7dde982,
+    type: 3}
 --- !u!1 &1715294484
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,16 +1,21 @@
 ﻿using System;
 using UnityEngine;
 
-public class PatternSchedule
+namespace Tanmak
 {
-    public BulletPatternBase pattern;
-    public float startTime;
-    public float duration;
 
-    public PatternSchedule(BulletPatternBase pattern, float startTime, float duration)
+    public class PatternSchedule
     {
-        this.pattern = pattern;
-        this.startTime = startTime;
-        this.duration = duration;
+        public BulletPatternBase pattern;
+        public float startTime;
+        public float duration;
+
+        public PatternSchedule(BulletPatternBase pattern, float startTime, float duration)
+        {
+            this.pattern = pattern;
+            this.startTime = startTime;
+            this.duration = duration;
+        }
     }
+
 }

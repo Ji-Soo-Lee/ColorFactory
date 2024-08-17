@@ -1,70 +1,74 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TanmakJoystick : MonoBehaviour,
-    IBeginDragHandler, IDragHandler, IEndDragHandler,
-    IPointerDownHandler, IPointerUpHandler
+namespace Tanmak
 {
-    [HideInInspector]
-    public bool isJoystickMoving;
-    [HideInInspector]
-    public Vector3 dir;
 
-    RectTransform lever;
-    RectTransform rectTransform;
-    float leverRange;
-
-    void Start()
+    public class TanmakJoystick : MonoBehaviour,
+        IBeginDragHandler, IDragHandler, IEndDragHandler,
+        IPointerDownHandler, IPointerUpHandler
     {
-        isJoystickMoving = false;
-        lever = transform.GetChild(0).GetComponent<RectTransform>();
-        rectTransform = GetComponent<RectTransform>();
-        leverRange = rectTransform.rect.width / 4.0f;
-    }
+        [HideInInspector]
+        public bool isJoystickMoving;
+        [HideInInspector]
+        public Vector3 dir;
 
-    void SetDirection(PointerEventData eventData)
-    {
-        var inputDir = eventData.position - rectTransform.anchoredPosition;
-        var clampedDir = inputDir.magnitude < leverRange ? inputDir : inputDir.normalized * leverRange;
+        RectTransform lever;
+        RectTransform rectTransform;
+        float leverRange;
 
-        dir = clampedDir / leverRange;
-        lever.anchoredPosition = clampedDir;
-    }
+        void Start()
+        {
+            isJoystickMoving = false;
+            lever = transform.GetChild(0).GetComponent<RectTransform>();
+            rectTransform = GetComponent<RectTransform>();
+            leverRange = rectTransform.rect.width / 4.0f;
+        }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Left)
+        void SetDirection(PointerEventData eventData)
+        {
+            var inputDir = eventData.position - rectTransform.anchoredPosition;
+            var clampedDir = inputDir.magnitude < leverRange ? inputDir : inputDir.normalized * leverRange;
+
+            dir = clampedDir / leverRange;
+            lever.anchoredPosition = clampedDir;
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            if (eventData.button == PointerEventData.InputButton.Left)
+            {
+                isJoystickMoving = true;
+                SetDirection(eventData);
+            }
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            if (eventData.button == PointerEventData.InputButton.Left)
+            {
+                isJoystickMoving = false;
+                SetDirection(eventData);
+                lever.anchoredPosition = new Vector2(0.0f, 0.0f);
+            }
+        }
+
+        public void OnBeginDrag(PointerEventData eventData)
         {
             isJoystickMoving = true;
             SetDirection(eventData);
         }
-    }
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Left)
+        public void OnDrag(PointerEventData eventData)
+        {
+            SetDirection(eventData);
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
         {
             isJoystickMoving = false;
             SetDirection(eventData);
             lever.anchoredPosition = new Vector2(0.0f, 0.0f);
         }
-    }
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        isJoystickMoving = true;
-        SetDirection(eventData);
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        SetDirection(eventData);
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        isJoystickMoving = false;
-        SetDirection(eventData);
-        lever.anchoredPosition = new Vector2(0.0f, 0.0f);
     }
 }
