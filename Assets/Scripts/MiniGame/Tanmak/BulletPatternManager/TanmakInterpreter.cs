@@ -13,7 +13,6 @@ namespace Tanmak
 
         private void Start()
         {
-
             StartCoroutine(ExecutePatterns());
         }
 
