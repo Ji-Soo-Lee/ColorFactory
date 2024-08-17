@@ -27,7 +27,6 @@ namespace Tanmak
                 SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
 
                 string prefabName = gameObject.name.Replace("(Clone)", "").Trim();
-                Debug.Log($"Prefab Name: {prefabName}");
 
                 // If color is assigned by prefab name
                 if (tanmakGM.bulletColorMapping.TryGetValue(prefabName, out color))

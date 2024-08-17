@@ -18,22 +18,6 @@ namespace Tanmak
         public int bulletCountCol = 3;
         public float bulletSpacing = 1.0f;
 
-        void Start()
-        {
-            Debug.Log("Debug log in TanmakPatterns");
-            // Log the assigned prefab names to confirm they are set
-            Debug.Log("bulletPrefab : " + bulletPrefab);
-            Debug.Log("bulletPrefab1: " + bulletPrefab1);
-            Debug.Log("bulletPrefab2: " + bulletPrefab2);
-            Debug.Log("bulletPrefab3: " + bulletPrefab3);
-            Debug.Log("============");
-
-            // StartCoroutine(FireBulletsCircularPattern()); // It can be changed
-            // StartCoroutine(FireBulletsRectangularPattern(bulletCountRow, bulletCountCol, bulletSpacing, 90));
-            //StartCoroutine(FireBulletsCirclePattern(20, 3, 0));
-            StartCoroutine(FireColorTest());
-        }
-
         IEnumerator FireColorTest()
         {
             Vector3 direction = new Vector3(1, 0, 0);
