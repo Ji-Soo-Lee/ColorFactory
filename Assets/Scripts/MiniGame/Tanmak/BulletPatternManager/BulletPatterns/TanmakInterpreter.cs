@@ -3,31 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class TanmakInterpreter : MonoBehaviour
+namespace Tanmak
 {
-    public List<PatternSchedule> schedules;
-
-    private float elapsedTime = 0f;
-
-    private void Start()
+    public class TanmakInterpreter : MonoBehaviour
     {
+        public List<PatternSchedule> schedules;
 
-        StartCoroutine(ExecutePatterns());
-    }
+        private float elapsedTime = 0f;
 
-
-    IEnumerator ExecutePatterns()
-    {
-        schedules = schedules.OrderBy(schedule => schedule.startTime).ToList();
-
-        foreach (var schedule in schedules)
+        private void Start()
         {
-            // waiting by next schedule
-            yield return new WaitForSeconds(schedule.startTime - elapsedTime);
 
-            StartCoroutine(schedule.pattern.FirePattern());
+            StartCoroutine(ExecutePatterns());
+        }
 
-            elapsedTime = schedule.startTime + schedule.duration;
+
+        IEnumerator ExecutePatterns()
+        {
+            schedules = schedules.OrderBy(schedule => schedule.startTime).ToList();
+
+            foreach (var schedule in schedules)
+            {
+                // waiting by next schedule
+                yield return new WaitForSeconds(schedule.startTime - elapsedTime);
+
+                StartCoroutine(schedule.pattern.FirePattern());
+
+                elapsedTime = schedule.startTime + schedule.duration;
+            }
         }
     }
 }

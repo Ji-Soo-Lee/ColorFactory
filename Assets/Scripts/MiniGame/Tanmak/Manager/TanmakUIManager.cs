@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class TanmakUIManager : MonoBehaviour
+namespace Tanmak
 {
-    public TMP_Text timerText;
-    public TMP_Text ScoreText;
-    public GameObject ResultPanel;
-
-    public void SetTimerText(float time)
+    public class TanmakUIManager : MonoBehaviour
     {
-        timerText.text = "Time " + ((int)time).ToString();
-    }
+        public TMP_Text timerText;
+        public TMP_Text ScoreText;
+        public GameObject ResultPanel;
 
-    public void SetScoreText(int score)
-    {
-        ScoreText.text = score.ToString();
+        public void SetTimerText(float time)
+        {
+            timerText.text = "Time " + ((int)time).ToString();
+        }
+
+        public void SetScoreText(int score)
+        {
+            ScoreText.text = score.ToString();
+        }
     }
 }
