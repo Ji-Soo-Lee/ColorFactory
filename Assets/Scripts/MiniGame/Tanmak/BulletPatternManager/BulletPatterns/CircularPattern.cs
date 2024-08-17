@@ -6,20 +6,8 @@ namespace Tanmak
 {
     public class CircularPattern : BulletPatternBase
     {
-        private LoadBulletPrefabs loadBulletPrefabs;
-
         private int bulletCount = 10;
         private float radius = 5f;
-
-        void Start()
-        {
-            loadBulletPrefabs = gameObject.AddComponent<LoadBulletPrefabs>();
-
-            bulletPrefab0 = loadBulletPrefabs.GetBulletPrefabByIndex(0);
-            bulletPrefab1 = loadBulletPrefabs.GetBulletPrefabByIndex(1);
-            bulletPrefab2 = loadBulletPrefabs.GetBulletPrefabByIndex(2);
-            bulletPrefab3 = loadBulletPrefabs.GetBulletPrefabByIndex(3);
-        }
 
         public override IEnumerator FirePattern()
         {

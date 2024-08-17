@@ -7,12 +7,22 @@ namespace Tanmak
     // class to abstract tanmak pattern
     public abstract class BulletPatternBase : MonoBehaviour
     {
-        public string prefabPath;
+        // bullet prefab with random color
+        protected GameObject bulletPrefab0;
+        // bullet prefab with first color 
+        protected GameObject bulletPrefab1;
+        // bullet prefab with second color
+        protected GameObject bulletPrefab2;
+        // bullet prefab with third color
+        protected GameObject bulletPrefab3;
 
-        protected GameObject bulletPrefab0; // bullet prefab with random color
-        protected GameObject bulletPrefab1; // first color
-        protected GameObject bulletPrefab2; // second color
-        protected GameObject bulletPrefab3; // third color
+        void Awake()
+        {
+            bulletPrefab0 = Resources.Load<GameObject>("Prefabs/BulletPrefab0");
+            bulletPrefab1 = Resources.Load<GameObject>("Prefabs/BulletPrefab1");
+            bulletPrefab2 = Resources.Load<GameObject>("Prefabs/BulletPrefab2");
+            bulletPrefab3 = Resources.Load<GameObject>("Prefabs/BulletPrefab3");
+        }
 
         public float fireRate = 1f; // bullet fire time rate (s)
         public float bulletSpeed = 5f; // bullet speed (m / s)
