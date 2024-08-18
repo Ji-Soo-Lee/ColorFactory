@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,9 @@ public class ClickerGameManager : MonoBehaviour
     private int buttonColorLength;
     private float colorThreshold;
     private int feverWeight = 1;
+
+    [DllImport("__Internal")]
+    public static extern void Vibrate(int _n);
 
     void Start()
     {
@@ -56,6 +60,11 @@ public class ClickerGameManager : MonoBehaviour
     public void IncrementClickCount()
     {
         int inc = (int)(1 + 0.1 * ((feverWeight << 1) + feverWeight));
+        # if UNITY_ANDROID && !UNITY_EDITOR
+            Vibration.Vibrate(20);
+        # elif UNITY_IOS && !UNITY_EDITOR
+            Vibrate(1519);
+        # endif
         clickNum += inc;
         currentClickNum += inc;
 
