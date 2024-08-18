@@ -20,7 +20,7 @@ public class ClickerUIManager : MonoBehaviour
 
     public void InitColors()
     {
-        currentColor = backgrounds[0].color;
+        currentColor = clickerGM.buttonColors[0];
         mainButtonSprite.color = currentColor;
     }
 
@@ -38,11 +38,19 @@ public class ClickerUIManager : MonoBehaviour
 
     public Color CalculateTargetColor()
     {
-        int curIdx = (int)Mathf.Floor(clickerGM.clickNum / clickerGM.maxClicks);
+
+        // itv = (int) Mathf.Floor(clickNum / colorThreshold);
+        // targetColor = Color.Lerp(
+            // buttonColors[itv % buttonColorLength], 
+            // buttonColors[(itv + 1) % buttonColorLength], 
+            // ((float) (clickNum % colorThreshold)) / colorThreshold
+        // );
+
+        int curIdx = (int)Mathf.Floor(clickerGM.clickNum / clickerGM.colorThreshold);
         Color targetColor = Color.Lerp(
-            backgrounds[curIdx % backgrounds.Count].color,
-            backgrounds[(curIdx + 1) % backgrounds.Count].color,
-            ((float)(clickerGM.clickNum % clickerGM.maxClicks)) / clickerGM.maxClicks
+            clickerGM.buttonColors[curIdx % backgrounds.Count],
+            clickerGM.buttonColors[(curIdx + 1) % backgrounds.Count],
+            ((float)(clickerGM.clickNum % clickerGM.colorThreshold)) / clickerGM.colorThreshold
         );
 
         return targetColor;

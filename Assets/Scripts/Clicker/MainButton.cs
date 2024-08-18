@@ -8,6 +8,7 @@ public class MainButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField] private ClickerUIManager clickerUIManager;
     private Vector3 originalScale;
     private Button selfbutton;
+    public float duration = 1.0f;
 
     void Awake()
     {
@@ -33,7 +34,7 @@ public class MainButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnClickButton()
     {
-        clickerGM.IncrementClickCount();
+        clickerGM.IncrementClickCount(duration);
     }
 
     public void SetInteractive(bool isInteractive)

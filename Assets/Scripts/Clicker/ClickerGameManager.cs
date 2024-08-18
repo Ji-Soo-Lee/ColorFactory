@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ClickerGameManager : MonoBehaviour
 {
@@ -20,11 +21,14 @@ public class ClickerGameManager : MonoBehaviour
     public int maxClicks { get; private set; } = 24;
     public int maxCycle { get; private set; } = 4;
 
-    public List<Color> worldColors;   // World Color
+    public List<float> targetAlphas;   // target Alpahs
+    public List<float> currentAlphas;  // current Alphas
     public List<Color> buttonColors { get; private set; } = new List<Color>();  // Available Colors for Button
+    [SerializeField] public List<Color> worldColors;    // World Colors
 
+    public float colorThreshold;
+    
     private int buttonColorLength;
-    private float colorThreshold;
     private int feverWeight = 1;
 
     [DllImport("__Internal")]
@@ -32,6 +36,12 @@ public class ClickerGameManager : MonoBehaviour
 
     void Start()
     {
+        for (int i = 0; i < worldColors.Count; i++)
+        {
+            targetAlphas.Add(clickerUIManager.backgrounds[i].color.a);
+            currentAlphas.Add(clickerUIManager.backgrounds[i].color.a / maxCycle);
+        }
+
         InitColors();
 
         clickerUIManager.InitColors();
@@ -58,7 +68,7 @@ public class ClickerGameManager : MonoBehaviour
         feverWeight = weight;
     }
 
-    public void IncrementClickCount()
+    public void IncrementClickCount(float duration = 1.0f)
     {
         int inc = (int)(1 + 0.1 * ((feverWeight << 1) + feverWeight));
         
@@ -70,7 +80,9 @@ public class ClickerGameManager : MonoBehaviour
         # endif
 
         // Click Effect
-        clickEffect.SpawnAndGrowEffect();
+        Color targetColor = clickerUIManager.CalculateTargetColor();
+        clickerUIManager.UpdateButtonColor(duration);
+        clickEffect.SpawnAndGrowEffect(targetColor);
         
         clickNum += inc;
         currentClickNum += inc;
@@ -82,7 +94,7 @@ public class ClickerGameManager : MonoBehaviour
         }
     }
 
-    public IEnumerator SimulateMultipleClicks(int clickNum, float duration)
+    public IEnumerator SimulateMultipleClicks(int clickNum, float duration = 5.0f)
     {
         // Spinlock if preceding coroutine exists
         // Cannot guarantee the order if blocked
@@ -95,9 +107,7 @@ public class ClickerGameManager : MonoBehaviour
 
         for (int i = 0; i < clickNum; i++)
         {
-            IncrementClickCount();
-
-            clickerUIManager.UpdateButtonColor(duration);
+            IncrementClickCount(stepColorTransitionDuration);
 
             if (i != clickNum - 1)
             {
@@ -113,12 +123,12 @@ public class ClickerGameManager : MonoBehaviour
     private void InitColors()
     {
         // Distribute World Colors
-        for (int i = 0; i < worldColors.Count; i++)
+        for (int i = 0; i < targetAlphas.Count; i++)
         {
-            Color color = new Color(worldColors[i].r, worldColors[i].g, worldColors[i].b, worldColors[i].a / maxCycle);
+            Color color = new Color(worldColors[i].r, worldColors[i].g, worldColors[i].b, currentAlphas[i]);
             buttonColors.Add(color);
 
-            clickerUIManager.backgrounds[i].color = color;
+            clickerUIManager.backgrounds[i].color = new Color(1.0f, 1.0f, 1.0f, currentAlphas[i]);
         }
 
         // Set Constant
@@ -196,7 +206,7 @@ public class ClickerGameManager : MonoBehaviour
         // Get Valid Indices
         for (int i = 0; i < buttonColorLength; i++)
         {
-            if (buttonColors[i].a != worldColors[i].a)
+            if (buttonColors[i].a != targetAlphas[i])
             {
                 validIndices.Add(i);
             }
@@ -209,16 +219,34 @@ public class ClickerGameManager : MonoBehaviour
 
             UnityEngine.Debug.Log(rewardIdx);
 
-            Color color = new Color(buttonColors[rewardIdx].r, buttonColors[rewardIdx].g, buttonColors[rewardIdx].b, buttonColors[rewardIdx].a + worldColors[rewardIdx].a / maxCycle);
-            buttonColors[rewardIdx] = color;
-            clickerUIManager.backgrounds[rewardIdx].color = color;
+            currentAlphas[rewardIdx] = buttonColors[rewardIdx].a + targetAlphas[rewardIdx] / maxCycle;
+            if (currentAlphas[rewardIdx] > 1.0f)
+            {
+                currentAlphas[rewardIdx] = 1.0f;
+            }
+            
+            // Update button 
+            buttonColors[rewardIdx] = new Color(buttonColors[rewardIdx].r, buttonColors[rewardIdx].g, buttonColors[rewardIdx].b, currentAlphas[rewardIdx]);;
+            
+            // Update background
+            // Color backgroundColor = clickerUIManager.backgrounds[rewardIdx].color;
+            // backgroundColor.a = currentAlphas[rewardIdx];
+            clickerUIManager.backgrounds[rewardIdx].color = new Color(1.0f, 1.0f, 1.0f, currentAlphas[rewardIdx]);
         }
 
-        if (Enumerable.SequenceEqual(buttonColors, worldColors))
+        if (Enumerable.SequenceEqual(targetAlphas, currentAlphas))
         {
             // End Logic
             UnityEngine.Debug.Log("You win!");
             robotManager.SetAllRobotsInteractable(false);
+            clickerUIManager.mainButton.SetInteractive(false);
+            StartCoroutine(delayTime());
+            SceneManager.LoadScene("ClickerCompleteScene");
         }
+    }
+
+    IEnumerator delayTime()
+    {
+        yield return new WaitForSeconds(clickEffect.growDuration);
     }
 }

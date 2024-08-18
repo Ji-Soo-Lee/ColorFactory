@@ -3066,8 +3066,8 @@ MonoBehaviour:
   pongPrefab: {fileID: 5009806924109080593, guid: 166d1da64819a4f589edeb1f0c48b1b1,
     type: 3}
   canvas: {fileID: 2029233457}
-  growDuration: 1
-  maxScale: {x: 5, y: 5, z: 5}
+  growDuration: 0.8
+  maxScale: {x: 3, y: 3, z: 3}
   startScale: 0.1
 --- !u!4 &779826950
 Transform:
@@ -4820,12 +4820,15 @@ MonoBehaviour:
   robotManager: {fileID: 1815135002}
   feverManager: {fileID: 1129687842}
   dummySceneController: {fileID: 566478200}
+  targetAlphas: []
+  currentAlphas: []
   worldColors:
   - {r: 0.15686275, g: 0.18431373, b: 0.32941177, a: 1}
   - {r: 0.96862745, g: 0.8392157, b: 0.8784314, a: 1}
   - {r: 0.9490196, g: 0.70980394, b: 0.83137256, a: 1}
   - {r: 1, g: 0.40784314, b: 0.41960785, a: 1}
   - {r: 0.25882354, g: 0.16862746, b: 0.14509805, a: 1}
+  colorThreshold: 0
 --- !u!4 &1129687841
 Transform:
   m_ObjectHideFlags: 0
@@ -6353,6 +6356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clickerGM: {fileID: 1129687840}
   clickerUIManager: {fileID: 70820729}
+  duration: 1
 --- !u!1 &1442397577
 GameObject:
   m_ObjectHideFlags: 0
