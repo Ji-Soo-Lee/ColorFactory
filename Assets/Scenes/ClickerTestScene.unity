@@ -605,15 +605,14 @@ MonoBehaviour:
   - {fileID: 1132270272}
   - {fileID: 37695503}
   - {fileID: 2145503573}
-  - {fileID: 0}
   - {fileID: 692914634}
   feverGaugeSprites:
-  - {fileID: 21300000, guid: b45096ef26ec4434e8ca66b8915080dc, type: 3}
-  - {fileID: 21300000, guid: 536450a672ffd0043be02dab8cfc3378, type: 3}
-  - {fileID: 21300000, guid: e5899e0cbd95bdf468386fb09eac398a, type: 3}
-  - {fileID: 21300000, guid: 029f839eff2a947449351dacea68229e, type: 3}
-  - {fileID: 21300000, guid: 67851e6cd742684419c965b703c5309e, type: 3}
-  - {fileID: 21300000, guid: 9b6a1e0fe9596c942aa0cf554007e62e, type: 3}
+  - {fileID: 21300000, guid: 8b0cbaf6e535548e398de282d06ef9ca, type: 3}
+  - {fileID: 21300000, guid: 50148f6392f654d7d92fc41c10f6aa36, type: 3}
+  - {fileID: 21300000, guid: 20af6680c9e57463193ce7e11346d551, type: 3}
+  - {fileID: 21300000, guid: c1e0490933c314317bc1304cc511a7ac, type: 3}
+  - {fileID: 21300000, guid: cb5cb2e758d6f4e3cba9f10c17f02245, type: 3}
+  - {fileID: 21300000, guid: 658d04b047673430cad27547f62121fa, type: 3}
 --- !u!4 &70820730
 Transform:
   m_ObjectHideFlags: 0
@@ -4775,7 +4774,6 @@ MonoBehaviour:
   - {r: 0.96862745, g: 0.8392157, b: 0.8784314, a: 1}
   - {r: 0.9490196, g: 0.70980394, b: 0.83137256, a: 1}
   - {r: 1, g: 0.40784314, b: 0.41960785, a: 1}
-  - {r: 0.9254902, g: 0.9529412, b: 0.61960787, a: 1}
   - {r: 0.25882354, g: 0.16862746, b: 0.14509805, a: 1}
 --- !u!4 &1129687841
 Transform:
@@ -5249,7 +5247,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b45096ef26ec4434e8ca66b8915080dc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8b0cbaf6e535548e398de282d06ef9ca, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
