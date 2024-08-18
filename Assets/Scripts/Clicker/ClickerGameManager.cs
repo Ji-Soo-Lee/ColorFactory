@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class ClickerGameManager : MonoBehaviour
 {
     public ClickerUIManager clickerUIManager;
+    public ClickEffect clickEffect;
     public RobotManager robotManager;
     public Fever feverManager;
     public DummySceneController dummySceneController;
@@ -60,11 +61,17 @@ public class ClickerGameManager : MonoBehaviour
     public void IncrementClickCount()
     {
         int inc = (int)(1 + 0.1 * ((feverWeight << 1) + feverWeight));
+        
+        // Vibrate
         # if UNITY_ANDROID && !UNITY_EDITOR
             Vibration.Vibrate(20);
         # elif UNITY_IOS && !UNITY_EDITOR
             Vibrate(1519);
         # endif
+
+        // Click Effect
+        clickEffect.SpawnAndGrowEffect();
+        
         clickNum += inc;
         currentClickNum += inc;
 

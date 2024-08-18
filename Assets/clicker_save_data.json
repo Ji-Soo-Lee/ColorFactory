@@ -1,6 +1,6 @@
 {
-    "clickNum": 0,
-    "currentClickNum": 0,
+    "clickNum": 58,
+    "currentClickNum": 10,
     "feverGauge": 0,
     "currentColor": {
         "r": 0.0,
@@ -37,7 +37,7 @@
             "r": 0.9254902005195618,
             "g": 0.9529411792755127,
             "b": 0.6196078658103943,
-            "a": 0.25
+            "a": 0.75
         }
     ],
     "robotClickAmounts": [

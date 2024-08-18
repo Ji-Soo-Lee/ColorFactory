@@ -3034,6 +3034,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747582377}
   m_CullTransparentMesh: 1
+--- !u!1 &779826948
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 779826950}
+  - component: {fileID: 779826949}
+  m_Layer: 0
+  m_Name: Click Effect Object
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &779826949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779826948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d28e29fb53144499cbfe0d00219bc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pongPrefab: {fileID: 5009806924109080593, guid: 166d1da64819a4f589edeb1f0c48b1b1,
+    type: 3}
+  canvas: {fileID: 2029233457}
+  growDuration: 1
+  maxScale: {x: 5, y: 5, z: 5}
+  startScale: 0.1
+--- !u!4 &779826950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779826948}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &786449575
 GameObject:
   m_ObjectHideFlags: 0
@@ -4766,6 +4816,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickerUIManager: {fileID: 70820729}
+  clickEffect: {fileID: 779826949}
   robotManager: {fileID: 1815135002}
   feverManager: {fileID: 1129687842}
   dummySceneController: {fileID: 566478200}
