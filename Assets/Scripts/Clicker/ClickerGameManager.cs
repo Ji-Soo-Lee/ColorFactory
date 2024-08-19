@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 public class ClickerGameManager : MonoBehaviour
 {
     public ClickerUIManager clickerUIManager;
+    public GameObject resetButton;
     public ClickEffect clickEffect;
     public RobotManager robotManager;
     public Fever feverManager;
@@ -68,7 +69,7 @@ public class ClickerGameManager : MonoBehaviour
         
         // Vibrate
         # if UNITY_ANDROID && !UNITY_EDITOR
-            Vibration.Vibrate(20);
+            Vibration.Vibrate(30);
         # elif UNITY_IOS && !UNITY_EDITOR
             Vibrate(1519);
         # endif
@@ -194,6 +195,8 @@ public class ClickerGameManager : MonoBehaviour
             feverManager.feverGauge, clickerUIManager.currentColor,
             buttonColors, robotManager.GetClickAmounts(), robotManager.GetMaxClicks());
         ClickerDataManager.SaveData(data);
+
+        resetButton.SetActive(false);
     }
 
     private void LoadGameData(ClickerData data)
@@ -260,6 +263,8 @@ public class ClickerGameManager : MonoBehaviour
             robotManager.SetAllRobotsInteractable(false);
             clickerUIManager.mainButton.gameObject.SetActive(false);
             clickerUIManager.backgroundButtonSprite.gameObject.SetActive(false);
+
+            resetButton.SetActive(true);
         }
     }
 
