@@ -197,6 +197,10 @@ public class ClickerGameManager : MonoBehaviour
         ClickerDataManager.SaveData(data);
 
         resetButton.SetActive(false);
+
+        robotManager.SetAllRobotsInteractable(true);
+        clickerUIManager.mainButton.gameObject.SetActive(true);
+        clickerUIManager.backgroundButtonSprite.gameObject.SetActive(true);
     }
 
     private void LoadGameData(ClickerData data)
