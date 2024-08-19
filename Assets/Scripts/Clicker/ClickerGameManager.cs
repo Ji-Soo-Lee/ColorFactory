@@ -36,12 +36,6 @@ public class ClickerGameManager : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < worldColors.Count; i++)
-        {
-            targetAlphas.Add(clickerUIManager.backgrounds[i].color.a);
-            currentAlphas.Add(clickerUIManager.backgrounds[i].color.a / maxCycle);
-        }
-
         InitColors();
 
         clickerUIManager.InitColors();
@@ -122,6 +116,16 @@ public class ClickerGameManager : MonoBehaviour
 
     private void InitColors()
     {
+        targetAlphas.Clear();
+        currentAlphas.Clear();
+        buttonColors.Clear();
+
+        for (int i = 0; i < worldColors.Count; i++)
+        {
+            targetAlphas.Add(clickerUIManager.backgrounds[i].color.a);
+            currentAlphas.Add(clickerUIManager.backgrounds[i].color.a / maxCycle);
+        }
+
         // Distribute World Colors
         for (int i = 0; i < targetAlphas.Count; i++)
         {
@@ -170,6 +174,21 @@ public class ClickerGameManager : MonoBehaviour
 
     private void SaveGameData()
     {
+        // Save Data
+        ClickerData data = ClickerDataManager.CreateClickerData(clickNum, currentClickNum,
+            feverManager.feverGauge, clickerUIManager.currentColor,
+            buttonColors, robotManager.GetClickAmounts(), robotManager.GetMaxClicks());
+        ClickerDataManager.SaveData(data);
+    }
+
+    public void ResetGameData()
+    {
+        InitColors();
+        clickerUIManager.InitColors();
+
+        clickNum = 0;
+        currentClickNum = 0;
+
         // Save Data
         ClickerData data = ClickerDataManager.CreateClickerData(clickNum, currentClickNum,
             feverManager.feverGauge, clickerUIManager.currentColor,
@@ -239,9 +258,8 @@ public class ClickerGameManager : MonoBehaviour
             // End Logic
             UnityEngine.Debug.Log("You win!");
             robotManager.SetAllRobotsInteractable(false);
-            clickerUIManager.mainButton.SetInteractive(false);
-            StartCoroutine(delayTime());
-            SceneManager.LoadScene("ClickerCompleteScene");
+            clickerUIManager.mainButton.gameObject.SetActive(false);
+            clickerUIManager.backgroundButtonSprite.gameObject.SetActive(false);
         }
     }
 
