@@ -10,10 +10,11 @@ public class ClickEffect : MonoBehaviour
     public float growDuration = 1.0f;
     public Vector3 maxScale = new Vector3 (3f, 3f, 3f);
     public float startScale = 0.1f;
+    [SerializeField] private Vector3 center;
 
     public void SpawnAndGrowEffect(Color color)
     {
-        GameObject effect = Instantiate(pongPrefab, new Vector3(30f, 240f, 0f), Quaternion.identity);
+        GameObject effect = Instantiate(pongPrefab, center, Quaternion.identity);
         effect.GetComponent<Image>().color = new Color(color.r, color.g, color.b, 0.3f);
         effect.transform.SetParent(canvas.transform, false);
 
