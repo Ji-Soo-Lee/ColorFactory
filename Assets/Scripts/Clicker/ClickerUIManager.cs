@@ -6,11 +6,14 @@ using UnityEngine.UI;
 public class ClickerUIManager : MonoBehaviour
 {
     public ClickerGameManager clickerGM;
+    public RobotManager robotManager;
+    public RobotV2 robot;   
 
     public MainButton mainButton;
     public Image mainButtonSprite;
     public Image backgroundButtonSprite;
     public Image feverGaugeImage;
+    public Image robotBatterySprite;
 
     public GameObject WorldPanel;
     public GameObject RobotPanel;
@@ -81,6 +84,12 @@ public class ClickerUIManager : MonoBehaviour
     {
         if (feverGauge < 0 || feverGauge >= feverGaugeSprites.Count) return;
         feverGaugeImage.sprite = feverGaugeSprites[feverGauge];
+    }
+
+    public void SetRobotBatterySprite(int robotBattery)
+    {
+        if (robotBattery < 0) return;
+        robotBatterySprite.fillAmount = (float)robotBattery / robot.MAX_ROBOT_BATTERY;
     }
 
     public void SetButtonColor(Color color)

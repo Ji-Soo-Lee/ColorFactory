@@ -9,9 +9,30 @@ using UnityEngine.UI;
 public class RobotV2 : MonoBehaviour
 {
     public RobotManager robotManager;
+    // public int robotBattery;
     public Button robotButton;
+    public ClickerUIManager clickerUIManager;
+    public int robotBattery { get; private set; } = 0;
+    public int MAX_ROBOT_BATTERY = 50;
     [field: SerializeField] public int clickAmount { get; private set; } = 0;
     [field: SerializeField] public int MAX_CLICK { get; private set; } = 100;
+
+    public void AddRobotBattery(int inc)
+    {
+        int sum = robotBattery + inc;
+        if (inc < 0 || sum < robotBattery) return;
+
+        sum = Mathf.Clamp(sum, 0, MAX_ROBOT_BATTERY);
+
+        SetRobotBattery(sum);
+    }
+
+    public void SetRobotBattery(int gauge)
+    {
+        robotBattery = Mathf.Clamp(gauge, 0, MAX_ROBOT_BATTERY);
+
+        clickerUIManager.SetRobotBatterySprite(robotBattery);
+    }
 
     public void OnClickButton()
     {

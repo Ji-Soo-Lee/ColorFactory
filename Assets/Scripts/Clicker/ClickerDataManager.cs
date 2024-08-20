@@ -27,12 +27,14 @@ public class ClickerStateData
     public int clickNum;
     public int currentClickNum;
     public int feverGauge;
+    public int robotBattery;
 
-    public ClickerStateData(int clickNum, int currentClickNum, int feverGauge)
+    public ClickerStateData(int clickNum, int currentClickNum, int feverGaug, int robotBattery)
     {
         this.clickNum = clickNum;
         this.currentClickNum = currentClickNum;
         this.feverGauge = feverGauge;
+        this.robotBattery = robotBattery;
     }
 }
 

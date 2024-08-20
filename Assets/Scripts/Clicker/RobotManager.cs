@@ -74,6 +74,10 @@ public class RobotManager : MonoBehaviour
     {
         foreach (RobotV2 robot in robots)
         {
+            if (robot.robotBattery < robot.MAX_ROBOT_BATTERY) {
+                Debug.Log("Robot Battery is not full");
+                return;
+            }
             robot.OnClickButton();
         }
     }

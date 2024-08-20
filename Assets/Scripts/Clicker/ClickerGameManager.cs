@@ -17,6 +17,7 @@ public class ClickerGameManager : MonoBehaviour
     public ClickEffect clickEffect;
     public RewardEffect rewardEffect;
     public RobotManager robotManager;
+    public RobotV2 robot;
     public Fever feverManager;
     public DummySceneController dummySceneController;
 
@@ -229,6 +230,7 @@ public class ClickerGameManager : MonoBehaviour
             if (scoreDataManager.isMiniGameClear)
             {
                 feverManager.AddFeverGauge(1);
+                robot.AddRobotBattery(1);
             }
         }
     }
@@ -237,7 +239,7 @@ public class ClickerGameManager : MonoBehaviour
     {
         // Save Data
         ClickerData data = new ClickerData(
-            new ClickerStateData(clickNum, currentClickNum, feverManager.feverGauge),
+            new ClickerStateData(clickNum, currentClickNum, feverManager.feverGauge, robot.robotBattery),
             new ClickerColorData(clickerUIManager.currentColor, buttonColors),
             new ClickerRobotData(robotManager.GetClickAmounts(), robotManager.GetMaxClicks()),
             null);
@@ -272,6 +274,7 @@ public class ClickerGameManager : MonoBehaviour
         buttonColors = data.colorData.buttonColors;
 
         feverManager.SetFeverGauge(data.stateData.feverGauge);
+        robot.SetRobotBattery(data.stateData.robotBattery);
 
         // Apply on Sprites
         clickerUIManager.SetButtonColor(data.colorData.currentColor);
