@@ -56,10 +56,10 @@ public class ButtonManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         ClickerData data = ClickerDataManager.LoadData();
         if (data != null)
         {
-            clickNum = data.clickNum;
-            currentClickNum = data.currentClickNum;
-            currentColor = data.currentColor;
-            buttonColors = data.buttonColors;
+            //clickNum = data.clickNum;
+            //currentClickNum = data.currentClickNum;
+            //currentColor = data.currentColor;
+            //buttonColors = data.buttonColors;
 
             // Apply on Sprites
             buttonSprite.color = currentColor;

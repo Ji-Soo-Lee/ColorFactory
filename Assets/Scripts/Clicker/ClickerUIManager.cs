@@ -20,8 +20,11 @@ public class ClickerUIManager : MonoBehaviour
 
     public void InitColors()
     {
-        currentColor = clickerGM.buttonColors[0];
-        mainButtonSprite.color = currentColor;
+        if (clickerGM.buttonColors.Count > 0)
+        {
+            currentColor = clickerGM.buttonColors[0];
+            mainButtonSprite.color = currentColor;
+        }
     }
 
     public void SetFeverGaugeSprite(int feverGauge)
@@ -36,29 +39,9 @@ public class ClickerUIManager : MonoBehaviour
         mainButtonSprite.color = color;
     }
 
-    public Color CalculateTargetColor()
-    {
-
-        // itv = (int) Mathf.Floor(clickNum / colorThreshold);
-        // targetColor = Color.Lerp(
-            // buttonColors[itv % buttonColorLength], 
-            // buttonColors[(itv + 1) % buttonColorLength], 
-            // ((float) (clickNum % colorThreshold)) / colorThreshold
-        // );
-
-        int curIdx = (int)Mathf.Floor(clickerGM.clickNum / clickerGM.colorThreshold);
-        Color targetColor = Color.Lerp(
-            clickerGM.buttonColors[curIdx % backgrounds.Count],
-            clickerGM.buttonColors[(curIdx + 1) % backgrounds.Count],
-            ((float)(clickerGM.clickNum % clickerGM.colorThreshold)) / clickerGM.colorThreshold
-        );
-
-        return targetColor;
-    }
-
     public void UpdateButtonColor(float duration = 1.0f)
     {
-        Color targetColor = CalculateTargetColor();
+        Color targetColor = clickerGM.CalculateTargetColor();
 
         if (currentButtonColorCoroutine != null) StopCoroutine(currentButtonColorCoroutine);
         currentButtonColorCoroutine = StartCoroutine(GraduallyChangeColor(mainButtonSprite, targetColor, duration));

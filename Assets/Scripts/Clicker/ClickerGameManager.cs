@@ -7,6 +7,7 @@ using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class ClickerGameManager : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class ClickerGameManager : MonoBehaviour
     public Fever feverManager;
     public DummySceneController dummySceneController;
 
-    public int clickNum { get; private set; } = 0;
+    [field: SerializeField] public int clickNum { get; private set; } = 0;
     public int currentClickNum { get; private set; } = 0;
     public int maxClicks { get; private set; } = 24;
     public int maxCycle { get; private set; } = 4;
@@ -27,15 +28,15 @@ public class ClickerGameManager : MonoBehaviour
     public List<Color> buttonColors { get; private set; } = new List<Color>();  // Available Colors for Button
     [SerializeField] public List<Color> worldColors;    // World Colors
 
-    public float colorThreshold;
-    
+    public float colorThreshold { get; private set; }
+
     private int buttonColorLength;
     private int feverWeight = 1;
 
     [DllImport("__Internal")]
     public static extern void Vibrate(int _n);
 
-    void Start()
+    void Awake()
     {
         InitColors();
 
@@ -53,6 +54,21 @@ public class ClickerGameManager : MonoBehaviour
     }
 
     void OnDisable()
+    {
+        SaveGameData();
+    }
+
+    void OnApplicationQuit()
+    {
+        SaveGameData();
+    }
+
+    //void OnApplicationFocus(bool paused)
+    //{
+    //    SaveGameData();
+    //}
+
+    void OnApplicationPause(bool paused)
     {
         SaveGameData();
     }
@@ -75,7 +91,7 @@ public class ClickerGameManager : MonoBehaviour
         # endif
 
         // Click Effect
-        Color targetColor = clickerUIManager.CalculateTargetColor();
+        Color targetColor = CalculateTargetColor();
         clickerUIManager.UpdateButtonColor(duration);
         clickEffect.SpawnAndGrowEffect(targetColor);
         
@@ -115,20 +131,51 @@ public class ClickerGameManager : MonoBehaviour
         // isClickCoroutineRunning = false;
     }
 
+    public Color CalculateTargetColor()
+    {
+        if (buttonColors.Count < 1)
+        {
+            UnityEngine.Debug.LogWarning("Button Colors Empty");
+            return clickerUIManager.currentColor;
+        }
+
+        int curIdx = (int)Mathf.Floor(clickNum / colorThreshold);
+        Color targetColor = Color.Lerp(
+            buttonColors[curIdx % buttonColors.Count],
+            buttonColors[(curIdx + 1) % buttonColors.Count],
+            ((float)(clickNum % colorThreshold)) / colorThreshold
+        );
+
+        return targetColor;
+    }
+
     private void InitColors()
     {
         targetAlphas.Clear();
         currentAlphas.Clear();
         buttonColors.Clear();
 
-        for (int i = 0; i < worldColors.Count; i++)
+        // For OOB Safety
+        if (worldColors.Count != clickerUIManager.backgrounds.Count)
+        {
+            UnityEngine.Debug.LogWarning("World Colors and Background Colors Mismatch!");
+            return;
+        }
+        else if (worldColors.Count == 0)
+        {
+            UnityEngine.Debug.LogWarning("World Colors Empty!");
+            return;
+        }
+
+        // Set Alphas
+        for (int i = 0; i < clickerUIManager.backgrounds.Count; i++)
         {
             targetAlphas.Add(clickerUIManager.backgrounds[i].color.a);
             currentAlphas.Add(clickerUIManager.backgrounds[i].color.a / maxCycle);
         }
 
         // Distribute World Colors
-        for (int i = 0; i < targetAlphas.Count; i++)
+        for (int i = 0; i < currentAlphas.Count; i++)
         {
             Color color = new Color(worldColors[i].r, worldColors[i].g, worldColors[i].b, currentAlphas[i]);
             buttonColors.Add(color);
@@ -176,14 +223,17 @@ public class ClickerGameManager : MonoBehaviour
     private void SaveGameData()
     {
         // Save Data
-        ClickerData data = ClickerDataManager.CreateClickerData(clickNum, currentClickNum,
-            feverManager.feverGauge, clickerUIManager.currentColor,
-            buttonColors, robotManager.GetClickAmounts(), robotManager.GetMaxClicks());
+        ClickerData data = new ClickerData(
+            new ClickerStateData(clickNum, currentClickNum, feverManager.feverGauge),
+            new ClickerColorData(clickerUIManager.currentColor, buttonColors),
+            new ClickerRobotData(robotManager.GetClickAmounts(), robotManager.GetMaxClicks()),
+            null);
         ClickerDataManager.SaveData(data);
     }
 
     public void ResetGameData()
     {
+        // Reset
         InitColors();
         clickerUIManager.InitColors();
 
@@ -191,13 +241,11 @@ public class ClickerGameManager : MonoBehaviour
         currentClickNum = 0;
 
         // Save Data
-        ClickerData data = ClickerDataManager.CreateClickerData(clickNum, currentClickNum,
-            feverManager.feverGauge, clickerUIManager.currentColor,
-            buttonColors, robotManager.GetClickAmounts(), robotManager.GetMaxClicks());
-        ClickerDataManager.SaveData(data);
+        SaveGameData();
 
-        resetButton.SetActive(false);
+        // resetButton.SetActive(false);
 
+        // Activate Buttons
         robotManager.SetAllRobotsInteractable(true);
         clickerUIManager.mainButton.gameObject.SetActive(true);
         clickerUIManager.backgroundButtonSprite.gameObject.SetActive(true);
@@ -205,14 +253,15 @@ public class ClickerGameManager : MonoBehaviour
 
     private void LoadGameData(ClickerData data)
     {
-        clickNum = data.clickNum;
-        currentClickNum = data.currentClickNum;
-        buttonColors = data.buttonColors;
+        // Apply on States
+        clickNum = data.stateData.clickNum;
+        currentClickNum = data.stateData.currentClickNum;
+        buttonColors = data.colorData.buttonColors;
 
-        feverManager.SetFeverGauge(data.feverGauge);
+        feverManager.SetFeverGauge(data.stateData.feverGauge);
 
         // Apply on Sprites
-        clickerUIManager.SetButtonColor(data.currentColor);
+        clickerUIManager.SetButtonColor(data.colorData.currentColor);
         for (int i = 0; i < buttonColors.Count; i++)
         {
             Color c = buttonColors[i];
@@ -220,8 +269,8 @@ public class ClickerGameManager : MonoBehaviour
         }
 
         // Apply on Robots
-        robotManager.SetClickAmounts(data.robotClickAmounts);
-        robotManager.SetMaxClicks(data.robotMaxClicks);
+        robotManager.SetClickAmounts(data.robotData.robotClickAmounts);
+        robotManager.SetMaxClicks(data.robotData.robotMaxClicks);
     }
 
     private void GetReward()

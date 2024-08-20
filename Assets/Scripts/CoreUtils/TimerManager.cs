@@ -8,7 +8,7 @@ public class TimerManager : MonoBehaviour
 {
 
     protected float timerDuration;       // Duration of Timer
-    protected float timer;               // Current Timer value
+    [SerializeField] protected float timer;               // Current Timer value
     protected bool isTimerRunning;       // Timer status
     protected float timerTik;              // Timer Tik for callback
     protected float timerTikStride;        // Stride for Tik
