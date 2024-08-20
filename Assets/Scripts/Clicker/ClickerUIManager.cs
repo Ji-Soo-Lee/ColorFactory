@@ -12,6 +12,10 @@ public class ClickerUIManager : MonoBehaviour
     public Image backgroundButtonSprite;
     public Image feverGaugeImage;
 
+    public GameObject WorldPanel;
+    public GameObject RobotPanel;
+    public GameObject MiniGamePanel;
+
     public List<Image> backgrounds = new List<Image>();
     public List<Sprite> feverGaugeSprites;
 
@@ -20,8 +24,57 @@ public class ClickerUIManager : MonoBehaviour
 
     public void InitColors()
     {
-        currentColor = backgrounds[0].color;
-        mainButtonSprite.color = currentColor;
+        if (clickerGM.buttonColors.Count > 0)
+        {
+            currentColor = clickerGM.buttonColors[0];
+            mainButtonSprite.color = currentColor;
+        }
+    }
+
+    public void DeactivatePanels()
+    {
+        WorldPanel.SetActive(false);
+        RobotPanel.SetActive(false);
+        MiniGamePanel.SetActive(false);
+    }
+
+    public void ToggleWorldPanel()
+    {
+        if (WorldPanel.activeSelf)
+        {
+            DeactivatePanels();
+        }
+        else
+        {
+            DeactivatePanels();
+            WorldPanel.SetActive(true);
+        }
+    }
+
+    public void ToggleRobotPanel()
+    {
+        if (RobotPanel.activeSelf)
+        {
+            DeactivatePanels();
+        }
+        else
+        {
+            DeactivatePanels();
+            RobotPanel.SetActive(true);
+        }
+    }
+
+    public void ToggleMiniGamePanel()
+    {
+        if (MiniGamePanel.activeSelf)
+        {
+            DeactivatePanels();
+        }
+        else
+        {
+            DeactivatePanels();
+            MiniGamePanel.SetActive(true);
+        }
     }
 
     public void SetFeverGaugeSprite(int feverGauge)
@@ -36,21 +89,9 @@ public class ClickerUIManager : MonoBehaviour
         mainButtonSprite.color = color;
     }
 
-    public Color CalculateTargetColor()
-    {
-        int curIdx = (int)Mathf.Floor(clickerGM.clickNum / clickerGM.maxClicks);
-        Color targetColor = Color.Lerp(
-            backgrounds[curIdx % backgrounds.Count].color,
-            backgrounds[(curIdx + 1) % backgrounds.Count].color,
-            ((float)(clickerGM.clickNum % clickerGM.maxClicks)) / clickerGM.maxClicks
-        );
-
-        return targetColor;
-    }
-
     public void UpdateButtonColor(float duration = 1.0f)
     {
-        Color targetColor = CalculateTargetColor();
+        Color targetColor = clickerGM.CalculateTargetColor();
 
         if (currentButtonColorCoroutine != null) StopCoroutine(currentButtonColorCoroutine);
         currentButtonColorCoroutine = StartCoroutine(GraduallyChangeColor(mainButtonSprite, targetColor, duration));

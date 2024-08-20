@@ -8,7 +8,7 @@ public class MixPause : PausableMonoBehaviour
 {
     public Button btn1;
     public PaletteResult paletteResult;
-    protected void PauseButtonOnClick()
+    public void PauseButtonOnClick()
     {
         if (CheckPause())
         {

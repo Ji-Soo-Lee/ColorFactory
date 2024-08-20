@@ -91,5 +91,6 @@ public class Fever : MonoBehaviour
         isFeverTimerSet = true;
 
         feverTimer.SetupTimer(10.0f, ResetFeverTimer);
+        feverTimer.StartTimer();
     }
 }

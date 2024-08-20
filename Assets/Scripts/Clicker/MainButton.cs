@@ -8,6 +8,7 @@ public class MainButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField] private ClickerUIManager clickerUIManager;
     private Vector3 originalScale;
     private Button selfbutton;
+    public float duration = 1.0f;
 
     void Awake()
     {
@@ -16,24 +17,24 @@ public class MainButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     void Start()
     {
-        originalScale = transform.localScale;
+        originalScale = clickerUIManager.mainButtonSprite.transform.localScale;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        transform.localScale = originalScale * 0.8f;
-        clickerUIManager.backgroundButtonSprite.transform.localScale = originalScale * 0.8f;
+        clickerUIManager.mainButtonSprite.transform.localScale = originalScale * 0.9f;
+        clickerUIManager.backgroundButtonSprite.transform.localScale = originalScale * 0.9f;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        transform.localScale = originalScale;
+        clickerUIManager.mainButtonSprite.transform.localScale = originalScale;
         clickerUIManager.backgroundButtonSprite.transform.localScale = originalScale;
     }
 
     public void OnClickButton()
     {
-        clickerGM.IncrementClickCount();
+        clickerGM.IncrementClickCount(duration);
     }
 
     public void SetInteractive(bool isInteractive)

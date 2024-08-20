@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Brain.unity
     guid: dce14f3475f36b140a34f82fd7f5c3b2
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BrainResult.unity
     guid: aaa0408452ef23f4fb5f0f4b5a90bc42
   - enabled: 1
@@ -23,12 +23,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Hoo.unity
     guid: 53d6eedfb052d9846bd04840e94b44e0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/dgim608.unity
     guid: 27aabd9436ccc16428a5e2de2f134ebc
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Simon.unity
     guid: a89f1444f4c03b444907fe7fb4620c20
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: 07de81f22a1a0374386ee3c832e317d3
+  - enabled: 0
+    path: Assets/Scenes/ClickerCompleteScene.unity
+    guid: 79f25bdab75a845b8a12939114e6ca04
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 599e4e097f0f599448ec28c67c945962,
       type: 2}
