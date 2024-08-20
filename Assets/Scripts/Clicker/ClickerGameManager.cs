@@ -15,6 +15,7 @@ public class ClickerGameManager : MonoBehaviour
     public ClickerUIManager clickerUIManager;
     public GameObject resetButton;
     public ClickEffect clickEffect;
+    public RewardEffect rewardEffect;
     public RobotManager robotManager;
     public Fever feverManager;
     public DummySceneController dummySceneController;
@@ -319,6 +320,9 @@ public class ClickerGameManager : MonoBehaviour
             // Update button 
             buttonColors[rewardIdx] = new Color(buttonColors[rewardIdx].r, buttonColors[rewardIdx].g, buttonColors[rewardIdx].b, currentAlphas[rewardIdx]);;
             
+            // Reward Effect
+            rewardEffect.DisplayRewardEffect(buttonColors[rewardIdx]);
+
             // Update background
             // Color backgroundColor = clickerUIManager.backgrounds[rewardIdx].color;
             // backgroundColor.a = currentAlphas[rewardIdx];
