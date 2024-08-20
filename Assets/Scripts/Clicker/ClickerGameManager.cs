@@ -37,8 +37,10 @@ public class ClickerGameManager : MonoBehaviour
     private bool isCoroutineClicking = false;
     private Coroutine clickCoroutine = null;
 
-    [DllImport("__Internal")]
-    public static extern void Vibrate(int _n);
+    #if UNITY_ANDROID && !UNITY_EDITOR
+        [DllImport("Vibration")]
+        public static extern void Vibrate(long _n);
+    # endif
 
     void Awake()
     {
