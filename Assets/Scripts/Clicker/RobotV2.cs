@@ -9,18 +9,23 @@ using UnityEngine.UI;
 public class RobotV2 : MonoBehaviour
 {
     public RobotManager robotManager;
-    // public int robotBattery;
+    // public int clickAmount;
     public Button robotButton;
     public ClickerUIManager clickerUIManager;
-    public int robotBattery { get; private set; } = 0;
-    public int MAX_ROBOT_BATTERY = 50;
     [field: SerializeField] public int clickAmount { get; private set; } = 0;
+    public int MAX_ROBOT_BATTERY = 50;
+    // [field: SerializeField] public int clickAmount { get; private set; } = 0;
     [field: SerializeField] public int MAX_CLICK { get; private set; } = 100;
+
+    public void ResetBattery()
+    {
+        SetRobotBattery(0);
+    }
 
     public void AddRobotBattery(int inc)
     {
-        int sum = robotBattery + inc;
-        if (inc < 0 || sum < robotBattery) return;
+        int sum = clickAmount + inc;
+        if (inc < 0 || sum < clickAmount) return;
 
         sum = Mathf.Clamp(sum, 0, MAX_ROBOT_BATTERY);
 
@@ -29,16 +34,20 @@ public class RobotV2 : MonoBehaviour
 
     public void SetRobotBattery(int gauge)
     {
-        robotBattery = Mathf.Clamp(gauge, 0, MAX_ROBOT_BATTERY);
+        clickAmount = Mathf.Clamp(gauge, 0, MAX_ROBOT_BATTERY);
+        Debug.Log("clickAmount : " + clickAmount);
 
-        clickerUIManager.SetRobotBatterySprite(robotBattery);
+        clickerUIManager.SetRobotBatterySprite(clickAmount);
     }
 
     public void OnClickButton()
     {
+        Debug.Log("Click Button");
+        Debug.Log(clickAmount);
+        
         robotManager.RobotClick(clickAmount);
 
-        SetClickAmount(0);
+        SetClickAmount(clickAmount);
     }
 
     public void AddClickAmount(int inc)

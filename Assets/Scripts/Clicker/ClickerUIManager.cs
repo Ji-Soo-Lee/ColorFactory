@@ -88,6 +88,7 @@ public class ClickerUIManager : MonoBehaviour
 
     public void SetRobotBatterySprite(int robotBattery)
     {
+        Debug.Log("SetRobotBatterySprite : " + robotBattery);
         if (robotBattery < 0) return;
         robotBatterySprite.fillAmount = (float)robotBattery / robot.MAX_ROBOT_BATTERY;
     }

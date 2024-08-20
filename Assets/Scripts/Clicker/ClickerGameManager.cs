@@ -224,13 +224,14 @@ public class ClickerGameManager : MonoBehaviour
             int weightedScore = (int)(score * weight);
 
             // Add Robot Clicks
-            robotManager.robots[robotIdx].AddClickAmount(weightedScore);
+            // robotManager.robots[robotIdx].AddClickAmount(weightedScore);
+            // robotManager.robots[robotIdx].AddClickAmount(1);
+            robot.AddRobotBattery(1);
 
             // Add Fever Gauge
             if (scoreDataManager.isMiniGameClear)
             {
                 feverManager.AddFeverGauge(1);
-                robot.AddRobotBattery(1);
             }
         }
     }
@@ -239,7 +240,7 @@ public class ClickerGameManager : MonoBehaviour
     {
         // Save Data
         ClickerData data = new ClickerData(
-            new ClickerStateData(clickNum, currentClickNum, feverManager.feverGauge, robot.robotBattery),
+            new ClickerStateData(clickNum, currentClickNum, feverManager.feverGauge, robot.clickAmount),
             new ClickerColorData(clickerUIManager.currentColor, buttonColors),
             new ClickerRobotData(robotManager.GetClickAmounts(), robotManager.GetMaxClicks()),
             null);

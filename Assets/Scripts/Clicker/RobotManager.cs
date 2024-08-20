@@ -13,6 +13,14 @@ public class RobotManager : MonoBehaviour
 
     public List<RobotV2> robots = new List<RobotV2>();
 
+    void Start()
+    {
+        foreach (RobotV2 robot in robots)
+        {
+            robot.ResetBattery();
+        }
+    }
+
     public void SetAllRobotsInteractable(bool isInteractable)
     {
         foreach (RobotV2 robot in robots)
@@ -67,6 +75,7 @@ public class RobotManager : MonoBehaviour
 
     public void RobotClick(int clickNum)
     {
+        Debug.Log("Robot Click: " + clickNum);
         clickerGM.StartMultipleClicks(clickNum, robotColorTransitionDuration);
     }
 
@@ -74,11 +83,10 @@ public class RobotManager : MonoBehaviour
     {
         foreach (RobotV2 robot in robots)
         {
-            if (robot.robotBattery < robot.MAX_ROBOT_BATTERY) {
-                Debug.Log("Robot Battery is not full");
-                return;
+            if (robot.clickAmount > 0) {
+                robot.OnClickButton();
+                robot.ResetBattery();
             }
-            robot.OnClickButton();
         }
     }
 }
