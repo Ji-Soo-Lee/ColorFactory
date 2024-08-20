@@ -42,8 +42,11 @@ namespace Tanmak.BulletPatterns
                         float angle = (float)parameters["directionWithAngle"];
                         direction = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0).normalized;
                         break;
+                    case "startPosition":
+                        startPosition = (Vector3)parameters["startPosition"];
+                        break;
 
-                    // special values for rectangular pattern
+                    // special values for circle pattern
                     case "bulletCount":
                         bulletCount = (int)parameters["bulletCount"];
                         break;

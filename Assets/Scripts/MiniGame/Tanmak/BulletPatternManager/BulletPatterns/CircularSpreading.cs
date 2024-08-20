@@ -26,12 +26,17 @@ namespace Tanmak.BulletPatterns
             {
                 switch (parameter)
                 {
+                    // defualt values are set in the TanmakPatterns.cs
                     case "fireRate":
                         fireRate = (float)parameters["fireRate"];
                         break;
                     case "bulletSpeed":
                         bulletSpeed = (int)parameters["bulletSpeed"];
                         break;
+                    case "startPosition":
+                        startPosition = (Vector3)parameters["startPosition"];
+                        break;
+
                     case "bulletCount":
                         bulletCount = (int)parameters["bulletCount"];
                         break;

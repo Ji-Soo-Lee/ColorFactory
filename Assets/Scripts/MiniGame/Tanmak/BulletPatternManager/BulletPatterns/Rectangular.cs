@@ -31,6 +31,7 @@ namespace Tanmak.BulletPatterns
                 switch (parameter)
                 {
                     // defualt values are set in the TanmakPatterns.cs
+                    // defualt values are set in the TanmakPatterns.cs
                     case "fireRate":
                         fireRate = (float)parameters["fireRate"];
                         break;
@@ -43,6 +44,9 @@ namespace Tanmak.BulletPatterns
                     case "directionWithAngle":
                         float angle = (float)parameters["directionWithAngle"];
                         direction = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0).normalized;
+                        break;
+                    case "startPosition":
+                        startPosition = (Vector3)parameters["startPosition"];
                         break;
 
                     // special values for rectangular pattern

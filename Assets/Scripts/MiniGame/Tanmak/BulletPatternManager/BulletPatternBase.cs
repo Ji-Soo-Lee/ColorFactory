@@ -27,12 +27,16 @@ namespace Tanmak
         public float fireRate = 1f; // bullet fire time rate (s)
         public float bulletSpeed = 5f; // bullet speed (m / s)
 
+        protected Vector3 startPosition = new Vector3(0, 0, 0);
+
         protected IEnumerator FireBullet(Vector3 position, Vector3 direction, int bulletType = 0)
         {
             if (bulletPrefab0 == null || bulletPrefab1 == null || bulletPrefab2 == null || bulletPrefab3 == null)
             {
                 Debug.LogWarning("[Tanmak] bulletPrefab is not assigned");
             }
+
+            position += startPosition;
 
             GameObject bullet;
             switch (bulletType)
