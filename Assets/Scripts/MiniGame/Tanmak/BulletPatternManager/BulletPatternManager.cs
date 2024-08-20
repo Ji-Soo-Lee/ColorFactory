@@ -11,11 +11,9 @@ namespace Tanmak
 
         private void Awake()
         {
+            if (interpreter == null)
             {
-                if (interpreter == null)
-                {
-                    interpreter = gameObject.AddComponent<TanmakInterpreter>();
-                }
+                interpreter = gameObject.AddComponent<TanmakInterpreter>();
             }
         }
 
@@ -29,28 +27,29 @@ namespace Tanmak
             BulletPatternBase circle = gameObject.AddComponent<Circle>();
 
             circularSpreading.SetParameters(new Dictionary<string, object> {
-            {"bulletCount", 12 },
-            { "radius", 3f },
-        });
+                {"bulletCount", 12 },
+                { "radius", 3f },
+            });
 
             rectangular.SetParameters(new Dictionary<string, object> {
-            {"rowCount", 3 },
-            {"colCount", 3 },
-            {"spacing", 1.0f },
-            {"directionWithAngle", 3 * Mathf.PI / 2 },
-        });
+                {"rowCount", 3 },
+                {"colCount", 3 },
+                {"spacing", 1.0f },
+                {"directionWithAngle", 3 * Mathf.PI / 2 },
+            });
 
             circle.SetParameters(new Dictionary<string, object> {
-            {"bulletCount", 12 },
-            { "radius", 1f },
-        });
+                {"bulletCount", 12 },
+                { "radius", 1f },
+            });
 
-            interpreter.schedules = new List<PatternSchedule>
-        {
-            new PatternSchedule(circularSpreading, 0f, 5f),
-            new PatternSchedule(circle, 3f, 8f),
-            new PatternSchedule(rectangular, 10f, 15f),
-        };
+            interpreter.schedules = new List<PatternSchedule> {
+                new PatternSchedule(circularSpreading, 0f, 5f),
+                new PatternSchedule(circle, 3f, 8f),
+                new PatternSchedule(rectangular, 10f, 15f),
+            };
+
+            interpreter.ExecutePatternSchedules();
         }
     }
 }

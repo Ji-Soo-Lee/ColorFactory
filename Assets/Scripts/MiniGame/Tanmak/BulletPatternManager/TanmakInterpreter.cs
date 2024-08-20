@@ -11,25 +11,27 @@ namespace Tanmak
 
         private float elapsedTime = 0f;
 
-        private void Start()
-        {
-            StartCoroutine(ExecutePatterns());
-        }
-
-
-        IEnumerator ExecutePatterns()
+        public void ExecutePatternSchedules()
         {
             schedules = schedules.OrderBy(schedule => schedule.startTime).ToList();
 
             foreach (var schedule in schedules)
             {
-                // waiting by next schedule
-                yield return new WaitForSeconds(schedule.startTime - elapsedTime);
-
-                StartCoroutine(schedule.pattern.FirePattern());
-
-                elapsedTime = schedule.startTime + schedule.duration;
+                StartCoroutine(ExecutePatterns(schedule));
             }
+        }
+
+        IEnumerator ExecutePatterns(PatternSchedule schedule)
+        {
+            Debug.Log("Fire Pattern: " + schedule.pattern.GetType().Name);
+            Debug.Log("Start Time: " + schedule.startTime);
+            Debug.Log("Elapsed Time: " + elapsedTime);
+            // waiting by next schedule
+            yield return new WaitForSeconds(schedule.startTime - elapsedTime);
+
+            StartCoroutine(schedule.pattern.FirePattern());
+
+            elapsedTime = schedule.startTime + schedule.duration;
         }
     }
 }
