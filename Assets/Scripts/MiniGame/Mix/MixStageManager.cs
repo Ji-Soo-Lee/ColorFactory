@@ -68,7 +68,7 @@ public class MixStageManager : StageManager
 
         if (isStageActive)
         {
-            timeText.text = (Mathf.Ceil(stageTimer.GetTimerValue()*10)/10).ToString();
+            timeText.text = (Mathf.Ceil(stageTimer.GetTimerValue()*10)/10).ToString("F2");
         }
 
         // General update logic if needed
@@ -89,9 +89,9 @@ public class MixStageManager : StageManager
         InitializeGameElements();
 
         stageTimer.StartTimer();
-        stageText.text = "stage"+(currentStage+1).ToString();
+        stageText.text = "STAGE"+(currentStage+1).ToString();
 
-        Debug.Log("Stage " + (currentStage + 1) + "started.");
+        Debug.Log("STAGE " + (currentStage + 1) + "started.");
     }
 
     protected override void EndStage()
@@ -105,7 +105,7 @@ public class MixStageManager : StageManager
         CalculateFinalScore();
         Debug.Log("Stage " + (currentStage + 1) + "ended.");
         Debug.Log("Total Score: " + scoreManager.GetScoreAsString());
-        scoreText.text = "Score : " + scoreManager.GetScoreAsString();
+        scoreText.text = scoreManager.GetScoreAsString();
 
         if (currentStage < totalStages - 1)
         {
