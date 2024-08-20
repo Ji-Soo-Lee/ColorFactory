@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -66,7 +67,7 @@ public class RobotManager : MonoBehaviour
 
     public void RobotClick(int clickNum)
     {
-        StartCoroutine(clickerGM.SimulateMultipleClicks(clickNum, robotColorTransitionDuration));
+        clickerGM.StartMultipleClicks(clickNum, robotColorTransitionDuration);
     }
 
     public void ConsumeAllRobotClicks()

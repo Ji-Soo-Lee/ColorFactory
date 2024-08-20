@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using System;
 
 public class ClickerGameManager : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class ClickerGameManager : MonoBehaviour
 
     private int buttonColorLength;
     private int feverWeight = 1;
+    private bool isCoroutineClicking = false;
+    private Coroutine clickCoroutine = null;
 
     [DllImport("__Internal")]
     public static extern void Vibrate(int _n);
@@ -105,30 +108,37 @@ public class ClickerGameManager : MonoBehaviour
         }
     }
 
-    public IEnumerator SimulateMultipleClicks(int clickNum, float duration = 5.0f)
+    public void InitClickCoroutine()
     {
-        // Spinlock if preceding coroutine exists
-        // Cannot guarantee the order if blocked
-        // while (currentClickCoroutine != null) yield return currentClickCoroutine;
-        // isClickCoroutineRunning = true;
-
-        float stepColorTransitionDuration = duration / clickNum;
-
-        clickerUIManager.mainButton.SetInteractive(false);
-
-        for (int i = 0; i < clickNum; i++)
+        isCoroutineClicking = false;
+        if (clickCoroutine != null)
         {
-            IncrementClickCount(stepColorTransitionDuration);
-
-            if (i != clickNum - 1)
-            {
-                yield return new WaitForSeconds(0.05f);
-            }
+            StopCoroutine(clickCoroutine);
         }
+        clickCoroutine = null;
+    }
 
-        clickerUIManager.mainButton.SetInteractive(true);
-
-        // isClickCoroutineRunning = false;
+    public void StartMultipleClicks(int clickNum, float duration = 5.0f, Action handler = null)
+    {
+        if (!isCoroutineClicking)
+        {
+            isCoroutineClicking = true;
+            Action action = () =>
+            {
+                InitClickCoroutine();
+                if (handler != null)
+                {
+                    handler();
+                }
+            };
+            clickCoroutine = StartCoroutine(
+                SimulateMultipleClicks(clickNum, duration, action)
+            );
+        }
+        else
+        {
+            UnityEngine.Debug.LogWarning("Clicking Coroutine Already Running!");
+        }
     }
 
     public Color CalculateTargetColor()
@@ -278,6 +288,12 @@ public class ClickerGameManager : MonoBehaviour
         int rewardIdx = -1;
         List<int> validIndices = new List<int>();
 
+        if (buttonColors.Count != targetAlphas.Count)
+        {
+            UnityEngine.Debug.LogWarning("Button Colors and Target Alphas Length Mismatch");
+            return;
+        }
+
         // Get Valid Indices
         for (int i = 0; i < buttonColorLength; i++)
         {
@@ -290,7 +306,7 @@ public class ClickerGameManager : MonoBehaviour
         if (validIndices.Count > 0)
         {
             // Get Random Reward
-            rewardIdx = validIndices[Random.Range(0, validIndices.Count)];
+            rewardIdx = validIndices[UnityEngine.Random.Range(0, validIndices.Count)];
 
             UnityEngine.Debug.Log(rewardIdx);
 
@@ -311,14 +327,53 @@ public class ClickerGameManager : MonoBehaviour
 
         if (Enumerable.SequenceEqual(targetAlphas, currentAlphas))
         {
-            // End Logic
-            UnityEngine.Debug.Log("You win!");
-            robotManager.SetAllRobotsInteractable(false);
-            clickerUIManager.mainButton.gameObject.SetActive(false);
-            clickerUIManager.backgroundButtonSprite.gameObject.SetActive(false);
-
-            resetButton.SetActive(true);
+            EndGame();
         }
+    }
+
+    private void EndGame()
+    {
+        // End Logic
+        UnityEngine.Debug.Log("You win!");
+
+        InitClickCoroutine();
+
+        robotManager.SetAllRobotsInteractable(false);
+        clickerUIManager.mainButton.gameObject.SetActive(false);
+        clickerUIManager.backgroundButtonSprite.gameObject.SetActive(false);
+
+        resetButton.SetActive(true);
+    }
+
+    private IEnumerator SimulateMultipleClicks(int clickNum, float duration = 5.0f, Action handler = null)
+    {
+        // Spinlock if preceding coroutine exists
+        // Cannot guarantee the order if blocked
+        // while (currentClickCoroutine != null) yield return currentClickCoroutine;
+        // isClickCoroutineRunning = true;
+
+        float stepColorTransitionDuration = duration / clickNum;
+
+        clickerUIManager.mainButton.SetInteractive(false);
+
+        for (int i = 0; i < clickNum; i++)
+        {
+            IncrementClickCount(stepColorTransitionDuration);
+
+            if (i != clickNum - 1)
+            {
+                yield return new WaitForSeconds(0.05f);
+            }
+        }
+
+        clickerUIManager.mainButton.SetInteractive(true);
+
+        if (handler != null)
+        {
+            handler();
+        }
+
+        // isClickCoroutineRunning = false;
     }
 
     IEnumerator delayTime()
