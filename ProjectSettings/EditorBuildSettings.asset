@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ClickerTestScene.unity
     guid: a0f4dcabfe28cf147a3705e6c8b8d105
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/TanmakTestScene.unity
     guid: dc5e5392f689c48459b135d134314fd4
   - enabled: 1
@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Simon.unity
     guid: a89f1444f4c03b444907fe7fb4620c20
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: 07de81f22a1a0374386ee3c832e317d3
   - enabled: 0
     path: Assets/Scenes/ClickerCompleteScene.unity
     guid: 79f25bdab75a845b8a12939114e6ca04

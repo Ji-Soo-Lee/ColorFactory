@@ -211,10 +211,10 @@ public class ClickerGameManager : MonoBehaviour
             float weight = 1.0f;
             
             // Set Weight & Robot with Scene Name
-            if (dummySceneController.sceneNames.Contains(sceneName))
+            if (DummySceneController.sceneNames.Contains(sceneName))
             {
                 weight = 0.5f;
-                robotIdx = dummySceneController.sceneNames.FindIndex(x => x.Equals(sceneName)) - 1;
+                robotIdx = DummySceneController.sceneNames.FindIndex(x => x.Equals(sceneName)) - 1;
             }
 
             // Weight Score
