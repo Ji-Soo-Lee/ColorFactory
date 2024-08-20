@@ -68,7 +68,7 @@ public class MixStageManager : StageManager
 
         if (isStageActive)
         {
-            timeText.text = (Mathf.Ceil(stageTimer.GetTimerValue()*10)/10).ToString("F2");
+            timeText.text = (Mathf.Ceil(stageTimer.GetTimerValue()*10)/10).ToString("F1");
         }
 
         // General update logic if needed
@@ -91,7 +91,7 @@ public class MixStageManager : StageManager
         stageTimer.StartTimer();
         stageText.text = "STAGE"+(currentStage+1).ToString();
 
-        Debug.Log("STAGE " + (currentStage + 1) + "started.");
+        Debug.Log("STAGE" + (currentStage + 1) + "started.");
     }
 
     protected override void EndStage()
