@@ -12,6 +12,7 @@ public class CommonPopupUIManager : MonoBehaviour
     public TMP_Text timeText;
     public TMP_Text scoreText;
     public TMP_Text feverGaugeText;
+    public TMP_Text robotBattery;
 
 
     void Start()
@@ -36,13 +37,14 @@ public class CommonPopupUIManager : MonoBehaviour
         PausePanelObject.SetActive(isActive);
     }
 
-    public void SetResultText(int time, int score, bool isFever)
+    public void SetResultText(int time, int score, bool isClear)
     {
         if (ResultPanelObject.activeSelf)
         {
             timeText.text = time.ToString();
             scoreText.text = score.ToString();
-            feverGaugeText.text = "+" + (isFever?1:0).ToString() + " Fever Gauge";
+            feverGaugeText.text = "+" + (isClear?1:0).ToString() + " Fever Gauge";
+            robotBattery.text = "+" + (isClear?1:0).ToString() + " Robot Battery";
         }
     }
 }
