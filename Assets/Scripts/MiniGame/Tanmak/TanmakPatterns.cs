@@ -73,7 +73,6 @@ namespace Tanmak
 
                 yield return new WaitForSeconds(fireRate);
             }
-
         }
 
 
