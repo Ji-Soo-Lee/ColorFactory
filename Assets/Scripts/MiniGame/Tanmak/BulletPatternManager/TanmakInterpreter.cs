@@ -23,9 +23,6 @@ namespace Tanmak
 
         IEnumerator ExecutePatterns(PatternSchedule schedule)
         {
-            Debug.Log("Fire Pattern: " + schedule.pattern.GetType().Name);
-            Debug.Log("Start Time: " + schedule.startTime);
-            Debug.Log("Elapsed Time: " + elapsedTime);
             // waiting by next schedule
             yield return new WaitForSeconds(schedule.startTime - elapsedTime);
 
