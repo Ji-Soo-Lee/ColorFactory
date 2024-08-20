@@ -12,6 +12,10 @@ public class ClickerUIManager : MonoBehaviour
     public Image backgroundButtonSprite;
     public Image feverGaugeImage;
 
+    public GameObject WorldPanel;
+    public GameObject RobotPanel;
+    public GameObject MiniGamePanel;
+
     public List<Image> backgrounds = new List<Image>();
     public List<Sprite> feverGaugeSprites;
 
@@ -24,6 +28,52 @@ public class ClickerUIManager : MonoBehaviour
         {
             currentColor = clickerGM.buttonColors[0];
             mainButtonSprite.color = currentColor;
+        }
+    }
+
+    public void DeactivatePanels()
+    {
+        WorldPanel.SetActive(false);
+        RobotPanel.SetActive(false);
+        MiniGamePanel.SetActive(false);
+    }
+
+    public void ToggleWorldPanel()
+    {
+        if (WorldPanel.activeSelf)
+        {
+            DeactivatePanels();
+        }
+        else
+        {
+            DeactivatePanels();
+            WorldPanel.SetActive(true);
+        }
+    }
+
+    public void ToggleRobotPanel()
+    {
+        if (RobotPanel.activeSelf)
+        {
+            DeactivatePanels();
+        }
+        else
+        {
+            DeactivatePanels();
+            RobotPanel.SetActive(true);
+        }
+    }
+
+    public void ToggleMiniGamePanel()
+    {
+        if (MiniGamePanel.activeSelf)
+        {
+            DeactivatePanels();
+        }
+        else
+        {
+            DeactivatePanels();
+            MiniGamePanel.SetActive(true);
         }
     }
 
