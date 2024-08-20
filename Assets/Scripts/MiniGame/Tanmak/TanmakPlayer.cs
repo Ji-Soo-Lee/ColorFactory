@@ -9,7 +9,7 @@ public class TanmakPlayer : MonoBehaviour
 
     SpriteRenderer spriteRenderer;
 
-    int curColorIdx;
+    public int curColorIdx { get; private set; } = 0;
     Vector3 pos;
     Vector3 direction;
 
@@ -39,8 +39,10 @@ public class TanmakPlayer : MonoBehaviour
     {
         if (tanmakGM.CheckPause()) return;
 
-        curColorIdx = (curColorIdx + 1) % TanmakGameManager.colorSize;
+        curColorIdx = GetNextColorIdx();
         spriteRenderer.color = tanmakGM.colors[curColorIdx];
+
+        SetChangeButtonNextColor();
     }
 
     public void SetInvincible(bool invincible)
@@ -60,6 +62,17 @@ public class TanmakPlayer : MonoBehaviour
             curColor.a = 0.0f;
         }
         spriteRenderer.color = curColor;
+    }
+
+    private int GetNextColorIdx()
+    {
+        return (curColorIdx + 1) % TanmakGameManager.colorSize;
+    }
+
+    public void SetChangeButtonNextColor()
+    {
+        Color nextColor = tanmakGM.colors[GetNextColorIdx()];
+        tanmakGM.TUIManager.SetColorChangeImageColor(nextColor);
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -89,10 +102,11 @@ public class TanmakPlayer : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        curColorIdx = 0;
         spriteRenderer.color = tanmakGM.colors[curColorIdx];
 
         StopMoving();
+
+        SetChangeButtonNextColor();
     }
 
     void OnEnable()

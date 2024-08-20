@@ -47,6 +47,8 @@ public class TanmakGameManager : StageManager
         Pause();
         // End Logic Needed
         base.EndGame();
+
+        commonPopupUIManager.SetResultText((int)stopwatchManager.GetStopwatchValue(), scoreManager.GetScore(), true);
     }
 
     protected override void Start()
