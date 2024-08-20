@@ -17,6 +17,7 @@ public class ClickEffect : MonoBehaviour
         GameObject effect = Instantiate(pongPrefab, center, Quaternion.identity);
         effect.GetComponent<Image>().color = new Color(color.r, color.g, color.b, 0.3f);
         effect.transform.SetParent(canvas.transform, false);
+        effect.transform.SetSiblingIndex(1);
 
         StartCoroutine(ScaleOverTime(effect));
     }
