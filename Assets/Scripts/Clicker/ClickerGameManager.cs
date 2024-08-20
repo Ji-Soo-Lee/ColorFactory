@@ -37,7 +37,7 @@ public class ClickerGameManager : MonoBehaviour
     private bool isCoroutineClicking = false;
     private Coroutine clickCoroutine = null;
 
-    #if UNITY_ANDROID && !UNITY_EDITOR
+    #if UNITY_IOS && !UNITY_EDITOR
         [DllImport("Vibration")]
         public static extern void Vibrate(long _n);
     # endif
