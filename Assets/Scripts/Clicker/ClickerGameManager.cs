@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using UnityEditor.Rendering;
@@ -143,7 +142,7 @@ public class ClickerGameManager : MonoBehaviour
         }
         else
         {
-            UnityEngine.Debug.LogWarning("Clicking Coroutine Already Running!");
+            Debug.LogWarning("Clicking Coroutine Already Running!");
         }
     }
 
@@ -209,7 +208,8 @@ public class ClickerGameManager : MonoBehaviour
         ScoreDataManager scoreDataManager = GameObject.FindObjectOfType<ScoreDataManager>();
         if (scoreDataManager != null)
         {
-            int score = scoreDataManager.finalMiniGameScore;
+            int score = ScoreDataManager.Inst.finalMiniGameScore;
+            //int score = scoreDataManager.finalMiniGameScore;
             string sceneName = scoreDataManager.resultSceneName;
 
             int robotIdx = 0;
@@ -228,6 +228,7 @@ public class ClickerGameManager : MonoBehaviour
             int weightedScore = (int)(score * weight);
 
             // Add Robot Clicks
+            Debug.Log(score);
             robotManager.robots[robotIdx].AddClickAmount(weightedScore);
             // robot.AddRobotBattery(weightedScore);
 
