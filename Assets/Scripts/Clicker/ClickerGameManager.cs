@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using UnityEditor.Rendering;
@@ -17,6 +16,7 @@ public class ClickerGameManager : MonoBehaviour
     public ClickEffect clickEffect;
     public RewardEffect rewardEffect;
     public RobotManager robotManager;
+    // public RobotV2 robot;
     public Fever feverManager;
     public DummySceneController dummySceneController;
 
@@ -37,11 +37,15 @@ public class ClickerGameManager : MonoBehaviour
     private bool isCoroutineClicking = false;
     private Coroutine clickCoroutine = null;
 
-    [DllImport("__Internal")]
-    public static extern void Vibrate(int _n);
+    #if UNITY_IOS && !UNITY_EDITOR
+        [DllImport("Vibration")]
+        public static extern void Vibrate(long _n);
+    # endif
 
     void Awake()
     {
+        Time.timeScale = 1f;
+
         InitColors();
 
         clickerUIManager.InitColors();
@@ -138,7 +142,7 @@ public class ClickerGameManager : MonoBehaviour
         }
         else
         {
-            UnityEngine.Debug.LogWarning("Clicking Coroutine Already Running!");
+            Debug.LogWarning("Clicking Coroutine Already Running!");
         }
     }
 
@@ -204,24 +208,29 @@ public class ClickerGameManager : MonoBehaviour
         ScoreDataManager scoreDataManager = GameObject.FindObjectOfType<ScoreDataManager>();
         if (scoreDataManager != null)
         {
-            int score = scoreDataManager.finalMiniGameScore;
+            int score = ScoreDataManager.Inst.finalMiniGameScore;
+            //int score = scoreDataManager.finalMiniGameScore;
             string sceneName = scoreDataManager.resultSceneName;
 
             int robotIdx = 0;
             float weight = 1.0f;
             
             // Set Weight & Robot with Scene Name
-            if (DummySceneController.sceneNames.Contains(sceneName))
-            {
-                weight = 0.5f;
-                robotIdx = DummySceneController.sceneNames.FindIndex(x => x.Equals(sceneName)) - 1;
-            }
+            // if (dummySceneController.sceneNames.Contains(sceneName))
+            // {
+            //     weight = 0.5f;
+            //     robotIdx = dummySceneController.sceneNames.FindIndex(x => x.Equals(sceneName)) - 1;
+            // }
+
+            weight = 0.5f;
 
             // Weight Score
             int weightedScore = (int)(score * weight);
 
             // Add Robot Clicks
+            Debug.Log(score);
             robotManager.robots[robotIdx].AddClickAmount(weightedScore);
+            // robot.AddRobotBattery(weightedScore);
 
             // Add Fever Gauge
             if (scoreDataManager.isMiniGameClear)
@@ -270,7 +279,7 @@ public class ClickerGameManager : MonoBehaviour
         buttonColors = data.colorData.buttonColors;
 
         feverManager.SetFeverGauge(data.stateData.feverGauge);
-
+        
         // Apply on Sprites
         clickerUIManager.SetButtonColor(data.colorData.currentColor);
         for (int i = 0; i < buttonColors.Count; i++)
@@ -355,7 +364,6 @@ public class ClickerGameManager : MonoBehaviour
         // Cannot guarantee the order if blocked
         // while (currentClickCoroutine != null) yield return currentClickCoroutine;
         // isClickCoroutineRunning = true;
-
         float stepColorTransitionDuration = duration / clickNum;
 
         clickerUIManager.mainButton.SetInteractive(false);

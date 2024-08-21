@@ -10,13 +10,17 @@ namespace Tanmak
         [SerializeField] private TanmakGameManager tanmakGM;
 
         SpriteRenderer spriteRenderer;
+        public GameObject ShieldObject;
 
-        int curColorIdx;
+        public int curColorIdx { get; private set; } = 0;
         Vector3 pos;
         Vector3 direction;
 
         bool isInvincible;
+        float invincibleTime = 3.0f;
+        bool isShielded = false;
 
+        
         // set direction of character to move
         public void SetDirection(Vector3 dir)
         {
@@ -41,8 +45,10 @@ namespace Tanmak
         {
             if (tanmakGM.CheckPause()) return;
 
-            curColorIdx = (curColorIdx + 1) % TanmakGameManager.colorSize;
+            curColorIdx = GetNextColorIdx();
             spriteRenderer.color = tanmakGM.colors[curColorIdx];
+
+            SetChangeButtonNextColor();
         }
 
         public void SetInvincible(bool invincible)
@@ -50,20 +56,37 @@ namespace Tanmak
             isInvincible = invincible;
         }
 
+        public void SetShield(bool isActive)
+        {
+            isShielded = isActive;
+            ShieldObject.SetActive(isActive);
+        }
+
         public void ToggleRenderer()
         {
             Color curColor = tanmakGM.colors[curColorIdx];
             if (spriteRenderer.color.a <= 0.01f)
             {
-                curColor.a = 1.0f;
+                    curColor.a = 1.0f;
+                }
+                else
+                {
+                    curColor.a = 0.0f;
+                }
+                spriteRenderer.color = curColor;
             }
-            else
-            {
-                curColor.a = 0.0f;
-            }
-            spriteRenderer.color = curColor;
+
+        private int GetNextColorIdx()
+        {
+            return (curColorIdx + 1) % TanmakGameManager.colorSize;
         }
 
+        public void SetChangeButtonNextColor()
+        {
+            Color nextColor = tanmakGM.colors[GetNextColorIdx()];
+            tanmakGM.TUIManager.SetColorChangeImageColor(nextColor);
+        }
+            
         void OnTriggerEnter2D(Collider2D collider)
         {
             if (tanmakGM.CheckPause()) return;
@@ -81,8 +104,28 @@ namespace Tanmak
                     else
                     {
                         // tanmakGM.ModifyScore(-10);
-                        tanmakGM.EndGame();
+                        if (isShielded)
+                        {
+                            SetShield(false);
+                        }
+                        else
+                        {
+                            tanmakGM.EndGame();
+                        }
                     }
+                }
+            }
+            else if (collider.tag == "TanmakItem")
+            {
+                TanmakItem item = collider.gameObject.GetComponent<TanmakItem>();
+                if (item != null)
+                {
+                    if (item.itemName == "TanmakBarrier")
+                    {
+                        SetShield(true);
+                    }
+
+                    Destroy(item.gameObject);
                 }
             }
         }
@@ -91,10 +134,11 @@ namespace Tanmak
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
 
-            curColorIdx = 0;
             spriteRenderer.color = tanmakGM.colors[curColorIdx];
 
             StopMoving();
+
+            SetChangeButtonNextColor();
         }
 
         void OnEnable()
@@ -108,7 +152,7 @@ namespace Tanmak
 
             SetInvincible(true);
 
-            tanmakGM.invincibleTimer.SetupTimer(5.0f, timerAction);
+            tanmakGM.invincibleTimer.SetupTimer(invincibleTime, timerAction);
             tanmakGM.invincibleTimer.SetupTimerTik(0.2f, ToggleRenderer);// Blink
             tanmakGM.invincibleTimer.StartTimer();
         }

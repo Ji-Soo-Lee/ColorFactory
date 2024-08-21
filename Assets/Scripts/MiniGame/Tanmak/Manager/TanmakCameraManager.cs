@@ -26,8 +26,13 @@ namespace Tanmak
             if (Vector3.Distance(targetPos, transform.position) >= 2.0f)
             {
                 speed = Target.GetComponent<TanmakPlayer>().speed / 2.0f;
+                
+                Vector3 nextPos = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
 
-                transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
+                nextPos.x = Mathf.Clamp(nextPos.x, -10f, 10f);
+                nextPos.y = Mathf.Clamp(nextPos.y, -8f, 8f);
+
+                transform.position = nextPos;
             }
         }
     }

@@ -39,8 +39,9 @@ public class ScoreDataManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name != "Jisoo")
+        if (scene.name != "LoadingScene")
         {
+            Debug.Log(scene.name);
             finalMiniGameScore = 0;
             isMiniGameClear = false;
         }

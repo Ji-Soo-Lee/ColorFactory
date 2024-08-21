@@ -1,22 +1,44 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PausableMonoBehaviour : MonoBehaviour
 {
     private bool isPause;
+    public Action pauseHandler;
+    public Action resumeHandler;
+
+    public void AddPauseHandler(Action handler)
+    {
+        pauseHandler += handler;
+    }
+
+    public void AddResumeHandler(Action handler)
+    {
+        resumeHandler += handler;
+    }
 
     public virtual void Pause()
     {
         Time.timeScale = 0; // Stops FixedUpdate
         isPause = true; // Stops After Pause Update
+
+        pauseHandler?.Invoke();
     }
 
     public virtual void Resume()
     {
         Time.timeScale = 1f;
         isPause = false;
+
+        resumeHandler?.Invoke();
+    }
+
+    protected virtual void OnDisable()
+    {
+        Resume();
     }
 
     public bool CheckPause()
