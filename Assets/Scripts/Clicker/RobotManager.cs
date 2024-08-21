@@ -12,7 +12,7 @@ public class RobotManager : MonoBehaviour
     public float robotColorTransitionDuration = 5.0f;
 
     public List<RobotV2> robots = new List<RobotV2>();
-    private bool isActive;
+    private bool isActive = true;
 
     public void SetAllRobotsInteractable(bool isInteractable)
     {

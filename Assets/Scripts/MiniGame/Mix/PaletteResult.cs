@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.Rendering;
 using TMPro;
+using System.Runtime.InteropServices;
 
 public class PaletteResult : MonoBehaviour
 {

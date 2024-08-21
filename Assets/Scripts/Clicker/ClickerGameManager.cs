@@ -36,7 +36,7 @@ public class ClickerGameManager : MonoBehaviour
     private int feverWeight = 1;
     private bool isCoroutineClicking = false;
     private Coroutine clickCoroutine = null;
-    private bool isCleared;
+    private bool isCleared = false;
 
     #if UNITY_IOS && !UNITY_EDITOR
         [DllImport("Vibration")]
@@ -251,7 +251,7 @@ public class ClickerGameManager : MonoBehaviour
         // Save Data
         ClickerData data = new ClickerData(
             new ClickerStateData(clickNum, currentClickNum, feverManager.feverGauge, isCleared),
-            new ClickerColorData(clickerUIManager.currentColor, buttonColors),
+            new ClickerColorData(clickerUIManager.currentColor, buttonColors, currentAlphas),
             new ClickerRobotData(robotManager.GetClickAmounts(), robotManager.GetMaxClicks()),
             null);
         ClickerDataManager.SaveData(data);
@@ -289,6 +289,7 @@ public class ClickerGameManager : MonoBehaviour
         clickNum = data.stateData.clickNum;
         currentClickNum = data.stateData.currentClickNum;
         buttonColors = data.colorData.buttonColors;
+        currentAlphas = data.colorData.currentAlphas;
         isCleared = data.stateData.isCleared;
 
         feverManager.SetFeverGauge(data.stateData.feverGauge);
@@ -298,7 +299,7 @@ public class ClickerGameManager : MonoBehaviour
         for (int i = 0; i < buttonColors.Count; i++)
         {
             Color c = buttonColors[i];
-            clickerUIManager.backgrounds[i].color = new Color(c.r, c.g, c.b, c.a);
+            clickerUIManager.backgrounds[i].color = new Color(1.0f, 1.0f, 1.0f, c.a);
         }
 
         // Apply on Robots
@@ -333,11 +334,11 @@ public class ClickerGameManager : MonoBehaviour
 
             UnityEngine.Debug.Log(rewardIdx);
 
-            currentAlphas[rewardIdx] = buttonColors[rewardIdx].a + targetAlphas[rewardIdx] / maxCycle;
-            if (currentAlphas[rewardIdx] > 1.0f)
-            {
-                currentAlphas[rewardIdx] = 1.0f;
-            }
+            currentAlphas[rewardIdx] = Mathf.Clamp(buttonColors[rewardIdx].a + targetAlphas[rewardIdx] / maxCycle, 0.0f, 1.0f);
+            // if (currentAlphas[rewardIdx] > 1.0f)
+            // {
+            //     currentAlphas[rewardIdx] = 1.0f;
+            // }
             
             // Update button 
             buttonColors[rewardIdx] = new Color(buttonColors[rewardIdx].r, buttonColors[rewardIdx].g, buttonColors[rewardIdx].b, currentAlphas[rewardIdx]);;
@@ -350,6 +351,9 @@ public class ClickerGameManager : MonoBehaviour
             // backgroundColor.a = currentAlphas[rewardIdx];
             clickerUIManager.backgrounds[rewardIdx].color = new Color(1.0f, 1.0f, 1.0f, currentAlphas[rewardIdx]);
         }
+
+        Debug.Log(string.Join(", ", currentAlphas));
+        Debug.Log(string.Join(", ", targetAlphas));
 
         if (Enumerable.SequenceEqual(targetAlphas, currentAlphas))
         {

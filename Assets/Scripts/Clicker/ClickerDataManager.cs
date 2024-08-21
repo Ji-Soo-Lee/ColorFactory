@@ -45,11 +45,13 @@ public class ClickerColorData
 {
     public Color currentColor;
     public List<Color> buttonColors;
+    public List<float> currentAlphas;
 
-    public ClickerColorData(Color currentColor, List<Color> buttonColors)
+    public ClickerColorData(Color currentColor, List<Color> buttonColors, List<float> currentAlphas)
     {
         this.currentColor = currentColor;
         this.buttonColors = buttonColors;
+        this.currentAlphas = currentAlphas;
     }
 }
 
