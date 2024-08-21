@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class StopwatchManager : MonoBehaviour
 {
-    protected float stopwatchTime;       // Current Stopwatch Time Value
+    [SerializeField] protected float stopwatchTime;       // Current Stopwatch Time Value
     protected bool isStopwatchRunning;   // Stopwatch Status
     protected float stopwatchTik;          // Timer Tik for callback
     protected float stopwatchTikStride;    // Stride for Tik

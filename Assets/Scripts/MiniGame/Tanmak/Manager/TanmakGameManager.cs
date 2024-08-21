@@ -15,6 +15,9 @@ public class TanmakGameManager : StageManager
     public StopwatchManager stopwatchManager;
     public TanmakUIManager TUIManager;
 
+    public GameObject World;
+    public GameObject Map;
+
     public Color[] colors;
     public static int colorSize = 3;
     public Dictionary<string, Color> bulletColorMapping;

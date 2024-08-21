@@ -8,6 +8,7 @@ TagManager:
   - Block
   - Palette
   - TanmakBorder
+  - TanmakItem
   layers:
   - Default
   - TransparentFX

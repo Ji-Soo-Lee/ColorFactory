@@ -8,6 +8,7 @@ public class TanmakPlayer : MonoBehaviour
     [SerializeField] private TanmakGameManager tanmakGM;
 
     SpriteRenderer spriteRenderer;
+    public GameObject ShieldObject;
 
     public int curColorIdx { get; private set; } = 0;
     Vector3 pos;
@@ -15,6 +16,7 @@ public class TanmakPlayer : MonoBehaviour
 
     bool isInvincible;
     float invincibleTime = 3.0f;
+    bool isShielded = false;
 
     // set direction of character to move
     public void SetDirection(Vector3 dir)
@@ -51,6 +53,12 @@ public class TanmakPlayer : MonoBehaviour
         isInvincible = invincible;
     }
 
+    public void SetShield(bool isActive)
+    {
+        isShielded = isActive;
+        ShieldObject.SetActive(isActive);
+    }
+
     public void ToggleRenderer()
     {
         Color curColor = tanmakGM.colors[curColorIdx];
@@ -82,7 +90,6 @@ public class TanmakPlayer : MonoBehaviour
 
         if (!isInvincible && collider.tag == "Tanmak")
         {
-            
             TempTanmak tanmak = collider.gameObject.GetComponent<TempTanmak>();
             if (tanmak != null)
             {
@@ -93,8 +100,28 @@ public class TanmakPlayer : MonoBehaviour
                 else
                 {
                     // tanmakGM.ModifyScore(-10);
-                    tanmakGM.EndGame();
+                    if (isShielded)
+                    {
+                        SetShield(false);
+                    }
+                    else
+                    {
+                        tanmakGM.EndGame();
+                    }
                 }
+            }
+        }
+        else if (collider.tag == "TanmakItem")
+        {
+            TanmakItem item = collider.gameObject.GetComponent<TanmakItem>();
+            if (item != null)
+            {
+                if (item.itemName == "TanmakBarrier")
+                {
+                    SetShield(true);
+                }
+
+                Destroy(item.gameObject);
             }
         }
     }
