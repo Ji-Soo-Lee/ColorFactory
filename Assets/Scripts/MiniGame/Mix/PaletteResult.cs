@@ -20,6 +20,11 @@ public class PaletteResult : MonoBehaviour
 
     private float clickThreshold = 5;
 
+    #if UNITY_IOS && !UNITY_EDITOR
+        [DllImport("Vibration")]
+        public static extern void Vibrate(long _n);
+    # endif
+
     public void AdditiveMixing()
     {
         colorA = btn1Image.color * (AClick / clickThreshold);
@@ -95,6 +100,12 @@ public class PaletteResult : MonoBehaviour
             {
                 if (AClick < clickThreshold && isMixable)
                 {
+                    // Vibrate
+                    # if UNITY_ANDROID && !UNITY_EDITOR
+                        Vibration.Vibrate(30);
+                    # elif UNITY_IOS && !UNITY_EDITOR
+                        Vibrate(1519);
+                    # endif
                     AClick++;
                 }
             }
@@ -102,6 +113,12 @@ public class PaletteResult : MonoBehaviour
             {
                 if(AClick > 0 && isMixable ) 
                 {
+                    // Vibrate
+                    # if UNITY_ANDROID && !UNITY_EDITOR
+                        Vibration.Vibrate(30);
+                    # elif UNITY_IOS && !UNITY_EDITOR
+                        Vibrate(1519);
+                    # endif
                     AClick--;
                 }
             }
@@ -115,6 +132,12 @@ public class PaletteResult : MonoBehaviour
             {
                 if (BClick < clickThreshold && isMixable)
                 {
+                    // Vibrate
+                    # if UNITY_ANDROID && !UNITY_EDITOR
+                        Vibration.Vibrate(30);
+                    # elif UNITY_IOS && !UNITY_EDITOR
+                        Vibrate(1519);
+                    # endif
                     BClick++;
                 }
             }
@@ -122,6 +145,12 @@ public class PaletteResult : MonoBehaviour
             {
                 if (BClick > 0 && isMixable )
                 {
+                    // Vibrate
+                    # if UNITY_ANDROID && !UNITY_EDITOR
+                        Vibration.Vibrate(30);
+                    # elif UNITY_IOS && !UNITY_EDITOR
+                        Vibrate(1519);
+                    # endif
                     BClick--;
                 }
             }
@@ -135,6 +164,12 @@ public class PaletteResult : MonoBehaviour
             {
                 if (CClick < clickThreshold && isMixable)
                 {
+                    // Vibrate
+                    # if UNITY_ANDROID && !UNITY_EDITOR
+                        Vibration.Vibrate(30);
+                    # elif UNITY_IOS && !UNITY_EDITOR
+                        Vibrate(1519);
+                    # endif
                     CClick++;
                 }
             }
@@ -142,6 +177,12 @@ public class PaletteResult : MonoBehaviour
             {
                 if (CClick > 0 && isMixable)
                 {
+                    // Vibrate
+                    # if UNITY_ANDROID && !UNITY_EDITOR
+                        Vibration.Vibrate(30);
+                    # elif UNITY_IOS && !UNITY_EDITOR
+                        Vibrate(1519);
+                    # endif
                     CClick--;
                 }
             }

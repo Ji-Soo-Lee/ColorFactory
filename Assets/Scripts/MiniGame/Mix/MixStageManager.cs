@@ -13,6 +13,11 @@ public class MixStageManager : StageManager
     public TMP_Text timeText, scoreText, stageText;
     public GameObject ob1;
 
+    #if UNITY_IOS && !UNITY_EDITOR
+        [DllImport("Vibration")]
+        public static extern void Vibrate(long _n);
+    # endif
+
     protected override void Awake()
     {
         base.Awake();
@@ -46,12 +51,24 @@ public class MixStageManager : StageManager
             resultColor = GameObject.Find("ResultImage").GetComponent<Image>().color;
             if (ColorUtils.CompareColor(targetColor, resultColor))
             {
+                // Vibrate
+                # if UNITY_ANDROID && !UNITY_EDITOR
+                    Vibration.Vibrate(30);
+                # elif UNITY_IOS && !UNITY_EDITOR
+                    Vibrate(1519);
+                # endif
                 scoreManager.AddScore(stageScores[currentStage]);
                 EndStage();
                 Debug.Log("Correct");
             }
             else
             {
+                // Vibrate
+                # if UNITY_ANDROID && !UNITY_EDITOR
+                    Vibration.Vibrate(50);
+                # elif UNITY_IOS && !UNITY_EDITOR
+                    Vibrate(1521);
+                # endif
                 Debug.Log("Wrong");
                 ob1.SetActive(true);
                 Invoke("HideMessage", 1.5f);
