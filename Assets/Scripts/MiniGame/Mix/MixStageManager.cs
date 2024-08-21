@@ -65,7 +65,7 @@ public class MixStageManager : StageManager
             {
                 // Vibrate
                 # if UNITY_ANDROID && !UNITY_EDITOR
-                    Vibration.Vibrate(50);
+                    Vibration.Vibrate(60);
                 # elif UNITY_IOS && !UNITY_EDITOR
                     Vibrate(1521);
                 # endif

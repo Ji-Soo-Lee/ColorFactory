@@ -364,7 +364,7 @@ public class ClickerGameManager : MonoBehaviour
         isCleared = true;
 
         // End Logic
-        UnityEngine.Debug.Log("You win!");
+        // UnityEngine.Debug.Log("You win!");
 
         clickerUIManager.fullBackground.gameObject.SetActive(true);
 

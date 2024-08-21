@@ -20,6 +20,11 @@ namespace Tanmak
         float invincibleTime = 3.0f;
         bool isShielded = false;
 
+        #if UNITY_IOS && !UNITY_EDITOR
+            [DllImport("Vibration")]
+            public static extern void Vibrate(long _n);
+        # endif
+
         
         // set direction of character to move
         public void SetDirection(Vector3 dir)
@@ -99,6 +104,12 @@ namespace Tanmak
                 {
                     if (ColorUtils.CompareColor(tanmak.color, tanmakGM.colors[curColorIdx]))
                     {
+                        // Vibration
+                        # if UNITY_ANDROID && !UNITY_EDITOR
+                            Vibration.Vibrate(30);
+                        # elif UNITY_IOS && !UNITY_EDITOR
+                            Vibrate(1519);
+                        # endif
                         tanmakGM.ModifyScore(5);
                     }
                     else
@@ -110,6 +121,12 @@ namespace Tanmak
                         }
                         else
                         {
+                            // Vibration
+                            # if UNITY_ANDROID && !UNITY_EDITOR
+                                Vibration.Vibrate(60);
+                            # elif UNITY_IOS && !UNITY_EDITOR
+                                Vibrate(1521);
+                            # endif
                             tanmakGM.EndGame();
                         }
                     }
@@ -120,6 +137,11 @@ namespace Tanmak
                 TanmakItem item = collider.gameObject.GetComponent<TanmakItem>();
                 if (item != null)
                 {
+                    # if UNITY_ANDROID && !UNITY_EDITOR
+                        Vibration.Vibrate(30);
+                    # elif UNITY_IOS && !UNITY_EDITOR
+                        Vibrate(1519);
+                    # endif
                     if (item.itemName == "TanmakBarrier")
                     {
                         SetShield(true);

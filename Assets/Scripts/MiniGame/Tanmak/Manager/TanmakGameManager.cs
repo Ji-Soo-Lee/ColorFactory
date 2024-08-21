@@ -44,11 +44,11 @@ namespace Tanmak
 
             TUIManager.SetScoreText(curScore);
 
-            if (curScore > highScore)
-            {
-                highScore = curScore;
-                TUIManager.SetActiveRecordText(true);
-            }
+            // if (curScore > highScore)
+            // {
+            //     highScore = curScore;
+            //     TUIManager.SetActiveRecordText(true);
+            // }
         }
 
         public override void Pause()
