@@ -44,7 +44,7 @@ public class CommonPopupUIManager : MonoBehaviour
             timeText.text = time.ToString();
             scoreText.text = score.ToString();
             feverGaugeText.text = "+" + (isClear?1:0).ToString() + " Fever Gauge";
-            robotBattery.text = "+" + (isClear?1:0).ToString() + " Robot Battery";
+            robotBattery.text = "+" + ((int)(score * 0.5)).ToString() + " Robot Battery";
         }
     }
 }
