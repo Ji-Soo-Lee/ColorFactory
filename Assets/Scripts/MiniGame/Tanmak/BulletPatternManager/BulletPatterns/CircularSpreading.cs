@@ -8,6 +8,7 @@ namespace Tanmak.BulletPatterns
     {
         private int bulletCount = 10;
         private float radius = 5f;
+        private Vector3 direction = new Vector3(1, 0, 0);  // default direction is right
 
         public override IEnumerator FirePattern()
         {
@@ -32,6 +33,13 @@ namespace Tanmak.BulletPatterns
                         break;
                     case "bulletSpeed":
                         bulletSpeed = (int)parameters["bulletSpeed"];
+                        break;
+                    case "direction":
+                        direction = (Vector3)parameters["direction"];
+                        break;
+                    case "directionWithAngle":
+                        float angle = (float)parameters["directionWithAngle"];
+                        direction = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0).normalized;
                         break;
                     case "startPosition":
                         startPosition = (Vector3)parameters["startPosition"];
