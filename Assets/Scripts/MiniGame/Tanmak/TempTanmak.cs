@@ -1,42 +1,44 @@
 using UnityEngine;
 
-public class TempTanmak : MonoBehaviour
+namespace Tanmak
 {
-    [HideInInspector]
-    public Color color;
-
-    // Destroy bullet if touched Tanmak Border
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class TempTanmak : MonoBehaviour
     {
-        if (collision.gameObject.CompareTag("TanmakBorder"))
+        [HideInInspector]
+        public Color color;
+
+        // Destroy bullet if touched Tanmak Border
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            Destroy(gameObject);
-        }
-    }
-
-    void Start()
-    {
-        var tgmobj = GameObject.Find("Tanmak Game Manager Object");
-
-        if (tgmobj != null)
-        {
-            // set initial tanmak color
-            TanmakGameManager tanmakGM = tgmobj.GetComponent<TanmakGameManager>();
-            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-
-            string prefabName = gameObject.name.Replace("(Clone)", "").Trim();
-            Debug.Log($"Prefab Name: {prefabName}");
-
-            // If color is assigned by prefab name
-            if (tanmakGM.bulletColorMapping.TryGetValue(prefabName, out color))
+            if (collision.gameObject.CompareTag("TanmakBorder"))
             {
-                spriteRenderer.color = color;
+                Destroy(gameObject);
             }
-            else 
+        }
+
+        void Start()
+        {
+            var tgmobj = GameObject.Find("Tanmak Game Manager Object");
+
+            if (tgmobj != null)
             {
-                // random color among colors list
-                color = tanmakGM.colors[UnityEngine.Random.Range(0, TanmakGameManager.colorSize)];
-                spriteRenderer.color = color;
+                // set initial tanmak color
+                TanmakGameManager tanmakGM = tgmobj.GetComponent<TanmakGameManager>();
+                SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+
+                string prefabName = gameObject.name.Replace("(Clone)", "").Trim();
+
+                // If color is assigned by prefab name
+                if (tanmakGM.bulletColorMapping.TryGetValue(prefabName, out color))
+                {
+                    spriteRenderer.color = color;
+                }
+                else
+                {
+                    // random color among colors list
+                    color = tanmakGM.colors[UnityEngine.Random.Range(0, TanmakGameManager.colorSize)];
+                    spriteRenderer.color = color;
+                }
             }
         }
     }

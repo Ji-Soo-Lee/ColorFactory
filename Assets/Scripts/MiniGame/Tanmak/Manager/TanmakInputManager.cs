@@ -1,73 +1,76 @@
 using System.Diagnostics;
 using UnityEngine;
 
-public class TanmakInputManager : MonoBehaviour
+namespace Tanmak
 {
-    public GameObject Player;
-    public GameObject Joystick;
-    [HideInInspector]
-    public bool isMovingKeyDown;
-
-    TanmakPlayer player;
-    Vector3 dir;
-
-    void Start()
+    public class TanmakInputManager : MonoBehaviour
     {
-        player = Player.GetComponent<TanmakPlayer>();
-    }
+        public GameObject Player;
+        public GameObject Joystick;
+        [HideInInspector]
+        public bool isMovingKeyDown;
 
-    void Update()
-    {
-        dir = new Vector3(0.0f, 0.0f, 0.0f);
-        isMovingKeyDown = false;
+        TanmakPlayer player;
+        Vector3 dir;
 
-        // get joystick input
-        if (Joystick.GetComponent<TanmakJoystick>() != null &&
-            Joystick.GetComponent<TanmakJoystick>().isJoystickMoving)
+        void Start()
         {
-            dir = Joystick.GetComponent<TanmakJoystick>().dir;
-            isMovingKeyDown = true;
+            player = Player.GetComponent<TanmakPlayer>();
         }
 
-        // get moving key
-        if (Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow))
+        void Update()
         {
-            dir.x -= 1.0f;
-            isMovingKeyDown = true;
-        }
-        if (Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow))
-        {
-            dir.x += 1.0f;
-            isMovingKeyDown = true;
-        }
-        if (Input.GetKey("w") || Input.GetKey(KeyCode.UpArrow))
-        {
-            dir.y += 1.0f;
-            isMovingKeyDown = true;
-        }
-        if (Input.GetKey("s") || Input.GetKey(KeyCode.DownArrow))
-        {
-            dir.y -= 1.0f;
-            isMovingKeyDown = true;
-        }
+            dir = new Vector3(0.0f, 0.0f, 0.0f);
+            isMovingKeyDown = false;
 
-        // control player
-        if (player != null)
-        {
-            if (isMovingKeyDown)
+            // get joystick input
+            if (Joystick.GetComponent<TanmakJoystick>() != null &&
+                Joystick.GetComponent<TanmakJoystick>().isJoystickMoving)
             {
-                player.SetDirection(dir);
-            }
-            else if (player.isMoving)
-            {
-                player.StopMoving();
+                dir = Joystick.GetComponent<TanmakJoystick>().dir;
+                isMovingKeyDown = true;
             }
 
-
-            // change color if enter pressed
-            if (Input.GetKeyDown(KeyCode.Return))
+            // get moving key
+            if (Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow))
             {
-                player.ChangeColor();
+                dir.x -= 1.0f;
+                isMovingKeyDown = true;
+            }
+            if (Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow))
+            {
+                dir.x += 1.0f;
+                isMovingKeyDown = true;
+            }
+            if (Input.GetKey("w") || Input.GetKey(KeyCode.UpArrow))
+            {
+                dir.y += 1.0f;
+                isMovingKeyDown = true;
+            }
+            if (Input.GetKey("s") || Input.GetKey(KeyCode.DownArrow))
+            {
+                dir.y -= 1.0f;
+                isMovingKeyDown = true;
+            }
+
+            // control player
+            if (player != null)
+            {
+                if (isMovingKeyDown)
+                {
+                    player.SetDirection(dir);
+                }
+                else if (player.isMoving)
+                {
+                    player.StopMoving();
+                }
+
+
+                // change color if enter pressed
+                if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    player.ChangeColor();
+                }
             }
         }
     }

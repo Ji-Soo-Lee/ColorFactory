@@ -2,24 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TanmakItem : MonoBehaviour
+namespace Tanmak
 {
-    TanmakGameManager tanmakGM;
-    TimerManager timer;
-    public string itemName = "";
-
-    protected virtual void Start()
+    public class TanmakItem : MonoBehaviour
     {
-        tanmakGM = GameObject.FindObjectOfType<TanmakGameManager>();
-        timer = gameObject.AddComponent<TimerManager>();
+        TanmakGameManager tanmakGM;
+        TimerManager timer;
+        public string itemName = "";
 
-        if (tanmakGM != null)
+        protected virtual void Start()
         {
-            timer.SetupTimer(15f, () => Destroy(gameObject));
-            tanmakGM.AddPauseHandler(timer.PauseTimer);
-            tanmakGM.AddResumeHandler(timer.StartTimer);
-        }
+            tanmakGM = GameObject.FindObjectOfType<TanmakGameManager>();
+            timer = gameObject.AddComponent<TimerManager>();
 
-        timer.StartTimer();
+            if (tanmakGM != null)
+            {
+                timer.SetupTimer(15f, () => Destroy(gameObject));
+                tanmakGM.AddPauseHandler(timer.PauseTimer);
+                tanmakGM.AddResumeHandler(timer.StartTimer);
+            }
+
+            timer.StartTimer();
+        }
     }
 }

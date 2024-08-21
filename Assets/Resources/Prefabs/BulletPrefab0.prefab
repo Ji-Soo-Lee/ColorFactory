@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5045325714993227067}
   - component: {fileID: 6856419819651619605}
   m_Layer: 0
-  m_Name: BulletPrefab
+  m_Name: BulletPrefab0
   m_TagString: Tanmak
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

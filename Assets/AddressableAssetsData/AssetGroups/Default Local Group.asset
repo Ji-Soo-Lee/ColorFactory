@@ -16,12 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 665fbb6f0bfcb794d867e4ac329fa159
-  m_SerializeEntries:
-  - m_GUID: 54e58f81a3db79243ae348e2cad5f84a
-    m_Address: Assets/MyResources/Sprites/problem_zzangu.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: eb1621db4eaf93b4c8cc508bcfcf8513, type: 2}
   m_SchemaSet:

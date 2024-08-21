@@ -2,35 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TanmakCameraManager : MonoBehaviour
+namespace Tanmak
 {
-    public GameObject Target;
-
-    float offsetX = 0.0f;
-    float offsetY = 0.0f;
-    float offsetZ = -10.0f;
-
-    float speed;
-    Vector3 targetPos;
-
-    void Update()
+    public class TanmakCameraManager : MonoBehaviour
     {
-        targetPos = new Vector3(
-            Target.transform.position.x + offsetX,
-            Target.transform.position.y + offsetY,
-            offsetZ
-            );
+        public GameObject Target;
 
-        if (Vector3.Distance(targetPos, transform.position) >= 2.0f)
+        float offsetX = 0.0f;
+        float offsetY = 0.0f;
+        float offsetZ = -10.0f;
+
+        float speed;
+        Vector3 targetPos;
+
+        void Update()
         {
-            speed = Target.GetComponent<TanmakPlayer>().speed / 2.0f;
+            targetPos = new Vector3(
+                Target.transform.position.x + offsetX,
+                Target.transform.position.y + offsetY,
+                offsetZ
+                );
 
-            Vector3 nextPos = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
+            if (Vector3.Distance(targetPos, transform.position) >= 2.0f)
+            {
+                speed = Target.GetComponent<TanmakPlayer>().speed / 2.0f;
+                
+                Vector3 nextPos = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
 
-            nextPos.x = Mathf.Clamp(nextPos.x, -10f, 10f);
-            nextPos.y = Mathf.Clamp(nextPos.y, -8f, 8f);
+                nextPos.x = Mathf.Clamp(nextPos.x, -10f, 10f);
+                nextPos.y = Mathf.Clamp(nextPos.y, -8f, 8f);
 
-            transform.position = nextPos;
+                transform.position = nextPos;
+            }
         }
     }
 }

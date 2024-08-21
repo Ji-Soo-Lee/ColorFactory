@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TanmakBarrier : TanmakItem
+namespace Tanmak
 {
-    protected override void Start()
+    public class TanmakBarrier : TanmakItem
     {
-        base.Start();
-        itemName = "TanmakBarrier";
+        protected override void Start()
+        {
+            base.Start();
+            itemName = "TanmakBarrier";
+        }
     }
 }

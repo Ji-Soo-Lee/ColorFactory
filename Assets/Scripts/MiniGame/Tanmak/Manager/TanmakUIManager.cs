@@ -4,39 +4,42 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class TanmakUIManager : MonoBehaviour
+namespace Tanmak
 {
-    public TMP_Text timerText;
-    public TMP_Text ScoreText;
-    public Image colorChangeImage;
-    public GameObject RecordTextObject;
-
-    public void SetTimerText(float time)
+    public class TanmakUIManager : MonoBehaviour
     {
-        timerText.text = "TIME" + ((int)time).ToString();
-    }
+        public TMP_Text timerText;
+        public TMP_Text ScoreText;
+        public Image colorChangeImage;
+        public GameObject RecordTextObject;
 
-    public void SetScoreText(int score)
-    {
-        // string text = "";
-        
-        // while(score >= 1000)
-        // {
-        //     text = "," + (score % 1000).ToString("D3") + text;
-        //     score /= 1000;
-        // }
-        // text = score.ToString() + text;
+        public void SetTimerText(float time)
+        {
+            timerText.text = "TIME" + ((int)time).ToString();
+        }
 
-        ScoreText.text = score.ToString("N0");
-    }
+        public void SetScoreText(int score)
+        {
+            // string text = "";
+            
+            // while(score >= 1000)
+            // {
+            //     text = "," + (score % 1000).ToString("D3") + text;
+            //     score /= 1000;
+            // }
+            // text = score.ToString() + text;
 
-    public void SetColorChangeImageColor(Color color)
-    {
-        colorChangeImage.color = color;
-    }
+            ScoreText.text = score.ToString("N0");
+        }
 
-    public void SetActiveRecordText(bool isActive)
-    {
-        RecordTextObject.SetActive(isActive);
+        public void SetColorChangeImageColor(Color color)
+        {
+            colorChangeImage.color = color;
+        }
+
+        public void SetActiveRecordText(bool isActive)
+        {
+            RecordTextObject.SetActive(isActive);
+        }
     }
 }
