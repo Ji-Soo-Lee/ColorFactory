@@ -13,21 +13,21 @@ public class TanmakUIManager : MonoBehaviour
 
     public void SetTimerText(float time)
     {
-        timerText.text = "Time " + ((int)time).ToString();
+        timerText.text = "TIME" + ((int)time).ToString();
     }
 
     public void SetScoreText(int score)
     {
-        string text = "";
+        // string text = "";
         
-        while(score >= 1000)
-        {
-            text = "," + (score % 1000).ToString("D3") + text;
-            score /= 1000;
-        }
-        text = score.ToString() + text;
+        // while(score >= 1000)
+        // {
+        //     text = "," + (score % 1000).ToString("D3") + text;
+        //     score /= 1000;
+        // }
+        // text = score.ToString() + text;
 
-        ScoreText.text = text;
+        ScoreText.text = score.ToString("N0");
     }
 
     public void SetColorChangeImageColor(Color color)
