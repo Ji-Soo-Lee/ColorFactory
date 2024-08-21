@@ -59,6 +59,6 @@ public class ScoreManager : MonoBehaviour
     // Get Score in String
     public string GetScoreAsString()
     {
-        return currentScore.ToString();
+        return currentScore.ToString("N0");
     }
 }

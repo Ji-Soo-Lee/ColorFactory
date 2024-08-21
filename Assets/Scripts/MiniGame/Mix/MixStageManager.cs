@@ -13,6 +13,11 @@ public class MixStageManager : StageManager
     public TMP_Text timeText, scoreText, stageText;
     public GameObject ob1;
 
+    #if UNITY_IOS && !UNITY_EDITOR
+        [DllImport("Vibration")]
+        public static extern void Vibrate(long _n);
+    # endif
+
     protected override void Awake()
     {
         base.Awake();
@@ -46,12 +51,24 @@ public class MixStageManager : StageManager
             resultColor = GameObject.Find("ResultImage").GetComponent<Image>().color;
             if (ColorUtils.CompareColor(targetColor, resultColor))
             {
+                // Vibrate
+                # if UNITY_ANDROID && !UNITY_EDITOR
+                    Vibration.Vibrate(30);
+                # elif UNITY_IOS && !UNITY_EDITOR
+                    Vibrate(1519);
+                # endif
                 scoreManager.AddScore(stageScores[currentStage]);
                 EndStage();
                 Debug.Log("Correct");
             }
             else
             {
+                // Vibrate
+                # if UNITY_ANDROID && !UNITY_EDITOR
+                    Vibration.Vibrate(50);
+                # elif UNITY_IOS && !UNITY_EDITOR
+                    Vibrate(1521);
+                # endif
                 Debug.Log("Wrong");
                 ob1.SetActive(true);
                 Invoke("HideMessage", 1.5f);
@@ -68,7 +85,7 @@ public class MixStageManager : StageManager
 
         if (isStageActive)
         {
-            timeText.text = (Mathf.Ceil(stageTimer.GetTimerValue()*10)/10).ToString();
+            timeText.text = (Mathf.Ceil(stageTimer.GetTimerValue()*10)/10).ToString("F1");
         }
 
         // General update logic if needed
@@ -89,9 +106,9 @@ public class MixStageManager : StageManager
         InitializeGameElements();
 
         stageTimer.StartTimer();
-        stageText.text = "stage"+(currentStage+1).ToString();
+        stageText.text = "STAGE"+(currentStage+1).ToString();
 
-        Debug.Log("Stage " + (currentStage + 1) + "started.");
+        Debug.Log("STAGE" + (currentStage + 1) + "started.");
     }
 
     protected override void EndStage()
@@ -105,7 +122,7 @@ public class MixStageManager : StageManager
         CalculateFinalScore();
         Debug.Log("Stage " + (currentStage + 1) + "ended.");
         Debug.Log("Total Score: " + scoreManager.GetScoreAsString());
-        scoreText.text = "Score : " + scoreManager.GetScoreAsString();
+        scoreText.text = scoreManager.GetScoreAsString();
 
         if (currentStage < totalStages - 1)
         {

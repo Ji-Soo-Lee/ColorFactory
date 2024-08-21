@@ -74,7 +74,10 @@ public class RobotManager : MonoBehaviour
     {
         foreach (RobotV2 robot in robots)
         {
-            robot.OnClickButton();
+            if (robot.clickAmount > 0) {
+                robot.OnClickButton();
+                robot.ResetClickAmount();
+            }
         }
     }
 }
