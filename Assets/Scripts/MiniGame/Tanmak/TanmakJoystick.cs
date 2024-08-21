@@ -19,12 +19,12 @@ public class TanmakJoystick : MonoBehaviour,
         isJoystickMoving = false;
         lever = transform.GetChild(0).GetComponent<RectTransform>();
         rectTransform = GetComponent<RectTransform>();
-        leverRange = rectTransform.rect.width / 4.0f;
+        leverRange = rectTransform.rect.width / rectTransform.localScale.x;
     }
 
     void SetDirection(PointerEventData eventData)
     {
-        var inputDir = eventData.position - rectTransform.anchoredPosition;
+        var inputDir = (eventData.position - rectTransform.anchoredPosition) / rectTransform.localScale.x;
         var clampedDir = inputDir.magnitude < leverRange ? inputDir : inputDir.normalized * leverRange;
 
         dir = clampedDir / leverRange;
