@@ -14,6 +14,7 @@ public class TanmakPlayer : MonoBehaviour
     Vector3 direction;
 
     bool isInvincible;
+    float invincibleTime = 3.0f;
 
     // set direction of character to move
     public void SetDirection(Vector3 dir)
@@ -120,7 +121,7 @@ public class TanmakPlayer : MonoBehaviour
 
         SetInvincible(true);
 
-        tanmakGM.invincibleTimer.SetupTimer(5.0f, timerAction);
+        tanmakGM.invincibleTimer.SetupTimer(invincibleTime, timerAction);
         tanmakGM.invincibleTimer.SetupTimerTik(0.2f, ToggleRenderer);// Blink
         tanmakGM.invincibleTimer.StartTimer();
     }
