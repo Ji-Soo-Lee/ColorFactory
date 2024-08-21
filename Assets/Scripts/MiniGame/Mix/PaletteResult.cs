@@ -22,8 +22,8 @@ public class PaletteResult : MonoBehaviour
     private float clickThreshold = 5;
 
     #if UNITY_IOS && !UNITY_EDITOR
-        [DllImport("Vibration")]
-        public static extern void Vibrate(long _n);
+        [DllImport("__Internal")]
+        private static extern void Vibrate(long _n);
     # endif
 
     public void AdditiveMixing()

@@ -39,8 +39,8 @@ public class ClickerGameManager : MonoBehaviour
     private bool isCleared = false;
 
     #if UNITY_IOS && !UNITY_EDITOR
-        [DllImport("Vibration")]
-        public static extern void Vibrate(long _n);
+        [DllImport("__Internal")]
+        private static extern void Vibrate(long _n);
     # endif
 
     void Awake()
