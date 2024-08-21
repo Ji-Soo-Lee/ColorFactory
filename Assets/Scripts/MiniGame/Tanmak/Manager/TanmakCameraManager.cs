@@ -25,7 +25,12 @@ public class TanmakCameraManager : MonoBehaviour
         {
             speed = Target.GetComponent<TanmakPlayer>().speed / 2.0f;
 
-            transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
+            Vector3 nextPos = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
+
+            nextPos.x = Mathf.Clamp(nextPos.x, -10f, 10f);
+            nextPos.y = Mathf.Clamp(nextPos.y, -8f, 8f);
+
+            transform.position = nextPos;
         }
     }
 }
