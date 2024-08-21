@@ -1,9 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 <<<<<<<< HEAD:Assets/MyResources/Sprites/UI.meta
 guid: 926d4e4497e75a849a1f6073cda75f1c
 ========
 guid: e5ab27bdf695472418d0ced08a98573f
 >>>>>>>> origin/coloring:Assets/MyResources/SoundEffects.meta
+=======
+guid: 926d4e4497e75a849a1f6073cda75f1c
+>>>>>>> Stashed changes
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
