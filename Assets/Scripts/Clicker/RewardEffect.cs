@@ -22,8 +22,6 @@ public class RewardEffect : MonoBehaviour
 
     IEnumerator DisappearOverTime(GameObject obj)
     {
-        Debug.Log("ShrinkOverTime");
-
         float currentTime = 0;
         Color originalColor = obj.GetComponent<Image>().color;
 

@@ -10,7 +10,7 @@ public class DummySceneController : MonoBehaviour
         "TanmakTestScene",
         "Brain",
         "Coloring",
-        "Hoo",
+        "MixFinal",
         "dgim608",
         "Simon"};
 

@@ -17,7 +17,7 @@ public class ClickerGameManager : MonoBehaviour
     public ClickEffect clickEffect;
     public RewardEffect rewardEffect;
     public RobotManager robotManager;
-    public RobotV2 robot;
+    // public RobotV2 robot;
     public Fever feverManager;
     public DummySceneController dummySceneController;
 
@@ -45,6 +45,8 @@ public class ClickerGameManager : MonoBehaviour
 
     void Awake()
     {
+        Time.timeScale = 1f;
+
         InitColors();
 
         clickerUIManager.InitColors();
@@ -214,19 +216,20 @@ public class ClickerGameManager : MonoBehaviour
             float weight = 1.0f;
             
             // Set Weight & Robot with Scene Name
-            if (dummySceneController.sceneNames.Contains(sceneName))
-            {
-                weight = 0.5f;
-                robotIdx = dummySceneController.sceneNames.FindIndex(x => x.Equals(sceneName)) - 1;
-            }
+            // if (dummySceneController.sceneNames.Contains(sceneName))
+            // {
+            //     weight = 0.5f;
+            //     robotIdx = dummySceneController.sceneNames.FindIndex(x => x.Equals(sceneName)) - 1;
+            // }
+
+            weight = 0.5f;
 
             // Weight Score
             int weightedScore = (int)(score * weight);
 
             // Add Robot Clicks
-            // robotManager.robots[robotIdx].AddClickAmount(weightedScore);
-            // robotManager.robots[robotIdx].AddClickAmount(1);
-            robot.AddRobotBattery(1);
+            robotManager.robots[robotIdx].AddClickAmount(weightedScore);
+            // robot.AddRobotBattery(weightedScore);
 
             // Add Fever Gauge
             if (scoreDataManager.isMiniGameClear)
@@ -240,7 +243,7 @@ public class ClickerGameManager : MonoBehaviour
     {
         // Save Data
         ClickerData data = new ClickerData(
-            new ClickerStateData(clickNum, currentClickNum, feverManager.feverGauge, robot.clickAmount),
+            new ClickerStateData(clickNum, currentClickNum, feverManager.feverGauge),
             new ClickerColorData(clickerUIManager.currentColor, buttonColors),
             new ClickerRobotData(robotManager.GetClickAmounts(), robotManager.GetMaxClicks()),
             null);
@@ -275,8 +278,7 @@ public class ClickerGameManager : MonoBehaviour
         buttonColors = data.colorData.buttonColors;
 
         feverManager.SetFeverGauge(data.stateData.feverGauge);
-        robot.SetRobotBattery(data.stateData.robotBattery);
-
+        
         // Apply on Sprites
         clickerUIManager.SetButtonColor(data.colorData.currentColor);
         for (int i = 0; i < buttonColors.Count; i++)
@@ -361,7 +363,6 @@ public class ClickerGameManager : MonoBehaviour
         // Cannot guarantee the order if blocked
         // while (currentClickCoroutine != null) yield return currentClickCoroutine;
         // isClickCoroutineRunning = true;
-
         float stepColorTransitionDuration = duration / clickNum;
 
         clickerUIManager.mainButton.SetInteractive(false);

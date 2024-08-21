@@ -2632,7 +2632,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1724281403}
         m_TargetAssemblyTypeName: RobotV2, Assembly-CSharp
-        m_MethodName: AddRobotBattery
+        m_MethodName: AddClickAmount
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4152,7 +4152,6 @@ MonoBehaviour:
   clickEffect: {fileID: 779826949}
   rewardEffect: {fileID: 1337991904}
   robotManager: {fileID: 1815135002}
-  robot: {fileID: 1724281403}
   feverManager: {fileID: 1129687842}
   dummySceneController: {fileID: 566478200}
   <clickNum>k__BackingField: 0
@@ -5848,7 +5847,7 @@ MonoBehaviour:
   robotManager: {fileID: 1815135002}
   robotButton: {fileID: 1724281400}
   clickerUIManager: {fileID: 70820729}
-  MAX_ROBOT_BATTERY: 10
+  <clickAmount>k__BackingField: 0
   <MAX_CLICK>k__BackingField: 100
 --- !u!1 &1726909344
 GameObject:

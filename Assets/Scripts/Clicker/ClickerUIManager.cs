@@ -86,11 +86,10 @@ public class ClickerUIManager : MonoBehaviour
         feverGaugeImage.sprite = feverGaugeSprites[feverGauge];
     }
 
-    public void SetRobotBatterySprite(int robotBattery)
+    public void SetRobotBatterySprite(int clickAmount)
     {
-        Debug.Log("SetRobotBatterySprite : " + robotBattery);
-        if (robotBattery < 0) return;
-        robotBatterySprite.fillAmount = (float)robotBattery / robot.MAX_ROBOT_BATTERY;
+        if (clickAmount < 0) return;
+        robotBatterySprite.fillAmount = (float)clickAmount / robot.MAX_CLICK;
     }
 
     public void SetButtonColor(Color color)
