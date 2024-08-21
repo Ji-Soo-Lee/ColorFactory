@@ -26,18 +26,17 @@ namespace Tanmak
         {
             // tmdghks: implemented just randomly generated patterns
             // this will be replaced with json loader (maybe)
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 100; i++)
             {
                 BulletPatternBase pattern = null;
                 float radius = Random.Range(1f, 5f);
-                int bulletCount = Random.Range(6, 15);
-                int rowCount = Random.Range(2, 5);
-                int colCount = Random.Range(2, 5);
-                float spacing = Random.Range(0.5f, 2f);
-                float directionWithAngle = Random.Range(0f, 2 * Mathf.PI);
+                int bulletCount = Random.Range(15, 40);
+                int rowCount = Random.Range(3, 10);
+                int colCount = Random.Range(3, 10);
+                float spacing = Random.Range(0.2f, 0.5f);
 
-                float posX = Random.Range(-10f, 10f);
-                float posY = Random.Range(-10f, 10f);
+                float posX = Random.Range(-5f, 5f);
+                float posY = Random.Range(-5f, 5f);
                 Vector3 position = new Vector3(posX, posY, 0);
 
                 float dirX = Random.Range(-1f, 1f);
@@ -62,7 +61,6 @@ namespace Tanmak
                             {"rowCount", rowCount },
                             {"colCount", colCount },
                             {"spacing", spacing },
-                            {"directionWithAngle", directionWithAngle },
                         });
                         break;
                     case 2:
@@ -79,7 +77,7 @@ namespace Tanmak
                     { "bulletSpeed", bulletSpeed },
                 });
                 
-                interpreter.schedules.Add(new PatternSchedule(pattern, i, i + 5));
+                interpreter.schedules.Add(new PatternSchedule(pattern, i / 2f, 5));
             }
 
             interpreter.ExecutePatternSchedules();
