@@ -20,10 +20,12 @@ public class ClickerUIManager : MonoBehaviour
     public GameObject MiniGamePanel;
 
     public List<Image> backgrounds = new List<Image>();
+    public Image fullBackground;
     public List<Sprite> feverGaugeSprites;
 
     public Color currentColor { get; private set; }
     private Coroutine currentButtonColorCoroutine;
+    public Image clearPopup;
 
     public void InitColors()
     {
@@ -122,5 +124,21 @@ public class ClickerUIManager : MonoBehaviour
         // Ensure Target Color
         currentColor = targetColor;
         img.color = currentColor;
+    }
+
+    public IEnumerator DisappearOverTime(Image popup, float disappearDuration)
+    {
+        float currentTime = 0;
+        Color originalColor = popup.color;
+
+        while (currentTime < disappearDuration)
+        {
+            currentTime += Time.deltaTime;
+            float alpah = Mathf.Lerp(originalColor.a, 0.1f, currentTime / disappearDuration);
+            popup.color = new Color (originalColor.r, originalColor.g, originalColor.b, alpah);
+            yield return null;
+        }
+
+        popup.gameObject.SetActive(false);  // Remove object after it reaches maximum size
     }
 }

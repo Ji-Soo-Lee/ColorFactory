@@ -12,6 +12,7 @@ public class RobotManager : MonoBehaviour
     public float robotColorTransitionDuration = 5.0f;
 
     public List<RobotV2> robots = new List<RobotV2>();
+    private bool isActive;
 
     public void SetAllRobotsInteractable(bool isInteractable)
     {
@@ -70,8 +71,13 @@ public class RobotManager : MonoBehaviour
         clickerGM.StartMultipleClicks(clickNum, robotColorTransitionDuration);
     }
 
+    public void SetRobotActive(bool isActive) {
+        this.isActive = isActive;
+    }
+
     public void ConsumeAllRobotClicks()
     {
+        if (!isActive) return;
         foreach (RobotV2 robot in robots)
         {
             if (robot.clickAmount > 0) {

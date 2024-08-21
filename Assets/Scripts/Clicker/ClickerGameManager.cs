@@ -36,6 +36,7 @@ public class ClickerGameManager : MonoBehaviour
     private int feverWeight = 1;
     private bool isCoroutineClicking = false;
     private Coroutine clickCoroutine = null;
+    private bool isCleared;
 
     #if UNITY_IOS && !UNITY_EDITOR
         [DllImport("Vibration")]
@@ -55,6 +56,11 @@ public class ClickerGameManager : MonoBehaviour
         if (data != null)
         {
             LoadGameData(data);
+        }
+
+        if (isCleared)
+        {
+            EndGame();
         }
 
         // Check MiniGame Result
@@ -244,7 +250,7 @@ public class ClickerGameManager : MonoBehaviour
     {
         // Save Data
         ClickerData data = new ClickerData(
-            new ClickerStateData(clickNum, currentClickNum, feverManager.feverGauge),
+            new ClickerStateData(clickNum, currentClickNum, feverManager.feverGauge, isCleared),
             new ClickerColorData(clickerUIManager.currentColor, buttonColors),
             new ClickerRobotData(robotManager.GetClickAmounts(), robotManager.GetMaxClicks()),
             null);
@@ -253,7 +259,11 @@ public class ClickerGameManager : MonoBehaviour
 
     public void ResetGameData()
     {
+        isCleared = false;
+
         // Reset
+        clickerUIManager.fullBackground.gameObject.SetActive(false);
+
         InitColors();
         clickerUIManager.InitColors();
 
@@ -267,8 +277,10 @@ public class ClickerGameManager : MonoBehaviour
 
         // Activate Buttons
         robotManager.SetAllRobotsInteractable(true);
+        robotManager.SetRobotActive(true);
         clickerUIManager.mainButton.gameObject.SetActive(true);
         clickerUIManager.backgroundButtonSprite.gameObject.SetActive(true);
+        clickerUIManager.mainButtonSprite.gameObject.SetActive(true);
     }
 
     private void LoadGameData(ClickerData data)
@@ -277,6 +289,7 @@ public class ClickerGameManager : MonoBehaviour
         clickNum = data.stateData.clickNum;
         currentClickNum = data.stateData.currentClickNum;
         buttonColors = data.colorData.buttonColors;
+        isCleared = data.stateData.isCleared;
 
         feverManager.SetFeverGauge(data.stateData.feverGauge);
         
@@ -340,20 +353,29 @@ public class ClickerGameManager : MonoBehaviour
 
         if (Enumerable.SequenceEqual(targetAlphas, currentAlphas))
         {
+            clickerUIManager.clearPopup.gameObject.SetActive(true);
+            StartCoroutine(clickerUIManager.DisappearOverTime(clickerUIManager.clearPopup, 1.0f));
             EndGame();
         }
     }
 
     private void EndGame()
     {
+        isCleared = true;
+
         // End Logic
         UnityEngine.Debug.Log("You win!");
+
+        clickerUIManager.fullBackground.gameObject.SetActive(true);
 
         InitClickCoroutine();
 
         robotManager.SetAllRobotsInteractable(false);
+        robotManager.SetRobotActive(false);
+
         clickerUIManager.mainButton.gameObject.SetActive(false);
         clickerUIManager.backgroundButtonSprite.gameObject.SetActive(false);
+        clickerUIManager.mainButtonSprite.gameObject.SetActive(false);
 
         resetButton.SetActive(true);
     }
@@ -386,10 +408,5 @@ public class ClickerGameManager : MonoBehaviour
         }
 
         // isClickCoroutineRunning = false;
-    }
-
-    IEnumerator delayTime()
-    {
-        yield return new WaitForSeconds(clickEffect.growDuration);
     }
 }
