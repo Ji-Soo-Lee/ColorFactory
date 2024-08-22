@@ -71,16 +71,6 @@ public class BrainProblemGenerator : MonoBehaviour
     {
         StopAllCoroutines();
         GameObject[] obj = GameObject.FindGameObjectsWithTag("Player");
-        // foreach (GameObject x in obj)
-        // {
-        //     Destroy(x);
-        // }
-        StartCoroutine(delayedDestroy(obj, 0.4f));
-    }
-
-    IEnumerator delayedDestroy(GameObject[] obj, float time)
-    {
-        yield return new WaitForSeconds(time);
         foreach (GameObject x in obj)
         {
             Destroy(x);

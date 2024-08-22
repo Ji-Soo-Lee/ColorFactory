@@ -88,7 +88,7 @@ public class BombTapGameManager : StageManager
     {
         currentStage = stageIndex;
 
-        float stageTimeLimit = 3.0f;
+        float stageTimeLimit = stageTimeLimits[currentStage];
         stageTimer.SetupTimer(stageTimeLimit, EndStage);
 
         isStageActive = true;

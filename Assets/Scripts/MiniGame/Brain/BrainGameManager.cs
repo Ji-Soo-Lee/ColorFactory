@@ -51,7 +51,7 @@ public class BrainGameManager : StageManager
         }
 
         currentStage = 0;
-        stageTimeLimits = new float[10] { 3f, 3f, 5f, 5f, 5f, 7f, 7f, 7f, 10f, 10f };
+        stageTimeLimits = new float[10] { 4f, 4f, 5f, 5f, 5f, 7f, 7f, 7f, 10f, 10f };
         stageScores = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         isCleared = false;
 
@@ -78,7 +78,7 @@ public class BrainGameManager : StageManager
     {
         currentStage = stageIndex;
 
-        float stageTimeLimit = 5.0f;
+        float stageTimeLimit = stageTimeLimits[currentStage];
         stageTimer.SetupTimer(stageTimeLimit, EndStage);
 
         isStageActive = true;
