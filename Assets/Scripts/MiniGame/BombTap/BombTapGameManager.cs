@@ -9,6 +9,7 @@ public class BombTapGameManager : StageManager
 {
     public static BombTapGameManager game;
     public bool playable = false;
+    public bool isCleared = false;
 
     public event Action<int> initiate;
 
@@ -60,6 +61,7 @@ public class BombTapGameManager : StageManager
         stageScores = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
         isStageActive = false;
+        isCleared = false;
     }
     protected override void Start()
     {
@@ -103,7 +105,11 @@ public class BombTapGameManager : StageManager
         stageTimer.PauseTimer();
         stageTimer.PauseTimer();
 
-        CalculateFinalScore();
+        if (isCleared)
+        {
+            CalculateFinalScore();
+            isCleared = false;
+        }
         scoreboard.GetComponent<TextMeshProUGUI>().text = scoreManager.GetScoreAsString();
 
         if (currentStage < maxStage - 1)
@@ -160,6 +166,7 @@ public class BombTapGameManager : StageManager
             this.scoreboard.GetComponent<TextMeshProUGUI>().text = scoreManager.GetScoreAsString();
             if (this.remain<=0)
             {
+                isCleared = true;
                 EndStage();
             }
             else

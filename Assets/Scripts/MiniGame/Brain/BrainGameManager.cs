@@ -11,6 +11,7 @@ public class BrainGameManager : StageManager
     public static BrainGameManager game;
     public GameObject wrongPopup;
     public bool playable = false;
+    public bool isCleared = false;
     bool pause = false;
     public Color now_color;
 
@@ -50,8 +51,9 @@ public class BrainGameManager : StageManager
         }
 
         currentStage = 0;
-        stageTimeLimits = new float[10] { 10f, 10f, 10f, 10f, 10f, 10f, 10f, 10f, 10f, 10f };
+        stageTimeLimits = new float[10] { 3f, 3f, 5f, 5f, 5f, 7f, 7f, 7f, 10f, 10f };
         stageScores = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        isCleared = false;
 
         isStageActive = false;
     }
@@ -94,7 +96,13 @@ public class BrainGameManager : StageManager
         stageTimer.PauseTimer();
     
         stop_problem();
-        CalculateFinalScore();
+
+        if (isCleared)
+        {
+            CalculateFinalScore();
+            this.wrong = true;
+            isCleared = false;
+        }
         scoreboard.GetComponent<TextMeshProUGUI>().text = scoreManager.GetScoreAsString();
 
         if (currentStage < totalStages - 1)
@@ -142,6 +150,7 @@ public class BrainGameManager : StageManager
         this.scoreboard.GetComponent<TextMeshProUGUI>().text = this.score.ToString();
         if (this.remain<=0)
         {
+            isCleared = true;
             EndStage();
         }
     }
