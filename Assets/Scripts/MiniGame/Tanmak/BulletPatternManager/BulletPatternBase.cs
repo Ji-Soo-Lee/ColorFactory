@@ -18,10 +18,10 @@ namespace Tanmak
 
         void Awake()
         {
-            bulletPrefab0 = Resources.Load<GameObject>("Prefabs/BulletPrefab0");
-            bulletPrefab1 = Resources.Load<GameObject>("Prefabs/BulletPrefab1");
-            bulletPrefab2 = Resources.Load<GameObject>("Prefabs/BulletPrefab2");
-            bulletPrefab3 = Resources.Load<GameObject>("Prefabs/BulletPrefab3");
+            bulletPrefab0 = BulletPrefabLoader.Instance.BulletPrefab0;
+            bulletPrefab1 = BulletPrefabLoader.Instance.BulletPrefab1;
+            bulletPrefab2 = BulletPrefabLoader.Instance.BulletPrefab2;
+            bulletPrefab3 = BulletPrefabLoader.Instance.BulletPrefab3;
         }
 
         public float fireRate = 1f; // bullet fire time rate (s)
