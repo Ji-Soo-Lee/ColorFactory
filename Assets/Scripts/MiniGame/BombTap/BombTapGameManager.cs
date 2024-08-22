@@ -45,7 +45,14 @@ public class BombTapGameManager : StageManager
     {
         base.Awake();
 
-        game = this;
+        if(game == null)
+        {
+            game = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
 
         currentStage = 0;
         maxStage = 10;

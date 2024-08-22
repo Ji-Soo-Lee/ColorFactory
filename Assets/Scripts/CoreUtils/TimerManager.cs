@@ -85,4 +85,9 @@ public class TimerManager : MonoBehaviour
     {
         return timer;
     }
+
+    public bool IsTimerExpired()
+    {
+        return timer <= 0f;
+    }
 }

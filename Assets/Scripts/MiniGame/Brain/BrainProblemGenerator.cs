@@ -8,9 +8,9 @@ public class BrainProblemGenerator : MonoBehaviour
     BrainGameManager game;
     public GameObject blockPrefab;
     public GameObject[] palette;
-    int row = 2;//���� ��
-    int column = 2;//���� ��
-    int kind = 3;//���� ��
+    int row = 2;
+    int column = 2;
+    int kind = 3;
     public Color[] colors;
 
     void Start()
@@ -27,29 +27,27 @@ public class BrainProblemGenerator : MonoBehaviour
         }
     }
     void change_color(Color x)
-    {//��ư�� �ִ� �Լ�. ���� �� �ٲٱ�.
+    {
         this.game.now_color = x;
     }
     public void InitiateProblem()
-    {//�� ������ ���� �غ��ϱ�
+    {
         StartCoroutine(ProblemCycle());
     }
     IEnumerator ProblemCycle()
-    {//�� ������ ����� ����Ŭ
-        //Debug.Log("������ ����� �����մϴ�.");
+    {
         this.game.remain = (this.row * this.column);
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(0.3f);
         prepare_problem();
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(3.0f);
         game.toggle_player(true);
     }
     void prepare_problem()
-    {//���� �غ��ϱ�
+    {
         for (int i = 0; i < this.row; i++)
-        {//���ϵ��� ��ġ�Ѵ�.
+        {
             for (int j = 0; j < this.column; j++)
             {
-                Debug.Log("���� ����");
                 Vector3 position = new Vector3((-0.25f * (this.column - 1)) + j * 0.5f, (0.25f * (this.row - 1)) - i * 0.5f, 0);
                 GameObject block = Instantiate(this.blockPrefab, position, Quaternion.identity);
                 int x = Random.Range(0, this.kind);
@@ -58,7 +56,7 @@ public class BrainProblemGenerator : MonoBehaviour
         }
     }
     void difficulty_increase()
-    {//���̵� �ø���
+    {
         if(this.row==this.column)
         {
             this.column += 1;
@@ -67,11 +65,22 @@ public class BrainProblemGenerator : MonoBehaviour
         {
             this.row += 1;
         }
+        this.game.stageTimeLimits[this.game.currentStage + 1] += 1.0f;
     }
     void stop_problem()
-    {//�� ���� ����. ���� ������ ������ �ٽ� ������ �� �� ����Ѵ�.
+    {
         StopAllCoroutines();
         GameObject[] obj = GameObject.FindGameObjectsWithTag("Player");
+        // foreach (GameObject x in obj)
+        // {
+        //     Destroy(x);
+        // }
+        StartCoroutine(delayedDestroy(obj, 0.4f));
+    }
+
+    IEnumerator delayedDestroy(GameObject[] obj, float time)
+    {
+        yield return new WaitForSeconds(time);
         foreach (GameObject x in obj)
         {
             Destroy(x);
