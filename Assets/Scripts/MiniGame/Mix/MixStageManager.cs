@@ -25,10 +25,12 @@ public class MixStageManager : StageManager
 
         totalStages = 5;
         stageTimeLimits = new float[5] { 10f, 10f, 20f, 20f, 30f };
-        stageScores = new int[5] { 100, 200, 300, 400, 500 };
+        stageScores = new int[5] { 1, 2, 3, 4, 5 };
 
         currentStage = 0;
         isStageActive = false;
+
+        Debug.Log("Total Score : " + scoreManager.GetScoreAsString());
     }
 
     protected override void Start()
@@ -59,6 +61,7 @@ public class MixStageManager : StageManager
                     Vibrate(1519);
                 # endif
                 scoreManager.AddScore(stageScores[currentStage]);
+                Debug.Log("Add Score: " + stageScores[currentStage]);
                 EndStage();
                 Debug.Log("Correct");
             }
@@ -135,6 +138,23 @@ public class MixStageManager : StageManager
             // Terminate game
             EndGame();
         }
+    }
+
+    protected override void CalculateFinalScore()
+    {
+        // Score Calculation logic (ex: Remaining time, Color sync rate etc.)
+        Debug.Log(stageTimer.GetTimerValue());
+        float remainingTime = stageTimer.GetTimerValue();
+        Debug.Log("Scaled Time: " + remainingTime);
+        OnStageClear(remainingTime);
+    }
+
+    public void OnStageClear(float remainingTime)
+    {
+        // Score increasing logic after stage clear
+        // ex : increase score in porportion to remaining time
+        int scoreToAdd = Mathf.FloorToInt(remainingTime) * 5;
+        scoreManager.AddScore(scoreToAdd);
     }
 
     protected override void InitializeGameElements()

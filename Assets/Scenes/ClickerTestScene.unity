@@ -3984,10 +3984,16 @@ MonoBehaviour:
   rewardEffect: {fileID: 1337991904}
   robotManager: {fileID: 1815135002}
   feverManager: {fileID: 1129687842}
-  dummySceneController: {fileID: 566478200}
   <clickNum>k__BackingField: 0
   targetAlphas: []
   currentAlphas: []
+  minigameWeights:
+  - 0.5
+  - 0.5
+  - 0.025
+  - 0
+  - 0
+  - 0
   worldColors:
   - {r: 0.15686275, g: 0.18431373, b: 0.32941177, a: 1}
   - {r: 0.96862745, g: 0.8392157, b: 0.8784314, a: 1}

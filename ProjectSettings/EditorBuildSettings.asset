@@ -38,6 +38,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MixFinal.unity
     guid: e7177381a3ae54a29a70bdf1a15572da
+  - enabled: 1
+    path: Assets/Scenes/Brain.unity
+    guid: 6a80bcae79c9344da93c7711171ff0d0
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 599e4e097f0f599448ec28c67c945962,
       type: 2}
