@@ -30,9 +30,9 @@ namespace Tanmak
             {
                 BulletPatternBase pattern = null;
                 float radius = Random.Range(1f, 5f);
-                int bulletCount = Random.Range(15, 40);
-                int rowCount = Random.Range(3, 10);
-                int colCount = Random.Range(3, 10);
+                int bulletCount = Random.Range(5, 10);
+                int rowCount = Random.Range(1, 4);
+                int colCount = Random.Range(1, 4);
                 float spacing = Random.Range(0.2f, 0.5f);
 
                 float posX = Random.Range(-5f, 5f);
