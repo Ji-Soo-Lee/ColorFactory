@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Runtime.InteropServices;
 
 public class BrainGameManager : StageManager
 {
@@ -23,13 +24,18 @@ public class BrainGameManager : StageManager
     const int TOTAL = 10;
 
     public int remain;
-    int currentStage = 0;
     int score = 0;
     int add = 0;
     int bonus = 0;
     bool wrong = false;
     public GameObject timer;
     public float timeLimit = 5.0f;
+
+    #if UNITY_IOS && !UNITY_EDITOR
+        [DllImport("__Internal")]
+        private static extern void Vibrate(long _n);
+    # endif
+
     protected override void Awake()
     {
         base.Awake();
@@ -111,10 +117,22 @@ public class BrainGameManager : StageManager
         this.remain -= 1;
         if(correct)
         {
+            # if UNITY_ANDROID && !UNITY_EDITOR
+                Vibration.Vibrate(30);
+            # elif UNITY_IOS && !UNITY_EDITOR
+                Vibrate(1519);
+            # endif
+            
             this.score += 1;
         }
         else
         {
+            # if UNITY_ANDROID && !UNITY_EDITOR
+                Vibration.Vibrate(60);
+            # elif UNITY_IOS && !UNITY_EDITOR
+                Vibrate(1521);
+            # endif
+
             wrongPopup.SetActive(true);
             stageTimer.PauseTimer();
             Invoke("HideMessage", 0.5f);
@@ -124,10 +142,6 @@ public class BrainGameManager : StageManager
         this.scoreboard.GetComponent<TextMeshProUGUI>().text = this.score.ToString();
         if (this.remain<=0)
         {
-            if (stageTimer.IsTimerExpired())
-            {
-                this.wrong = true;
-            }
             EndStage();
         }
     }
