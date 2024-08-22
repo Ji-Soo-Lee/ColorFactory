@@ -48,7 +48,7 @@ public class BrainProblemGenerator : MonoBehaviour
         {
             for (int j = 0; j < this.column; j++)
             {
-                Vector3 position = new Vector3((-0.25f * (this.column - 1)) + j * 0.5f, (0.25f * (this.row - 1)) - i * 0.5f, 0);
+                Vector3 position = new Vector3((-0.5f * (this.column - 1)) + j * 0.75f, (0.5f * (this.row - 1)) - i * 0.75f, 0);
                 GameObject block = Instantiate(this.blockPrefab, position, Quaternion.identity);
                 int x = Random.Range(0, this.kind);
                 StartCoroutine(block.GetComponent<Block>().assign_color(this.colors[x]));

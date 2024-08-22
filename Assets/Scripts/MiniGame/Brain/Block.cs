@@ -21,6 +21,7 @@ public class Block : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
         this.sprite.color = Color.gray;
         game.stageTimer.StartTimer();
+        game.playable = true;
     }
     void OnMouseDown()
     {

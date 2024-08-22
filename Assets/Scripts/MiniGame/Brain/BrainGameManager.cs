@@ -92,6 +92,7 @@ public class BrainGameManager : StageManager
     protected override void EndStage()
     {
         isStageActive = false;
+        playable = false;
         stageTimer.PauseTimer();
         stageTimer.PauseTimer();
     
@@ -99,9 +100,13 @@ public class BrainGameManager : StageManager
 
         if (isCleared)
         {
+            Debug.Log("Stage Cleared");
             CalculateFinalScore();
-            this.wrong = true;
             isCleared = false;
+        }
+        else
+        {
+            this.wrong = true;
         }
         scoreboard.GetComponent<TextMeshProUGUI>().text = scoreManager.GetScoreAsString();
 
