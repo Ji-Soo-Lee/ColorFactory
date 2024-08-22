@@ -58,6 +58,8 @@ public class ClickerGameManager : MonoBehaviour
             LoadGameData(data);
         }
 
+        Debug.Log(isCleared);
+
         if (isCleared)
         {
             EndGame();
