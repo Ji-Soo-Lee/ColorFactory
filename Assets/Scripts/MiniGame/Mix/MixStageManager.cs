@@ -30,7 +30,7 @@ public class MixStageManager : StageManager
         currentStage = 0;
         isStageActive = false;
 
-        Debug.Log("Total Score : " + scoreManager.GetScoreAsString());
+        // Debug.Log("Total Score : " + scoreManager.GetScoreAsString());
     }
 
     protected override void Start()

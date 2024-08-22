@@ -4,91 +4,142 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class BombTapGameManager : MonoBehaviour
+public class BombTapGameManager : StageManager
 {
     public static BombTapGameManager game;
     public bool playable = false;
 
-    public event Action<int> initiate;//Core와 연결
+    public event Action<int> initiate;
 
-    Color target = Color.white;//현재의 목표 색
-    int remain = 0;//남은 목표 폭탄 수
+    Color target = Color.white;
+    int remain = 0;
 
-    int bomb = 4;//폭탄 배치 수(갈수록 늘어남)
-    float limit = 5.0f;//제한 시간(갈수록 짧아짐)
-    float clock;//남은 시간
+    int bomb = 4;
+    // float limit = 3.0f;
 
-    int score = 0;//현재 점수
-    int life = 3;//남은 생명
+    // int score = 0;
+    // int life = 3;
+    int currentStage = 0; // stage
+    int maxStage = 10;
 
     public GameObject scoreboard;
     public GameObject timer;
+    public GameObject stageboard;
 
-    void Awake()
-    {//게임 매니저를 전역 싱글톤으로 설정하기.
-        if (game == null)
-        {
-            game = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+    // core
+    SpriteRenderer sprite;
+    const int TOTAL = 7;
+    const float R = 1.8f;
+    Color[] dex = new Color[TOTAL] { Color.red, Color.green, Color.blue, Color.magenta, Color.yellow, Color.cyan, Color.white };
+    public GameObject bombPrefab;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        game = this;
+
+        currentStage = 0;
+        maxStage = 10;
+        stageTimeLimits = new float[10] { 3f, 3f, 3f, 3f, 3f, 3f, 3f, 3f, 3f, 3f };
+        stageScores = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+        isStageActive = false;
     }
-    void Start()
-    {//3초 기다리고 게임 시작
-        StartCoroutine(new_problem(3.0f));
+    protected override void Start()
+    {
+        InitializeStageTimer();
+        InitializeScoreManager();
+
+        this.sprite = GetComponent<SpriteRenderer>();
+        this.initiate += make_problem;
+
+        StartStage(0);
+        this.scoreboard.GetComponent<TextMeshProUGUI>().text = "0";
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        this.clock -= Time.deltaTime;
-        if(this.playable)
+        if (isStageActive)
         {
-            this.timer.GetComponent<TextMeshProUGUI>().text = this.clock.ToString("F2");
-        }
-        if ((this.clock <= 0.0f) && this.playable)
-        {//시간이 초과되었는데 폭탄이 남아있는 경우
-            Debug.Log("시간 초과");
-            this.timer.GetComponent<TextMeshProUGUI>().text = "0.00";
-            this.life -= 1;
-            StartCoroutine(new_problem(0.6f));
+            this.timer.GetComponent<TextMeshProUGUI>().text = (Mathf.Ceil(stageTimer.GetTimerValue()*10)/10).ToString("F1");
         }
     }
-    IEnumerator new_problem(float time)
-    {//새 문제 내기
-        this.playable = false;
-        if (this.life > 0)
-        {//생명이 남아있을 경우 새 문제를 낸다.
-            GameObject[] obj = GameObject.FindGameObjectsWithTag("Player");
-            foreach (GameObject x in obj)
-            {//기존에 있던 폭탄들은 모두 지운다.
-                Destroy(x);
-            }
-            yield return new WaitForSeconds(time);
-            this.initiate(this.bomb);
-            this.clock = this.limit;
+
+    protected override void StartStage(int stageIndex)
+    {
+        currentStage = stageIndex;
+
+        float stageTimeLimit = 3.0f;
+        stageTimer.SetupTimer(stageTimeLimit, EndStage);
+
+        isStageActive = true;
+
+        stageTimer.StartTimer();
+        stageboard.GetComponent<TextMeshProUGUI>().text = "STAGE" + (currentStage + 1).ToString();
+
+        new_problem();
+    }
+
+    protected override void EndStage()
+    {
+        isStageActive = false;
+        stageTimer.PauseTimer();
+        stageTimer.PauseTimer();
+
+        CalculateFinalScore();
+        scoreboard.GetComponent<TextMeshProUGUI>().text = scoreManager.GetScoreAsString();
+
+        if (currentStage < maxStage - 1)
+        {
+            StartStage(currentStage + 1);
         }
         else
-        {//생명을 모두 잃었을 경우 게임이 끝난다.
-            Debug.Log("게임이 끝났습니다.");
+        {
+            EndGame();
         }
     }
+
+    protected override void CalculateFinalScore()
+    {
+        float remainingTime = stageTimer.GetTimerValue();
+        OnStageClear(remainingTime);
+    }
+
+    public void OnStageClear(float remainingTime)
+    {
+        int scoreToAdd = Mathf.FloorToInt(remainingTime) * 5;
+        scoreManager.AddScore(scoreToAdd);
+    }
+
+    private void new_problem()
+    {
+        Debug.Log(1);
+        this.playable = false;
+        GameObject[] obj = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject x in obj)
+        {
+            Destroy(x);
+        }
+        this.initiate?.Invoke(this.bomb);
+    }
+
     public void set_goal(Color color,int num)
-    {//현재 목표 색과 목표 폭탄의 개수를 저장한다.
+    {
         this.target = color;
         this.remain = num;
     }
     public void judge(Color color)
-    {//목표한 색을 바르게 클릭했는지 확인하기
+    {
         if(this.target==color)
-        {//답이 맞는 경우
-            this.score += 1; this.remain -= 1;
-            this.scoreboard.GetComponent<TextMeshProUGUI>().text = this.score.ToString();
+        {
+            CalculateFinalScore();
+            this.remain -= 1;
+            this.scoreboard.GetComponent<TextMeshProUGUI>().text = scoreManager.GetScoreAsString();
             if (this.remain<=0)
             {
-                StartCoroutine(new_problem(0.6f));
+                EndStage();
             }
             else
             {
@@ -96,9 +147,39 @@ public class BombTapGameManager : MonoBehaviour
             }
         }
         else
-        {//답이 틀린 경우
-            this.life -= 1;
-            StartCoroutine(new_problem(0.6f));
+        {
+            EndStage();
         }
+    }
+
+    // core
+    void make_problem(int num)
+    {
+        int target = UnityEngine.Random.Range(0, TOTAL);
+        Debug.Log(target);
+        float d = 360.0f / (float)num;
+        int cnt = 0;
+        Color key = this.dex[target];
+        sprite.color = key;
+        for(int i=0; i<num; i++)
+        {
+            float deg = (d * (float)i);
+            Color color;
+            Vector3 pos = new Vector3(R * Mathf.Cos(Mathf.Deg2Rad * deg), R * Mathf.Sin(Mathf.Deg2Rad * deg), 0);
+            GameObject bomb = Instantiate(this.bombPrefab, pos, Quaternion.identity);
+            if(i==(num-1) && cnt==0)
+            {
+                color = key;
+            }
+            else
+            {
+                int x = UnityEngine.Random.Range(0, TOTAL);
+                color = this.dex[x];
+            }
+            cnt += (color == key ? 1 : 0);
+            bomb.GetComponent<Bomb>().assign_color(color);
+        }
+        set_goal(key, cnt);
+        this.playable = true;
     }
 }

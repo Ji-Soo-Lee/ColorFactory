@@ -7,30 +7,30 @@ public class Core : MonoBehaviour
     BombTapGameManager game;
     SpriteRenderer sprite;
     public GameObject bombPrefab;
-    const int TOTAL = 7;//ÆøÅº »ö °¡Áþ¼ö
-    const float R = 1.8f;//ÄÚ¾î¸¦ Áß½ÉÀ¸·Î ÇÑ ¿øÀÇ ¹ÝÁö¸§. ÀÌ ¿øÀÇ ¿øÁÖ¿¡ ÆøÅºÀ» ³õ´Â´Ù.
+    const int TOTAL = 7;//ï¿½ï¿½Åº ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    const float R = 1.8f;//ï¿½Ú¾î¸¦ ï¿½ß½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö¿ï¿½ ï¿½ï¿½Åºï¿½ï¿½ ï¿½ï¿½ï¿½Â´ï¿½.
     Color[] dex = new Color[TOTAL] { Color.red, Color.green, Color.blue, Color.magenta, Color.yellow, Color.cyan, Color.white };
-    void Start()
+    void Awake()
     {
         this.game = BombTapGameManager.game;
         this.sprite = GetComponent<SpriteRenderer>();
         this.game.initiate += make_problem;
     }
     void make_problem(int num)
-    {//¸ñÇ¥ »ö Á¤ÇÏ°í ÆøÅº ³õ±â. ÀÌ »ö°ú °°Àº »öÀÇ ÆøÅºµéÀ» ¸ðµÎ ºü¸£°Ô Å¬¸¯ÇØ¾ß ÇÑ´Ù.
+    {//ï¿½ï¿½Ç¥ ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½Åº ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Åºï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½Ñ´ï¿½.
         int target = Random.Range(0, TOTAL);
-        float d = 360.0f / (float)num;//µÎ ÆøÅº »çÀÌ °£°ÝÀÇ °¢µµ(µµ ´ÜÀ§. ½ÇÁ¦ ¹èÄ¡ ½Ã¿¡´Â È£µµ¹ýÀ¸·Î ¹Ù²Ù¾î ¾´´Ù)
-        int cnt = 0;//¸ñÇ¥ ÆøÅºÀÇ °³¼ö
-        Color key = this.dex[target];//ÀÌ¹ø ¸ñÇ¥ »ö.
+        float d = 360.0f / (float)num;//ï¿½ï¿½ ï¿½ï¿½Åº ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½Ã¿ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù¾ï¿½ ï¿½ï¿½ï¿½ï¿½)
+        int cnt = 0;//ï¿½ï¿½Ç¥ ï¿½ï¿½Åºï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Color key = this.dex[target];//ï¿½Ì¹ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½.
         sprite.color = key;
         for(int i=0; i<num; i++)
-        {//ÆøÅº ¹«ÀÛÀ§·Î ¹èÄ¡ÇÏ±â.
-            float deg = (d * (float)i);//¹èÄ¡ °¢µµ.
+        {//ï¿½ï¿½Åº ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï±ï¿½.
+            float deg = (d * (float)i);//ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½.
             Color color;
-            Vector3 pos = new Vector3(R * Mathf.Cos(Mathf.Deg2Rad * deg), R * Mathf.Sin(Mathf.Deg2Rad * deg), 0);//½ÇÁ¦ ¿øÁÖ »ó ¹èÄ¡ À§Ä¡
+            Vector3 pos = new Vector3(R * Mathf.Cos(Mathf.Deg2Rad * deg), R * Mathf.Sin(Mathf.Deg2Rad * deg), 0);//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½Ä¡
             GameObject bomb = Instantiate(this.bombPrefab, pos, Quaternion.identity);
             if(i==(num-1) && cnt==0)
-            {//¸ñÇ¥ »öÀÌ ÃÖ¼ÒÇÑ ÇÑ °³´Â ÀÖ°Ô ÇÑ´Ù.
+            {//ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½Ñ´ï¿½.
                 color = key;
             }
             else
@@ -41,7 +41,7 @@ public class Core : MonoBehaviour
             cnt += (color == key ? 1 : 0);
             bomb.GetComponent<Bomb>().assign_color(color);
         }
-        game.set_goal(key, cnt);//key »öÀÎ ÆøÅºÀº cnt°³ ÀÖ´Ù.
+        game.set_goal(key, cnt);//key ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Åºï¿½ï¿½ cntï¿½ï¿½ ï¿½Ö´ï¿½.
         this.game.playable = true;
     }
 }
