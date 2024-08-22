@@ -481,7 +481,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 410, y: 20}
+  m_AnchoredPosition: {x: 460, y: 20}
   m_SizeDelta: {x: 220, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &472931033
@@ -950,7 +950,7 @@ PrefabInstance:
     - target: {fileID: 538925605288644002, guid: 7b4536f65dc41af479bc89e75be66511,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1366584450735435025, guid: 7b4536f65dc41af479bc89e75be66511,
         type: 3}
@@ -977,6 +977,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2212275649689671668, guid: 7b4536f65dc41af479bc89e75be66511,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2539449388684917160, guid: 7b4536f65dc41af479bc89e75be66511,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -991,6 +996,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: ClickerTestScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 3346790226254314642, guid: 7b4536f65dc41af479bc89e75be66511,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3639422628694402215, guid: 7b4536f65dc41af479bc89e75be66511,
         type: 3}
@@ -2461,8 +2471,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 170, y: 20}
-  m_SizeDelta: {x: 300, y: 82}
+  m_AnchoredPosition: {x: 190, y: 20}
+  m_SizeDelta: {x: 320, y: 82}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1754050503
 MonoBehaviour:
