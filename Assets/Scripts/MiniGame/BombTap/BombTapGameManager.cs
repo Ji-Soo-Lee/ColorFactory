@@ -14,7 +14,7 @@ public class BombTapGameManager : StageManager
     Color target = Color.white;
     int remain = 0;
 
-    int bomb = 4;
+    int bomb = 6;
     // float limit = 3.0f;
 
     // int score = 0;
@@ -30,8 +30,10 @@ public class BombTapGameManager : StageManager
     SpriteRenderer sprite;
     const int TOTAL = 7;
     const float R = 1.8f;
-    Color[] dex = new Color[TOTAL] { Color.red, Color.green, Color.blue, Color.magenta, Color.yellow, Color.cyan, Color.white };
+    public Color[] dex = new Color[TOTAL] { Color.red, Color.green, Color.blue, Color.magenta, Color.yellow, Color.cyan, Color.white };
     public GameObject bombPrefab;
+
+    public GameObject wrongPopup;
 
     protected override void Awake()
     {
@@ -148,7 +150,10 @@ public class BombTapGameManager : StageManager
         }
         else
         {
-            EndStage();
+            wrongPopup.SetActive(true);
+            stageTimer.PauseTimer();
+            Invoke("HideMessage", 0.5f);
+            StartCoroutine(delayedEndStage(0.6f));
         }
     }
 
@@ -181,5 +186,16 @@ public class BombTapGameManager : StageManager
         }
         set_goal(key, cnt);
         this.playable = true;
+    }
+
+    protected void HideMessage()
+    {
+        wrongPopup.SetActive(false);
+    }
+
+    IEnumerator delayedEndStage(float time)
+    {
+        yield return new WaitForSeconds(time);
+        EndStage();
     }
 }
