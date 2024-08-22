@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Runtime.InteropServices;
 
 public class BombTapGameManager : StageManager
 {
@@ -34,6 +35,11 @@ public class BombTapGameManager : StageManager
     public GameObject bombPrefab;
 
     public GameObject wrongPopup;
+
+    #if UNITY_IOS && !UNITY_EDITOR
+        [DllImport("__Internal")]
+        private static extern void Vibrate(long _n);
+    # endif
 
     protected override void Awake()
     {
@@ -111,7 +117,7 @@ public class BombTapGameManager : StageManager
 
     public void OnStageClear(float remainingTime)
     {
-        int scoreToAdd = Mathf.FloorToInt(remainingTime) * 5;
+        int scoreToAdd = Mathf.FloorToInt(remainingTime) * 3;
         scoreManager.AddScore(scoreToAdd);
     }
 
@@ -136,6 +142,12 @@ public class BombTapGameManager : StageManager
     {
         if(this.target==color)
         {
+            # if UNITY_ANDROID && !UNITY_EDITOR
+                Vibration.Vibrate(30);
+            # elif UNITY_IOS && !UNITY_EDITOR
+                Vibrate(1519);
+            # endif
+
             CalculateFinalScore();
             this.remain -= 1;
             this.scoreboard.GetComponent<TextMeshProUGUI>().text = scoreManager.GetScoreAsString();
@@ -150,6 +162,12 @@ public class BombTapGameManager : StageManager
         }
         else
         {
+            # if UNITY_ANDROID && !UNITY_EDITOR
+                Vibration.Vibrate(60);
+            # elif UNITY_IOS && !UNITY_EDITOR
+                Vibrate(1521);
+            # endif
+
             wrongPopup.SetActive(true);
             stageTimer.PauseTimer();
             Invoke("HideMessage", 0.5f);

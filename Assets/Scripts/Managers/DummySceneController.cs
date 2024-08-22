@@ -12,8 +12,9 @@ public class DummySceneController : MonoBehaviour
         "Brain",
         "Coloring",
         "MixFinal",
-        "dgim608",
-        "Simon"};
+        "BombTap",
+        "dgim608"
+        };
 
     private static string nextSceneName;
     private float minimumDuration = 2f;
