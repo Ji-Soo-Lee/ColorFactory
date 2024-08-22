@@ -15,15 +15,19 @@ public class BrainGameManager : StageManager
     public GameObject scoreboard;
     public GameObject pausepanel;
     public GameObject questionboard;
-    public GameObject submitButton;
 
     public event Action new_problem;//ProblemGenerator과 느슨히 연결됨.
     public event Action stop_problem;
+    public event Action difficulty_increase;
 
     const int TOTAL = 10;//총 문제 수
+
+    public int remain;
     int current = 1;
     int score = 0;//점수
+    int add = 0;
     int bonus = 0;//최대 기억 수(보너스 점수)
+    bool wrong = false;
     protected override void Awake()
     {//게임 매니저를 전역 싱글톤으로 설정하기.
         base.Awake();
@@ -41,14 +45,37 @@ public class BrainGameManager : StageManager
         base.Start();
         new_problem();
     }
-    public void apply_result(int correct)
+    public void verdict(bool correct)
+    {//클릭 판정
+        this.remain -= 1;
+        if(correct)
+        {//정답
+            this.score += 1; this.add += 1;
+        }
+        else
+        {//오답
+            this.wrong = true;
+        }
+        this.scoreboard.GetComponent<TextMeshProUGUI>().text = this.score.ToString();
+        if (this.remain<=0)
+        {
+            apply_result();
+        }
+    }
+    public void apply_result()
     {//점수 반영하기
+        toggle_player(false);
+        stop_problem();
         this.current += 1;
-        this.score += correct;//맞은 것 하나당 1점
-        this.bonus = (this.bonus < correct ? correct : this.bonus);//최대 기억 수는 수에 따라 보너스 점수를 준다.
+        this.bonus = (this.bonus < this.add ? this.add : this.bonus);//최대 기억 수는 수에 따라 보너스 점수를 준다.
         this.scoreboard.GetComponent<TextMeshProUGUI>().text = this.score.ToString();
         if (this.current <= TOTAL)
         {//다음 문제 내기
+            if(!this.wrong)
+            {//이전 문제에서 모두 정답인 경우 난이도 올리기
+                difficulty_increase();
+            }
+            this.add = 0; this.wrong = false;
             this.questionboard.GetComponent<TextMeshProUGUI>().text = "Q " + this.current + "/" + TOTAL;
             new_problem();
         }
@@ -61,7 +88,6 @@ public class BrainGameManager : StageManager
     public void toggle_player(bool toggle)
     {//플레이어의 입력 차례인지 체크하기
         this.playable = toggle;
-        this.submitButton.SetActive(toggle);
     }
     public void toggle_pause()
     {//게임 일시정지
