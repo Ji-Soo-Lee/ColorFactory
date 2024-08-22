@@ -6,26 +6,38 @@ using UnityEngine.UI;
 
 public class MixPause : PausableMonoBehaviour
 {
-    public Button btn1;
+    // public Button btn1;
     public PaletteResult paletteResult;
-    public void PauseButtonOnClick()
+    // public void PauseButtonOnClick()
+    // {
+    //     if (CheckPause())
+    //     {
+    //         Resume();
+    //         paletteResult.isMixable = true;
+    //     }
+    //     else
+    //     {
+    //         Pause();
+    //         paletteResult.isMixable = false;
+    //     }
+    // }
+    // protected void Start()
+    // {
+    //     btn1.onClick.AddListener(() =>
+    //     {
+    //         PauseButtonOnClick();
+    //     });
+    // }
+
+    public override void Pause()
     {
-        if (CheckPause())
-        {
-            Resume();
-            paletteResult.isMixable = true;
-        }
-        else
-        {
-            Pause();
-            paletteResult.isMixable = false;
-        }
+        base.Pause();
+        paletteResult.isMixable = true;
     }
-    protected void Start()
+
+    public override void Resume()
     {
-        btn1.onClick.AddListener(() =>
-        {
-            PauseButtonOnClick();
-        });
+        base.Resume();
+        paletteResult.isMixable = true;
     }
 }
