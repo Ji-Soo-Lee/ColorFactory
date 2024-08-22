@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class BrainGameManager : StageManager
 {
     public static BrainGameManager game;
-    public bool playable = false;//ÇöÀç ÇÃ·¹ÀÌ¾î°¡ ´äÀ» ÇÒ ¼ö ÀÖ´ÂÁö
+    public bool playable = false;//ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½
     bool pause = false;
     public Color now_color;
 
@@ -16,21 +16,21 @@ public class BrainGameManager : StageManager
     public GameObject pausepanel;
     public GameObject questionboard;
 
-    public event Action new_problem;//ProblemGenerator°ú ´À½¼È÷ ¿¬°áµÊ.
+    public event Action new_problem;//ProblemGeneratorï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.
     public event Action stop_problem;
     public event Action difficulty_increase;
-
-    const int TOTAL = 10;//ÃÑ ¹®Á¦ ¼ö
+    const int TOTAL = 10;//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
     public int remain;
     int current = 1;
-    int score = 0;//Á¡¼ö
+    int score = 0;//ï¿½ï¿½ï¿½ï¿½
     int add = 0;
-    int bonus = 0;//ÃÖ´ë ±â¾ï ¼ö(º¸³Ê½º Á¡¼ö)
+    int bonus = 0;//ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½(ï¿½ï¿½ï¿½Ê½ï¿½ ï¿½ï¿½ï¿½ï¿½)
     bool wrong = false;
     protected override void Awake()
-    {//°ÔÀÓ ¸Å´ÏÀú¸¦ Àü¿ª ½Ì±ÛÅæÀ¸·Î ¼³Á¤ÇÏ±â.
+    {//ï¿½ï¿½ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½.
         base.Awake();
+
         if(game==null)
         {
             game = this;
@@ -46,14 +46,14 @@ public class BrainGameManager : StageManager
         new_problem();
     }
     public void verdict(bool correct)
-    {//Å¬¸¯ ÆÇÁ¤
+    {//Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         this.remain -= 1;
         if(correct)
-        {//Á¤´ä
+        {//ï¿½ï¿½ï¿½ï¿½
             this.score += 1; this.add += 1;
         }
         else
-        {//¿À´ä
+        {//ï¿½ï¿½ï¿½ï¿½
             this.wrong = true;
         }
         this.scoreboard.GetComponent<TextMeshProUGUI>().text = this.score.ToString();
@@ -63,40 +63,40 @@ public class BrainGameManager : StageManager
         }
     }
     public void apply_result()
-    {//Á¡¼ö ¹Ý¿µÇÏ±â
+    {//ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¿ï¿½ï¿½Ï±ï¿½
         toggle_player(false);
         stop_problem();
         this.current += 1;
-        this.bonus = (this.bonus < this.add ? this.add : this.bonus);//ÃÖ´ë ±â¾ï ¼ö´Â ¼ö¿¡ µû¶ó º¸³Ê½º Á¡¼ö¸¦ ÁØ´Ù.
+        this.bonus = (this.bonus < this.add ? this.add : this.bonus);//ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ê½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½.
         this.scoreboard.GetComponent<TextMeshProUGUI>().text = this.score.ToString();
         if (this.current <= TOTAL)
-        {//´ÙÀ½ ¹®Á¦ ³»±â
+        {//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if(!this.wrong)
-            {//ÀÌÀü ¹®Á¦¿¡¼­ ¸ðµÎ Á¤´äÀÎ °æ¿ì ³­ÀÌµµ ¿Ã¸®±â
+            {//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½
                 difficulty_increase();
             }
             this.add = 0; this.wrong = false;
-            this.questionboard.GetComponent<TextMeshProUGUI>().text = "Q " + this.current + "/" + TOTAL;
+            this.questionboard.GetComponent<TextMeshProUGUI>().text = "STAGE" + this.current;
             new_problem();
         }
         else
-        {//°ÔÀÓ Á¾·á
+        {//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             // StartCoroutine(Gameover());
             EndGame();
         }
     }
     public void toggle_player(bool toggle)
-    {//ÇÃ·¹ÀÌ¾îÀÇ ÀÔ·Â Â÷·ÊÀÎÁö Ã¼Å©ÇÏ±â
+    {//ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©ï¿½Ï±ï¿½
         this.playable = toggle;
     }
     public void toggle_pause()
-    {//°ÔÀÓ ÀÏ½ÃÁ¤Áö
+    {//ï¿½ï¿½ï¿½ï¿½ ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½
         this.pause = !(this.pause);
         this.pausepanel.SetActive(this.pause);
         toggle_player(false);
-        stop_problem();//°ÔÀÓÀ» ÀÏ½ÃÁ¤ÁöÇÑ °æ¿ì ¹®Á¦ ÃâÁ¦¸¦ ÁßÁöÇÑ´Ù.
+        stop_problem();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
         if(this.pause==false)
-        {//°ÔÀÓÀ» ´Ù½Ã ÄÒ °æ¿ì ¹®Á¦¸¦ ´Ù½Ã ³½´Ù.
+        {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½.
             GameObject[] obj = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject x in obj)
             {
@@ -106,7 +106,7 @@ public class BrainGameManager : StageManager
         }
     }
     IEnumerator Gameover()
-    {//°ÔÀÓ Á¾·á. ±â·ÏÀ» ÀúÀåÇÏ°í ´ÙÀ½ È­¸é¿¡¼­ °á°ú¸¦ º¸¿©ÁÜ.
+    {//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ È­ï¿½é¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
         PlayerPrefs.SetInt("score", this.score);
         PlayerPrefs.SetInt("bonus", this.bonus);
         yield return new WaitForSeconds(3.0f);

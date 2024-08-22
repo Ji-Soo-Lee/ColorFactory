@@ -8,10 +8,10 @@ public class BrainProblemGenerator : MonoBehaviour
     BrainGameManager game;
     public GameObject blockPrefab;
     public GameObject[] palette;
-    int row = 2;//ÇàÀÇ ¼ö
-    int column = 2;//¿­ÀÇ ¼ö
-    int kind = 3;//»öÀÇ ¼ö
-    Color[] colors = new Color[3] { Color.red, Color.green, Color.blue };
+    int row = 2;//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    int column = 2;//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    int kind = 3;//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    public Color[] colors;
 
     void Start()
     {
@@ -27,16 +27,16 @@ public class BrainProblemGenerator : MonoBehaviour
         }
     }
     void change_color(Color x)
-    {//¹öÆ°¿¡ ³Ö´Â ÇÔ¼ö. ÇöÀç »ö ¹Ù²Ù±â.
+    {//ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ù²Ù±ï¿½.
         this.game.now_color = x;
     }
     public void InitiateProblem()
-    {//»õ ¹®Á¦¸¦ ¸¸µé ÁØºñÇÏ±â
+    {//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½ï¿½Ï±ï¿½
         StartCoroutine(ProblemCycle());
     }
     IEnumerator ProblemCycle()
-    {//ÇÑ ¹®Á¦¸¦ ¸¸µå´Â »çÀÌÅ¬
-        //Debug.Log("¹®Á¦¸¦ ¸¸µé±â ½ÃÀÛÇÕ´Ï´Ù.");
+    {//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å¬
+        //Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
         this.game.remain = (this.row * this.column);
         yield return new WaitForSeconds(1.2f);
         prepare_problem();
@@ -44,12 +44,12 @@ public class BrainProblemGenerator : MonoBehaviour
         game.toggle_player(true);
     }
     void prepare_problem()
-    {//ºí·Ï ÁØºñÇÏ±â
+    {//ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½ï¿½Ï±ï¿½
         for (int i = 0; i < this.row; i++)
-        {//ºí·ÏµéÀ» ¼³Ä¡ÇÑ´Ù.
+        {//ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ñ´ï¿½.
             for (int j = 0; j < this.column; j++)
             {
-                Debug.Log("ºí·Ï »ý¼º");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 Vector3 position = new Vector3((-0.25f * (this.column - 1)) + j * 0.5f, (0.25f * (this.row - 1)) - i * 0.5f, 0);
                 GameObject block = Instantiate(this.blockPrefab, position, Quaternion.identity);
                 int x = Random.Range(0, this.kind);
@@ -58,7 +58,7 @@ public class BrainProblemGenerator : MonoBehaviour
         }
     }
     void difficulty_increase()
-    {//³­ÀÌµµ ¿Ã¸®±â
+    {//ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½
         if(this.row==this.column)
         {
             this.column += 1;
@@ -69,7 +69,7 @@ public class BrainProblemGenerator : MonoBehaviour
         }
     }
     void stop_problem()
-    {//Çö ¹®Á¦ ÁßÁö. ±âÁ¸ ¹®Á¦¸¦ ¹ö¸®°í ´Ù½Ã ¹®Á¦¸¦ ³¾ ¶§ »ç¿ëÇÑ´Ù.
+    {//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
         StopAllCoroutines();
         GameObject[] obj = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject x in obj)
