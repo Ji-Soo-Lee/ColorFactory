@@ -642,7 +642,7 @@ PrefabInstance:
     - target: {fileID: 6037026395552128135, guid: 7b4536f65dc41af479bc89e75be66511,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: Hoo
+      value: MixFinal
       objectReference: {fileID: 0}
     - target: {fileID: 7812191476628137444, guid: 7b4536f65dc41af479bc89e75be66511,
         type: 3}
