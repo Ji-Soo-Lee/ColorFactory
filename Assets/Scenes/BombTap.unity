@@ -257,6 +257,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4900709376044750113, guid: 7b4536f65dc41af479bc89e75be66511,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4900709376044750113, guid: 7b4536f65dc41af479bc89e75be66511,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4900709376044750113, guid: 7b4536f65dc41af479bc89e75be66511,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -559,6 +569,7 @@ MonoBehaviour:
   stageTimer: {fileID: 0}
   stageStopwatch: {fileID: 0}
   playable: 0
+  isCleared: 0
   scoreboard: {fileID: 2059487536}
   timer: {fileID: 947075934}
   stageboard: {fileID: 205615256}
