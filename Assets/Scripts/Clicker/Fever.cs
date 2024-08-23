@@ -86,11 +86,12 @@ public class Fever : MonoBehaviour
         feverInput = feverGauge;
         SetFeverGauge(0);
 
-        clickerGM.SetFeverWeight(feverInput);
+        // clickerGM.SetFeverWeight(feverInput);
+        clickerGM.SetFeverWeight(2);
 
         isFeverTimerSet = true;
 
-        feverTimer.SetupTimer(10.0f, ResetFeverTimer);
+        feverTimer.SetupTimer(((float)feverInput) * 0.5f, ResetFeverTimer);
         feverTimer.StartTimer();
     }
 }

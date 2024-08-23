@@ -97,7 +97,9 @@ public class ClickerGameManager : MonoBehaviour
 
     public void IncrementClickCount(float duration = 1.0f)
     {
-        int inc = (int)(1 + 0.1 * ((feverWeight << 1) + feverWeight));
+        // int inc = (int)(1 + 0.1 * ((feverWeight << 1) + feverWeight));
+        int inc = (int) (1 * feverWeight);
+        // Debug.Log(inc);
         
         // Vibrate
         # if UNITY_ANDROID && !UNITY_EDITOR
