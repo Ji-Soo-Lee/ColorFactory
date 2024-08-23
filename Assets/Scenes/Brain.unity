@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 611930206}
   m_Layer: 5
   m_Name: Red
-  m_TagString: Untagged
+  m_TagString: Palette
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -956,7 +956,7 @@ GameObject:
   - component: {fileID: 906877919}
   m_Layer: 5
   m_Name: Blue
-  m_TagString: Untagged
+  m_TagString: Palette
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1536,7 +1536,7 @@ GameObject:
   - component: {fileID: 1503281523}
   m_Layer: 5
   m_Name: Yellow
-  m_TagString: Untagged
+  m_TagString: Palette
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

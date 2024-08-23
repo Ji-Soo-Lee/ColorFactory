@@ -88,6 +88,12 @@ public class BrainProblemGenerator : MonoBehaviour
         {
             Destroy(x);
         }
+
+        GameObject[] buttons = GameObject.FindGameObjectsWithTag("Palette");
+        foreach (GameObject x in buttons)
+        {
+            x.GetComponent<Button>().interactable = false;
+        }
     }
 
     // void pause_problem()
