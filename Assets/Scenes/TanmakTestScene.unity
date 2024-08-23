@@ -1622,6 +1622,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: ClickerTestScene
       objectReference: {fileID: 0}
+    - target: {fileID: 3346790226254314642, guid: 991c120744fe34805b3c89213e4da98a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4900709376044750113, guid: 991c120744fe34805b3c89213e4da98a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1746,6 +1751,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: Tanmak.TanmakGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7812191476628137444, guid: 991c120744fe34805b3c89213e4da98a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8054941394312929311, guid: 991c120744fe34805b3c89213e4da98a,
         type: 3}

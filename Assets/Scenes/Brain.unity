@@ -756,6 +756,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4203574653690385759, guid: 7b4536f65dc41af479bc89e75be66511,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 4203574653690385759, guid: 7b4536f65dc41af479bc89e75be66511,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.85
+      objectReference: {fileID: 0}
     - target: {fileID: 4900709376044750113, guid: 7b4536f65dc41af479bc89e75be66511,
         type: 3}
       propertyPath: m_Pivot.x
@@ -910,6 +920,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299915611137294829, guid: 7b4536f65dc41af479bc89e75be66511,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299915611137294829, guid: 7b4536f65dc41af479bc89e75be66511,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 7812191476628137444, guid: 7b4536f65dc41af479bc89e75be66511,
         type: 3}
