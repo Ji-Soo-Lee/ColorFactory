@@ -17,7 +17,7 @@ public class BrainGameManager : StageManager
     public Color now_color;
 
     public GameObject scoreboard;
-    public GameObject pausepanel;
+    // public GameObject pausepanel;
     public GameObject questionboard;
 
     public event Action new_problem;
@@ -41,7 +41,7 @@ public class BrainGameManager : StageManager
     public List<Button> buttons;
     public List<GameObject> rings;
 
-    public GameObject startPopup;
+    // public GameObject startPopup;
 
     #if UNITY_IOS && !UNITY_EDITOR
         [DllImport("__Internal")]
@@ -202,10 +202,26 @@ public class BrainGameManager : StageManager
     {
         this.playable = toggle;
     }
-    public void toggle_pause()
+    // public void toggle_pause()
+    // {
+    //     this.pause = !(this.pause);
+    //     this.pausepanel.SetActive(this.pause);
+    //     toggle_player(false);
+    //     stop_problem();
+    //     if(this.pause==false)
+    //     {
+    //         GameObject[] obj = GameObject.FindGameObjectsWithTag("Player");
+    //         foreach (GameObject x in obj)
+    //         {
+    //             Destroy(x);
+    //         }
+    //         new_problem();
+    //     }
+    // }
+
+    public override void Pause()
     {
-        this.pause = !(this.pause);
-        this.pausepanel.SetActive(this.pause);
+        base.Pause();
         toggle_player(false);
         stop_problem();
         if(this.pause==false)
@@ -217,6 +233,12 @@ public class BrainGameManager : StageManager
             }
             new_problem();
         }
+    }
+
+    public override void Resume()
+    {
+        base.Resume();
+        StartStage(currentStage);
     }
 
     protected override void CalculateFinalScore()
