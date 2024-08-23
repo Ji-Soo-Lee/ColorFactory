@@ -32,7 +32,7 @@ public class BrainGameManager : StageManager
     int bonus = 0;
     bool wrong = false;
     public GameObject timer;
-    public float timeLimit = 5.0f;
+    public float timeLimit = 10.0f;
     public float stageTimeLimit;
     public Button buttonA;
     public Button buttonB;
@@ -125,14 +125,17 @@ public class BrainGameManager : StageManager
 
         if (isCleared)
         {
+            Debug.Log(scoreManager.GetScoreAsString());
             Debug.Log("Stage Cleared");
             CalculateFinalScore();
+            Debug.Log(scoreManager.GetScoreAsString());
             isCleared = false;
         }
         else
         {
             this.wrong = true;
         }
+        Debug.Log(scoreManager.GetScoreAsString());
         scoreboard.GetComponent<TextMeshProUGUI>().text = scoreManager.GetScoreAsString();
 
         if (currentStage < totalStages - 1)
@@ -161,7 +164,8 @@ public class BrainGameManager : StageManager
                 Vibrate(1519);
             # endif
             
-            this.score += 1;
+            this.score += 2;
+            scoreManager.AddScore(2);
         }
         else
         {

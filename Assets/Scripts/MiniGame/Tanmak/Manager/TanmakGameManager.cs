@@ -85,7 +85,7 @@ namespace Tanmak
 
             // Setup Stopwatch
             stopwatchManager.ResetStopwatch();
-            stopwatchManager.SetupStopwatchTik(1, () => ModifyScore((int)stopwatchManager.GetStopwatchValue()/10 + 1));
+            stopwatchManager.SetupStopwatchTik(1, () => ModifyScore((int)stopwatchManager.GetStopwatchValue()/7 + 1));
             stopwatchManager.StartStopwatch();
         }
 

@@ -11,6 +11,7 @@ public class BrainProblemGenerator : MonoBehaviour
     // public GameObject[] palette;
     int row = 2;
     int column = 2;
+    int MAX = 5;
     int kind = 3;
     public Color[] colors;
     [SerializeField] private Vector3 center;
@@ -55,15 +56,29 @@ public class BrainProblemGenerator : MonoBehaviour
     }
     void difficulty_increase()
     {
+        bool changed = false;
         if(this.row==this.column)
         {
-            this.column += 1;
+            int increasedCol = this.column + 1;
+            if (increasedCol <= MAX)
+            {
+                this.column = increasedCol;
+                changed = true;
+            }
         }
         else
         {
-            this.row += 1;
+            int increasedRow = this.row + 1;
+            if (increasedRow <= MAX)
+            {
+                this.row = increasedRow;
+                changed = true;
+            }
         }
-        this.game.stageTimeLimit += 1.0f;
+        if (changed)
+        {
+            this.game.stageTimeLimit += 1.0f;
+        }
     }
     void stop_problem()
     {

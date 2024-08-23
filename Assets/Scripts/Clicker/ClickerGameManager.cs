@@ -221,7 +221,7 @@ public class ClickerGameManager : MonoBehaviour
             string sceneName = scoreDataManager.resultSceneName;
 
             int robotIdx = 0;
-            float weight = 1.0f;
+            float weight = 0.25f;
             
             // Set Weight & Robot with Scene Name
             // if (dummySceneController.sceneNames.Contains(sceneName))
@@ -230,7 +230,7 @@ public class ClickerGameManager : MonoBehaviour
             //     robotIdx = dummySceneController.sceneNames.FindIndex(x => x.Equals(sceneName)) - 1;
             // }
 
-            weight = 0.5f;
+            // weight = 0.5f;
 
             // Weight Score
             int weightedScore = (int)(score * weight);
