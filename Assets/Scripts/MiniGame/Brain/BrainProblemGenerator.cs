@@ -6,12 +6,14 @@ using UnityEngine.UI;
 public class BrainProblemGenerator : MonoBehaviour
 {
     BrainGameManager game;
+    public GameObject canvas;
     public GameObject blockPrefab;
-    public GameObject[] palette;
+    // public GameObject[] palette;
     int row = 2;
     int column = 2;
     int kind = 3;
     public Color[] colors;
+    [SerializeField] private Vector3 center;
 
     void Start()
     {
@@ -19,17 +21,8 @@ public class BrainProblemGenerator : MonoBehaviour
         game.new_problem += InitiateProblem;
         game.stop_problem += stop_problem;
         game.difficulty_increase += difficulty_increase;
-        for (int i=0; i<this.kind; i++)
-        {
-            Button button = this.palette[i].GetComponent<Button>();
-            Color color = this.colors[i];
-            button.onClick.AddListener(() => change_color(color));
-        }
     }
-    void change_color(Color x)
-    {
-        this.game.now_color = x;
-    }
+
     public void InitiateProblem()
     {
         StartCoroutine(ProblemCycle());
@@ -41,6 +34,7 @@ public class BrainProblemGenerator : MonoBehaviour
         prepare_problem();
         yield return new WaitForSeconds(3.0f);
         game.toggle_player(true);
+        game.ActivateButton();
     }
     void prepare_problem()
     {
@@ -48,8 +42,12 @@ public class BrainProblemGenerator : MonoBehaviour
         {
             for (int j = 0; j < this.column; j++)
             {
-                Vector3 position = new Vector3((-0.5f * (this.column - 1)) + j * 0.75f, (0.5f * (this.row - 1)) - i * 0.75f, 0);
-                GameObject block = Instantiate(this.blockPrefab, position, Quaternion.identity);
+                Vector3 position = new Vector3((-25f * (this.column - 1)) + j * 50f, (25f * (this.row - 1)) - i * 50f, 0);
+                GameObject block = Instantiate(this.blockPrefab, center, Quaternion.identity) as GameObject;
+                block.transform.SetParent(canvas.transform, false);
+                block.transform.SetSiblingIndex(1);
+                block.transform.localPosition = position;
+                // Debug.Log("BLOCK " + block.transform.position);
                 int x = Random.Range(0, this.kind);
                 StartCoroutine(block.GetComponent<Block>().assign_color(this.colors[x]));
             }
@@ -65,7 +63,7 @@ public class BrainProblemGenerator : MonoBehaviour
         {
             this.row += 1;
         }
-        this.game.stageTimeLimits[this.game.currentStage + 1] += 1.0f;
+        this.game.stageTimeLimit += 1.0f;
     }
     void stop_problem()
     {
@@ -76,4 +74,14 @@ public class BrainProblemGenerator : MonoBehaviour
             Destroy(x);
         }
     }
+
+    // void pause_problem()
+    // {
+    //     StopAllCoroutines();
+    //     GameObject[] obj = GameObject.FindGameObjectsWithTag("Player");
+    //     foreach (GameObject x in obj)
+    //     {
+    //         x.GetComponent<Button>().interactable = false;
+    //     }
+    // }
 }

@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 using System.Runtime.InteropServices;
 
 public class BrainGameManager : StageManager
 {
     public static BrainGameManager game;
+    // public GameObject problemGenerator;
     public GameObject wrongPopup;
     public bool playable = false;
     public bool isCleared = false;
@@ -21,6 +22,7 @@ public class BrainGameManager : StageManager
 
     public event Action new_problem;
     public event Action stop_problem;
+    public event Action pause_problem;
     public event Action difficulty_increase;
     const int TOTAL = 10;
 
@@ -31,6 +33,15 @@ public class BrainGameManager : StageManager
     bool wrong = false;
     public GameObject timer;
     public float timeLimit = 5.0f;
+    public float stageTimeLimit;
+    public Button buttonA;
+    public Button buttonB;
+    public Button buttonC; 
+
+    public List<Button> buttons;
+    public List<GameObject> rings;
+
+    public GameObject startPopup;
 
     #if UNITY_IOS && !UNITY_EDITOR
         [DllImport("__Internal")]
@@ -51,11 +62,23 @@ public class BrainGameManager : StageManager
         }
 
         currentStage = 0;
-        stageTimeLimits = new float[10] { 4f, 4f, 5f, 5f, 5f, 7f, 7f, 7f, 10f, 10f };
-        stageScores = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        // stageTimeLimits = new float[10] { 4f, 4f, 5f, 5f, 5f, 7f, 7f, 7f, 10f, 10f };
+        stageTimeLimit = 3.0f;
+        // stageScores = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+        buttons = new List<Button>() { buttonA, buttonB, buttonC };
+
+        for (int i = 0; i < buttons.Count; i++) {
+            Button button = buttons[i];
+            button.onClick.AddListener(() => PickColor(button));
+            button.interactable = false;
+        }
+
         isCleared = false;
 
         isStageActive = false;
+        playable = false;
+        DeactivateButton();
     }
     protected override void Start()
     {
@@ -78,7 +101,7 @@ public class BrainGameManager : StageManager
     {
         currentStage = stageIndex;
 
-        float stageTimeLimit = stageTimeLimits[currentStage];
+        // float stageTimeLimit = stageTimeLimits[currentStage];
         stageTimer.SetupTimer(stageTimeLimit, EndStage);
 
         isStageActive = true;
@@ -93,6 +116,8 @@ public class BrainGameManager : StageManager
     {
         isStageActive = false;
         playable = false;
+        DeactivateButton();
+
         stageTimer.PauseTimer();
         stageTimer.PauseTimer();
     
@@ -147,6 +172,15 @@ public class BrainGameManager : StageManager
             # endif
 
             wrongPopup.SetActive(true);
+            // stop_problem();
+            {
+                StopAllCoroutines();
+                GameObject[] obj = GameObject.FindGameObjectsWithTag("Player");
+                foreach (GameObject x in obj)
+                {
+                    x.GetComponent<Button>().interactable = false;
+                }
+            }
             stageTimer.PauseTimer();
             Invoke("HideMessage", 0.5f);
             StartCoroutine(delayedEndStage(0.6f));
@@ -192,7 +226,7 @@ public class BrainGameManager : StageManager
     {
         // Score increasing logic after stage clear
         // ex : increase score in porportion to remaining time
-        int scoreToAdd = Mathf.FloorToInt(remainingTime) * 3;
+        int scoreToAdd = Mathf.FloorToInt(remainingTime) * 5;
         scoreManager.AddScore(scoreToAdd);
     }
 
@@ -201,9 +235,57 @@ public class BrainGameManager : StageManager
     {
         wrongPopup.SetActive(false);
     }
+
     IEnumerator delayedEndStage(float time)
     {
         yield return new WaitForSeconds(time);
         EndStage();
+    }
+    public void PickColor(Button button)
+    {
+        # if UNITY_ANDROID && !UNITY_EDITOR
+            Vibration.Vibrate(30);
+        # elif UNITY_IOS && !UNITY_EDITOR
+            Vibrate(1519);
+        # endif
+
+        Color color = button.colors.normalColor;
+        now_color = color;
+
+        int idx = buttons.IndexOf(button);
+        RingHandler(idx);
+    }
+
+    public void RingHandler(int idx)
+    {
+        for (int i = 0; i < rings.Count; i++)
+            {
+                if (i == idx)
+                {
+                    rings[i].SetActive(true);
+                }
+                else
+                {
+                    rings[i].SetActive(false);
+                }
+            }
+    }
+    
+
+    public void ActivateButton()
+    {
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            buttons[i].interactable = true;
+        }
+    }
+
+    public void DeactivateButton()
+    {
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            buttons[i].interactable = false;
+            rings[i].SetActive(false);
+        }
     }
 }
