@@ -277,7 +277,7 @@ public class ClickerGameManager : MonoBehaviour
         // Save Data
         SaveGameData();
 
-        // resetButton.SetActive(false);
+        resetButton.SetActive(false);
 
         // Activate Buttons
         robotManager.SetAllRobotsInteractable(true);
