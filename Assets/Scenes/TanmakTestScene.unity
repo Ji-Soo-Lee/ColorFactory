@@ -1592,6 +1592,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2539449388684917160, guid: 991c120744fe34805b3c89213e4da98a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 24857169}
+    - target: {fileID: 2539449388684917160, guid: 991c120744fe34805b3c89213e4da98a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 2539449388684917160, guid: 991c120744fe34805b3c89213e4da98a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: ClickerTestScene
+      objectReference: {fileID: 0}
     - target: {fileID: 4900709376044750113, guid: 991c120744fe34805b3c89213e4da98a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1691,6 +1706,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054941394312929311, guid: 991c120744fe34805b3c89213e4da98a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1260355401}
+    - target: {fileID: 8054941394312929311, guid: 991c120744fe34805b3c89213e4da98a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Resume
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054941394312929311, guid: 991c120744fe34805b3c89213e4da98a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Tanmak.TanmakGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
