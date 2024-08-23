@@ -10,10 +10,10 @@ public class DummySceneController : MonoBehaviour
         {"ClickerTestScene",
         "TanmakTestScene",
         "Brain",
-        "Coloring",
-        "MixFinal",
         "BombTap",
-        "dgim608"
+        "MixFinal",
+        // "Coloring",
+        // "dgim608"
         };
 
     private static string nextSceneName;
