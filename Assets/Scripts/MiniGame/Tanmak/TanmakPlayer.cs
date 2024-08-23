@@ -128,7 +128,7 @@ namespace Tanmak
                             # elif UNITY_IOS && !UNITY_EDITOR
                                 Vibrate(1521);
                             # endif
-                            tanmakGM.EndGame();
+                            tanmakGM.EndGameWithTime();
                         }
                     }
                 }

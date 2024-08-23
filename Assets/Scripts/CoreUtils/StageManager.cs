@@ -154,4 +154,15 @@ public class StageManager : PausableMonoBehaviour
         commonPopupUIManager.SetActiveResultPanel(true);
         commonPopupUIManager.SetResultText((int)stageTimer.GetTimerValue(), scoreManager.GetScore(), true);
     }
+
+    public virtual void EndGameWithTime()
+    {
+        Debug.Log("Game completed.");
+        // Game termination logic (ex: Show result page, Move to main menu etc.)
+
+        // Save Score & Activate End Game Panel
+        ScoreDataManager.Inst.SaveResult(scoreManager.GetScore(), true);
+        commonPopupUIManager.SetActiveResultPanel(true);
+        commonPopupUIManager.SetResultTextWithTime((int)stageTimer.GetTimerValue(), scoreManager.GetScore(), true);
+    }
 }

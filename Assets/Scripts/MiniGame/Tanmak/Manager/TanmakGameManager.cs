@@ -63,12 +63,12 @@ namespace Tanmak
             stopwatchManager.StartStopwatch();
         }
 
-        public override void EndGame()
+        public override void EndGameWithTime()
         {
             UnityEngine.Debug.Log("End Game");
             Pause();
             // End Logic Needed
-            base.EndGame();
+            base.EndGameWithTime();
 
             SaveGameData();
 
