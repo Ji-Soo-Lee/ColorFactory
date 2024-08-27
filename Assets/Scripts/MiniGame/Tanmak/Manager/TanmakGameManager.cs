@@ -72,7 +72,7 @@ namespace Tanmak
 
             SaveGameData();
 
-            commonPopupUIManager.SetResultText((int)stopwatchManager.GetStopwatchValue(), scoreManager.GetScore(), true);
+            commonPopupUIManager.SetResultTextWithTime((int)stopwatchManager.GetStopwatchValue(), scoreManager.GetScore(), true);
         }
 
         protected override void Start()
