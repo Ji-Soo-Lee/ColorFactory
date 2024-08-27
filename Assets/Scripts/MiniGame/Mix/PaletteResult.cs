@@ -12,7 +12,7 @@ public class PaletteResult : MonoBehaviour
     public Button btn1, btn2, btn3, btnPaletteMod, btnSubmission;
     public Image resultImage, btn1Image, btn2Image, btn3Image, targetImage, btnPlusImage, btnMinusImage;
     public int AClick = 0, BClick = 0, CClick = 0, mixType = 1;
-    private int paletteType = 0;
+    public int paletteType = 0;
     private Color colorA, colorB, colorC;
     private AnswerToken answerToken;
     private Action ActionOnClick;
@@ -89,6 +89,30 @@ public class PaletteResult : MonoBehaviour
         textBtn2.text = "";
         textBtn3.text = "";
         ActionOnClick?.Invoke();
+    }
+
+    public void SetPaletteType(int type)
+    {   
+        if (isMixable)
+        {
+            Debug.Log(type);
+            if (type == 0)
+            {
+                // Add Mode
+                btnPlusImage.color = new Color(1, 1, 1, 1);
+                btnMinusImage.color = new Color(1, 1, 1, 0);
+                textPlus.color = new Color(0, 0, 0, 1);
+                textMinus.color = new Color(1, 1, 1, 1);
+            }
+            else
+            {
+                // Sub Mode
+                btnPlusImage.color = new Color(1, 1, 1, 0);
+                btnMinusImage.color = new Color(1, 1, 1, 1);
+                textPlus.color = new Color(1, 1, 1, 1);
+                textMinus.color = new Color(0, 0, 0, 1);
+            }
+        }
     }
 
     void Start()
@@ -193,24 +217,8 @@ public class PaletteResult : MonoBehaviour
         });
 
         btnPaletteMod.onClick.AddListener(() => {
-            if (isMixable)
-            {
-                paletteType = (paletteType + 1) % 2;
-                if (paletteType == 0)
-                {
-                    btnPlusImage.color = new Color(1, 1, 1, 1);
-                    btnMinusImage.color = new Color(1, 1, 1, 0);
-                    textPlus.color = new Color(0, 0, 0, 1);
-                    textMinus.color = new Color(1, 1, 1, 1);
-                }
-                else
-                {
-                    btnPlusImage.color = new Color(1, 1, 1, 0);
-                    btnMinusImage.color = new Color(1, 1, 1, 1);
-                    textPlus.color = new Color(1, 1, 1, 1);
-                    textMinus.color = new Color(0, 0, 0, 1);
-                }
-            }
+            paletteType = (paletteType + 1) % 2;
+            SetPaletteType(paletteType);
         });
     }
 }
