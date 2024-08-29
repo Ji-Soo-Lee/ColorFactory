@@ -91,30 +91,6 @@ public class PaletteResult : MonoBehaviour
         ActionOnClick?.Invoke();
     }
 
-    public void SetPaletteType(int type)
-    {   
-        if (isMixable)
-        {
-            Debug.Log(type);
-            if (type == 0)
-            {
-                // Add Mode
-                btnPlusImage.color = new Color(1, 1, 1, 1);
-                btnMinusImage.color = new Color(1, 1, 1, 0);
-                textPlus.color = new Color(0, 0, 0, 1);
-                textMinus.color = new Color(1, 1, 1, 1);
-            }
-            else
-            {
-                // Sub Mode
-                btnPlusImage.color = new Color(1, 1, 1, 0);
-                btnMinusImage.color = new Color(1, 1, 1, 1);
-                textPlus.color = new Color(1, 1, 1, 1);
-                textMinus.color = new Color(0, 0, 0, 1);
-            }
-        }
-    }
-
     void Start()
     {
         answerToken = GameObject.Find("TargetImage").GetComponent<AnswerToken>();
@@ -217,8 +193,32 @@ public class PaletteResult : MonoBehaviour
         });
 
         btnPaletteMod.onClick.AddListener(() => {
-            paletteType = (paletteType + 1) % 2;
-            SetPaletteType(paletteType);
+            if (isMixable)
+            {
+                paletteType = (paletteType + 1) % 2;
+                if (paletteType == 0)
+                {
+                    btnPlusImage.color = new Color(1, 1, 1, 1);
+                    btnMinusImage.color = new Color(1, 1, 1, 0);
+                    textPlus.color = new Color(0, 0, 0, 1);
+                    textMinus.color = new Color(1, 1, 1, 1);
+                }
+                else
+                {
+                    btnPlusImage.color = new Color(1, 1, 1, 0);
+                    btnMinusImage.color = new Color(1, 1, 1, 1);
+                    textPlus.color = new Color(1, 1, 1, 1);
+                    textMinus.color = new Color(0, 0, 0, 1);
+                }
+            }
         });
+    }
+
+    public void InitializePaletteType() {
+        paletteType = 0;
+        btnPlusImage.color = new Color(1, 1, 1, 1);
+        btnMinusImage.color = new Color(1, 1, 1, 0);
+        textPlus.color = new Color(0, 0, 0, 1);
+        textMinus.color = new Color(1, 1, 1, 1);
     }
 }

@@ -112,7 +112,7 @@ public class MixStageManager : StageManager
         stageTimer.StartTimer();
         stageText.text = "STAGE"+(currentStage+1).ToString();
 
-        paletteResult.SetPaletteType(0);
+        paletteResult.InitializePaletteType();
 
         Debug.Log("STAGE" + (currentStage + 1) + "started.");
     }
