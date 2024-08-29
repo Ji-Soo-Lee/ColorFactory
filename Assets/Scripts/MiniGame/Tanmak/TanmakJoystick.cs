@@ -15,14 +15,14 @@ namespace Tanmak
 
         RectTransform lever;
         RectTransform rectTransform;
-        float leverRange;
+        float leverRange = 50f;
 
         void Start()
         {
             isJoystickMoving = false;
             lever = transform.GetChild(0).GetComponent<RectTransform>();
             rectTransform = GetComponent<RectTransform>();
-            leverRange = rectTransform.rect.width / rectTransform.localScale.x;
+            // leverRange = rectTransform.rect.width / rectTransform.localScale.x;
         }
 
         void SetDirection(PointerEventData eventData)
