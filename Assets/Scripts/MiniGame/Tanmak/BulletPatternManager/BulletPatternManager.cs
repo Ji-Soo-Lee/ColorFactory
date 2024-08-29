@@ -26,7 +26,7 @@ namespace Tanmak
         {
             // tmdghks: implemented just randomly generated patterns
             // this will be replaced with json loader (maybe)
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 BulletPatternBase pattern = null;
                 float radius = Random.Range(1f, 5f);
