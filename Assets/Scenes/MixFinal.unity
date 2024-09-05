@@ -484,6 +484,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Common Popup Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 538925605288644002, guid: 7b4536f65dc41af479bc89e75be66511,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1366584450735435025, guid: 7b4536f65dc41af479bc89e75be66511,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1568,6 +1573,7 @@ MonoBehaviour:
   BClick: 0
   CClick: 0
   mixType: 1
+  paletteType: 0
   textBtn1: {fileID: 566797983}
   textBtn2: {fileID: 1043306756}
   textBtn3: {fileID: 405394129}
